@@ -6,28 +6,74 @@ class m130524_201442_init extends Migration
 {
     public function up()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-        }
+        $auth = Yii::$app->authManager;
 
-        $this->createTable('{{%user}}', [
-            'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
-            'auth_key' => $this->string(32)->notNull(),
-            'password_hash' => $this->string()->notNull(),
-            'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
+        //produtos
+        $criarProduto = $auth->createPermission('criarProduto');
+        $criarProduto->description = 'Criar um produto';
+        $auth->add($criarProduto);
 
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
-        ], $tableOptions);
+        $editarProduto = $auth->createPermission('editarProduto');
+        $editarProduto->description = 'Editar um produto';
+        $auth->add($editarProduto);
+
+        $eliminarProduto = $auth->createPermission('eliminarProduto');
+        $eliminarProduto->description = 'Eliminar um produto';
+        $auth->add($eliminarProduto);
+
+
+        //categorias
+        $criarCategoria = $auth->createPermission('criarCategoria');
+        $criarCategoria->description = 'Criar uma categoria';
+        $auth->add($criarCategoria);
+
+        $editarCategoria = $auth->createPermission('editarCategoria');
+        $editarCategoria->description = 'Editar uma categoria';
+        $auth->add($editarCategoria);
+
+        $eliminarCategoria = $auth->createPermission('eliminarCategoria');
+        $eliminarCategoria->description = 'Eliminar uma categoria';
+        $auth->add($eliminarCategoria);
+
+
+        //marcas
+        $criarMarca = $auth->createPermission('criarMarca');
+        $criarMarca->description = 'Criar uma marca';
+        $auth->add($criarMarca);
+
+        $editarMarca = $auth->createPermission('editarMarca');
+        $criarMarca->description = 'Editar uma marca';
+        $auth->add($editarMarca);
+
+        $eliminarMarca = $auth->createPermission('eliminarMarca');
+        $eliminarMarca->description = 'Eliminar uma marca';
+        $auth->add($eliminarMarca);
+
+
+        //albuns
+        $criarAlbum = $auth->createPermission('criarAlbum');
+        $criarAlbum->description = 'Criar um album';
+        $auth->add($criarAlbum);
+
+        $editarAlbum = $auth->createPermission('editarAlbum');
+        $editarAlbum->description = 'Editar um album';
+        $auth->add($editarAlbum);
+
+        $eliminarAlbum = $auth->createPermission('eliminarAlbum');
+        $eliminarAlbum->description = 'Eliminar um album';
+        $auth->add($eliminarAlbum);
+
+
+        //eventos
+        $criarEvento = $auth->createPermission('criarAlbum');
+        $criarEvento->description = 'Criar um evento';
+        $auth->add($criarEvento);
     }
 
     public function down()
     {
-        $this->dropTable('{{%user}}');
+        $auth = Yii::$app->authManager;
+
+        $auth->removeAll();
     }
 }
