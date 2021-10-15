@@ -13,6 +13,10 @@ class m130524_201442_init extends Migration
         $criarProduto->description = 'Criar um produto';
         $auth->add($criarProduto);
 
+        $verProduto = $auth->createPermission('verProduto');
+        $verProduto->description = 'Ver um produto';
+        $auth->add($verProduto);
+
         $editarProduto = $auth->createPermission('editarProduto');
         $editarProduto->description = 'Editar um produto';
         $auth->add($editarProduto);
@@ -26,6 +30,10 @@ class m130524_201442_init extends Migration
         $criarCategoria = $auth->createPermission('criarCategoria');
         $criarCategoria->description = 'Criar uma categoria';
         $auth->add($criarCategoria);
+
+        $verCategoria = $auth->createPermission('verCategoria');
+        $verCategoria->description = 'Ver uma categoria';
+        $auth->add($verCategoria);
 
         $editarCategoria = $auth->createPermission('editarCategoria');
         $editarCategoria->description = 'Editar uma categoria';
@@ -41,6 +49,10 @@ class m130524_201442_init extends Migration
         $criarMarca->description = 'Criar uma marca';
         $auth->add($criarMarca);
 
+        $verMarca = $auth->createPermission('verMarca');
+        $verMarca->description = 'Ver uma marca';
+        $auth->add($verMarca);
+
         $editarMarca = $auth->createPermission('editarMarca');
         $criarMarca->description = 'Editar uma marca';
         $auth->add($editarMarca);
@@ -54,6 +66,10 @@ class m130524_201442_init extends Migration
         $criarAlbum = $auth->createPermission('criarAlbum');
         $criarAlbum->description = 'Criar um album';
         $auth->add($criarAlbum);
+
+        $verAlbum = $auth->createPermission('verAlbum');
+        $verAlbum->description = 'Ver um album';
+        $auth->add($verAlbum);
 
         $editarAlbum = $auth->createPermission('editarAlbum');
         $editarAlbum->description = 'Editar um album';
