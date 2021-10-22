@@ -81,9 +81,81 @@ class m130524_201442_init extends Migration
 
 
         //eventos
-        $criarEvento = $auth->createPermission('criarAlbum');
+        $criarEvento = $auth->createPermission('criarEvento');
         $criarEvento->description = 'Criar um evento';
         $auth->add($criarEvento);
+
+        $verEvento = $auth->createPermission('verEvento');
+        $verEvento->description = 'Ver um evento';
+        $auth->add($verEvento);
+
+        $editarEvento = $auth->createPermission('editarEvento');
+        $editarEvento->description = 'Editar um evento';
+        $auth->add($editarEvento);
+
+        $eliminarEvento = $auth->createPermission('eliminarEvento');
+        $eliminarEvento->description = 'Eliminar um evento';
+        $auth->add($eliminarEvento);
+
+
+
+            //Roles
+        //admin
+        $admin = $auth->createRole('Administrador');
+        $auth->add($admin);
+
+        $auth->addChild($admin, $criarProduto);
+        $auth->addChild($admin, $verProduto);
+        $auth->addChild($admin, $editarProduto);
+        $auth->addChild($admin, $eliminarProduto);
+        $auth->addChild($admin, $criarCategoria);
+        $auth->addChild($admin, $verCategoria);
+        $auth->addChild($admin, $editarCategoria);
+        $auth->addChild($admin, $eliminarCategoria);
+        $auth->addChild($admin, $criarMarca);
+        $auth->addChild($admin, $verMarca);
+        $auth->addChild($admin, $editarMarca);
+        $auth->addChild($admin, $eliminarMarca);
+        $auth->addChild($admin, $criarAlbum);
+        $auth->addChild($admin, $verAlbum);
+        $auth->addChild($admin, $editarAlbum);
+        $auth->addChild($admin, $eliminarAlbum);
+        $auth->addChild($admin, $criarEvento);
+        $auth->addChild($admin, $verEvento);
+        $auth->addChild($admin, $editarEvento);
+        $auth->addChild($admin, $eliminarEvento);
+
+        //gestor de loja
+        $gestor = $auth->createRole('Gestor de loja');
+        $auth->add($gestor);
+
+        $auth->addChild($gestor, $criarProduto);
+        $auth->addChild($gestor, $verProduto);
+        $auth->addChild($gestor, $editarProduto);
+        $auth->addChild($gestor, $eliminarProduto);
+        $auth->addChild($gestor, $criarCategoria);
+        $auth->addChild($gestor, $verCategoria);
+        $auth->addChild($gestor, $editarCategoria);
+        $auth->addChild($gestor, $eliminarCategoria);
+        $auth->addChild($gestor, $criarMarca);
+        $auth->addChild($gestor, $verMarca);
+        $auth->addChild($gestor, $editarMarca);
+        $auth->addChild($gestor, $eliminarMarca);
+        $auth->addChild($gestor, $criarAlbum);
+        $auth->addChild($gestor, $verAlbum);
+        $auth->addChild($gestor, $editarAlbum);
+        $auth->addChild($gestor, $eliminarAlbum);
+
+        //cliente
+        $cliente = $auth->createRole('Cliente');
+        $auth->add($cliente);
+
+        $auth->addChild($cliente, $verProduto);
+        $auth->addChild($cliente, $verCategoria);
+        $auth->addChild($cliente, $verMarca);
+        $auth->addChild($cliente, $verAlbum);
+        $auth->addChild($cliente, $verEvento);
+
     }
 
     public function down()
