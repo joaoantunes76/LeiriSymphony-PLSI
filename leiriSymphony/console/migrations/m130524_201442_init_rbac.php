@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m130524_201442_init extends Migration
+class m130524_201442_init_rbac extends Migration
 {
     public function up()
     {
@@ -156,6 +156,9 @@ class m130524_201442_init extends Migration
         $auth->addChild($cliente, $verAlbum);
         $auth->addChild($cliente, $verEvento);
 
+
+
+        $auth->assign($admin, 1);
     }
 
     public function down()
