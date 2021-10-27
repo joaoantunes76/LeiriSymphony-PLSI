@@ -79,6 +79,24 @@ class m130524_201442_init_rbac extends Migration
         $eliminarAlbum->description = 'Eliminar um album';
         $auth->add($eliminarAlbum);
 
+        //musicas
+        $criarMusica = $auth->createPermission('criarMusica');
+        $criarMusica->description = 'Criar uma musica';
+        $auth->add($criarMusica);
+
+        $verMusica = $auth->createPermission('verMusica');
+        $verMusica->description = 'Ver uma musica';
+        $auth->add($verMusica);
+
+        $editarMusica = $auth->createPermission('editarMusica');
+        $editarMusica->description = 'Editar uma musica';
+        $auth->add($editarMusica);
+
+        $eliminarMusica = $auth->createPermission('eliminarMusica');
+        $eliminarMusica->description = 'Eliminar uma musica';
+        $auth->add($eliminarMusica);
+
+
 
         //eventos
         $criarEvento = $auth->createPermission('criarEvento');
@@ -120,6 +138,10 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($admin, $verAlbum);
         $auth->addChild($admin, $editarAlbum);
         $auth->addChild($admin, $eliminarAlbum);
+        $auth->addChild($admin, $criarMusica);
+        $auth->addChild($admin, $verMusica);
+        $auth->addChild($admin, $editarMusica);
+        $auth->addChild($admin, $eliminarMusica);
         $auth->addChild($admin, $criarEvento);
         $auth->addChild($admin, $verEvento);
         $auth->addChild($admin, $editarEvento);
@@ -145,6 +167,21 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($gestor, $verAlbum);
         $auth->addChild($gestor, $editarAlbum);
         $auth->addChild($gestor, $eliminarAlbum);
+        $auth->addChild($gestor, $criarMusica);
+        $auth->addChild($gestor, $verMusica);
+        $auth->addChild($gestor, $editarMusica);
+        $auth->addChild($gestor, $eliminarMusica);
+
+        //apoio ao cliente
+        $apoio = $auth->createRole('Apoio ao cliente');
+        $auth->add($apoio);
+
+        $auth->addChild($apoio, $verProduto);
+        $auth->addChild($apoio, $verCategoria);
+        $auth->addChild($apoio, $verMarca);
+        $auth->addChild($apoio, $verAlbum);
+        $auth->addChild($apoio, $verMusica);
+        $auth->addChild($apoio, $verEvento);
 
         //cliente
         $cliente = $auth->createRole('Cliente');
@@ -154,6 +191,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($cliente, $verCategoria);
         $auth->addChild($cliente, $verMarca);
         $auth->addChild($cliente, $verAlbum);
+        $auth->addChild($cliente, $verMusica);
         $auth->addChild($cliente, $verEvento);
 
 
