@@ -6,8 +6,10 @@ use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\BaseUrl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\helpers\Url;
 
 /**
  * Site controller
@@ -76,11 +78,11 @@ class SiteController extends Controller
             $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
             foreach ($roles as $role){
 
-                if ($role -> name == 'Administrador'){
+                if ($role -> name == 'Administrador' || $role -> name == 'Gestor de loja' || $role -> name == 'Apoio ao cliente'){
                     return $this->goHome();
-
                 }else{
                     Yii::$app->user->logout();
+                    return $this->redirect(BaseUrl::to(['frontend/web']));
                 }
             }
             
