@@ -15,69 +15,93 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <?php $this->head() ?>
+    <script>
+        function openSlideMenu() {
+            document.getElementById('menu').style.width = '100%';
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeSlideMenu() {
+            document.getElementById('menu').style.width = '0';
+        }
+
+        function sideMenuClick() {
+            event.stopPropagation();
+        }
+    </script>
 </head>
+
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-</header>
+    <header>
+        <nav class="ls-navbar ls-bg-dark">
+            <div class="row ls-flex">
+                <div class="col-md-4 col-sm-2">
+                    <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
+                    <a class="navbar-brand" href="#"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'logo']); ?></a>
+                </div>
+                <div class="col-md-4 col-sm-5 ls-flex">
+                    <div class="ls-navbar-search">
+                        <form action="search" method="GET">
+                            <input class="form-control ls-nav-text-input mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-5 ls-flex ls-flex-end">
+                    <div class="ls-navbar-buttons">
+                        <a href="#perfil"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
+                        <a href="#favoritos"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
+                        <a href="#carrinho"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
+        <div class="ls-sidemenu-content" onclick="sideMenuClick()">
+            <a href="#">Guitarras</a>
+            <a href="#">Baterias</a>
+            <a href="#">Teclas</a>
+            <a href="#">Sopros</a>
+            <a href="#">Clássicos</a>
+            <a href="#">Tradicionais</a>
+            <a href="#">Acessórios</a>
+            <a href="#">Música</a>
+        </div>
+        <div style="width: 100%; height:100%">
+
+        </div>
     </div>
-</main>
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
+    </main>
 
-<?php $this->endBody() ?>
+    <footer class="footer mt-auto py-3 text-muted">
+        <div class="container">
+            <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <p class="float-right"><?= Yii::powered() ?></p>
+        </div>
+    </footer>
+
+    <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage();
