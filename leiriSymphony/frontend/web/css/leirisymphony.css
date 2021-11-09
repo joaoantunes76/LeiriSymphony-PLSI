@@ -1,0 +1,84 @@
+@media screen and (max-width: 1000px) {
+    .navbar-brand {
+      display: none;
+    }
+  }
+
+
+.ls-bg-dark {
+    background-color: #2A2A2A;
+}
+
+.ls-nav-text-input {
+    background-color: #2A2A2A;
+    border-color: #FF8B07;
+    color: #FF8B07;
+}
+
+.ls-nav-text-input:focus {
+    background-color: #303030;
+    border-color: #FF8B07;
+    color: #FF8B07;
+}
+
+.ls-navbar {
+    padding: 5px;
+    color: #FF8B07;
+}
+
+.ls-navbar-search {
+    width: 100%;
+}
+
+.navbar-brand {
+    padding-bottom: 0;
+}
+
+.logo {
+    vertical-align: baseline;
+}
+
+.ls-navbar-icons {
+    color: #FF8B07;
+    font-size: 34px;
+    margin-right: 25px;
+}
+
+.ls-flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.ls-flex-end {
+    justify-content: end;
+    padding-right: 25px;
+}
+
+.ls-sidemenu {
+    height: calc(100% - 61px);
+    margin-top: 61px;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.81);
+    overflow-x: hidden;
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.ls-sidemenu-content {
+    width: 250px;
+    background-color: white;
+    height: 100%;
+}
+
+.ls-sidemenu-content a {
+    display: block;
+    padding: 20px 30px;
+    text-decoration: none;
+    color: #262626;
+    font-size: 25px;
+}
