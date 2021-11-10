@@ -77,12 +77,11 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
             foreach ($roles as $role){
-
                 if ($role -> name == 'Administrador' || $role -> name == 'Gestor de loja' || $role -> name == 'Apoio ao cliente'){
                     return $this->goHome();
                 }else{
                     Yii::$app->user->logout();
-                    return $this->redirect(BaseUrl::to(['frontend/web']));
+                    
                 }
             }
             
