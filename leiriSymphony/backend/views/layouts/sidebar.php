@@ -46,7 +46,6 @@
                             ['label' => 'SubCategorias', 'url' => ['#'], 'iconStyle' => 'far'],
                             ['label' => 'Produtos', 'url' => ['#'], 'iconStyle' => 'far'],
                             ['label' => 'Marcas', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Eventos', 'url' => ['#'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['#'], 'iconStyle' => 'far'],
                         ]
                     ],
@@ -56,6 +55,7 @@
                         'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['#'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],
