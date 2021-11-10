@@ -206,7 +206,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($apoio, $verMusica);
         $auth->addChild($apoio, $verEvento);
         $auth->addChild($apoio, $editarEncomenda);
-        $auth->addChild($apoio, $editarEncomenda);
+        $auth->addChild($apoio, $verEncomenda);
 
         //cliente
         $cliente = $auth->createRole('Cliente');
