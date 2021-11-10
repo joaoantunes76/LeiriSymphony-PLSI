@@ -79,6 +79,21 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionPerfil()
+    {
+        if(Yii::$app->user->isGuest){
+            return $this->redirect(['site/login']);
+        }
+        else{
+            return $this->render('perfil');
+        }
+    }
+
+    /**
      * Logs in a user.
      *
      * @return mixed

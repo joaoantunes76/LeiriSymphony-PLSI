@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <img src="<?=$assetDir?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">LeiriSymphony</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,7 +13,7 @@
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">Administrador</a>
             </div>
         </div>
 
@@ -36,15 +36,28 @@
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
                     [
-                        'label' => 'Starter Pages',
+                        'label' => 'Gestão de loja',
                         'icon' => 'tachometer-alt',
                         'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Categorias', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'SubCategorias', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Produtos', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Marcas', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Encomendas', 'url' => ['#'], 'iconStyle' => 'far'],
                         ]
                     ],
-                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
+                    [
+                        'label' => 'Apoio ao Cliente',
+                        'icon' => 'tachometer-alt',
+                        'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
+                        ]
+                    ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],
                     ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
