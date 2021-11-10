@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -47,7 +48,7 @@ AppAsset::register($this);
             <div class="row ls-flex">
                 <div class="col-md-4 col-sm-2">
                     <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
-                    <a class="navbar-brand" href="#"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'logo']); ?></a>
+                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'logo']); ?></a>
                 </div>
                 <div class="col-md-4 col-sm-5 ls-flex">
                     <div class="ls-navbar-search">
