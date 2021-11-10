@@ -59,7 +59,7 @@ AppAsset::register($this);
                 </div>
                 <div class="col-md-4 col-sm-5 ls-flex ls-flex-end">
                     <div class="ls-navbar-buttons">
-                        <a href="#perfil"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
+                        <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
                         <a href="#favoritos"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
                         <a href="#carrinho"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
                     </div>
@@ -70,14 +70,14 @@ AppAsset::register($this);
 
     <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
         <div class="ls-sidemenu-content" onclick="sideMenuClick()">
-            <a href="#">Guitarras</a>
-            <a href="#">Baterias</a>
-            <a href="#">Teclas</a>
-            <a href="#">Sopros</a>
-            <a href="#">Clássicos</a>
-            <a href="#">Tradicionais</a>
-            <a href="#">Acessórios</a>
-            <a href="#">Música</a>
+            <a href="#guitarras">Guitarras</a>
+            <a href="#baterias">Baterias</a>
+            <a href="#teclas">Teclas</a>
+            <a href="#sopros">Sopros</a>
+            <a href="#classicos">Clássicos</a>
+            <a href="#tradicionais">Tradicionais</a>
+            <a href="#acessorios">Acessórios</a>
+            <a href="#musica">Música</a>
         </div>
         <div style="width: 100%; height:100%">
 

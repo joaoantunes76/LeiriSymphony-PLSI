@@ -6,6 +6,7 @@
 
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -30,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <br>
                     Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
                 </div>
+
+                <span><a href="<?= Url::toRoute('site/signup'); ?>">Click here</a> to create an account</span>
 
                 <div class="form-group">
                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
