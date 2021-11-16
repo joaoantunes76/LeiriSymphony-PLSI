@@ -85,10 +85,9 @@ class SiteController extends Controller
      */
     public function actionPerfil()
     {
-        if(Yii::$app->user->isGuest){
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
-        }
-        else{
+        } else {
             return $this->render('perfil');
         }
     }
@@ -110,6 +109,8 @@ class SiteController extends Controller
         }
 
         $model->password = '';
+
+        $this->layout = 'blank';
 
         return $this->render('login', [
             'model' => $model,
