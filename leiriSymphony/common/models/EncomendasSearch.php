@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Subcategorias;
+use common\models\Encomendas;
 
 /**
- * SubcategoriasSearch represents the model behind the search form of `app\models\Subcategorias`.
+ * EncomendasSearch represents the model behind the search form of `app\models\Encomendas`.
  */
-class SubcategoriasSearch extends Subcategorias
+class EncomendasSearch extends Encomendas
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class SubcategoriasSearch extends Subcategorias
     public function rules()
     {
         return [
-            [['subcategoriaId', 'categoriaId'], 'integer'],
-            [['nome'], 'safe'],
+            [['encomendaId', 'perfilId', 'estaPago'], 'integer'],
+            [['estado'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class SubcategoriasSearch extends Subcategorias
      */
     public function search($params)
     {
-        $query = Subcategorias::find();
+        $query = Encomendas::find();
 
         // add conditions that should always apply here
 
@@ -58,11 +58,12 @@ class SubcategoriasSearch extends Subcategorias
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'subcategoriaId' => $this->subcategoriaId,
-            'categoriaId' => $this->categoriaId,
+            'encomendaId' => $this->encomendaId,
+            'perfilId' => $this->perfilId,
+            'estaPago' => $this->estaPago,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'estado', $this->estado]);
 
         return $dataProvider;
     }

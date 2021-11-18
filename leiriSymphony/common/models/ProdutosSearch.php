@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Encomendas;
+use common\models\Produtos;
 
 /**
- * EncomendasSearch represents the model behind the search form of `app\models\Encomendas`.
+ * ProdutosSearch represents the model behind the search form of `app\models\Produtos`.
  */
-class EncomendasSearch extends Encomendas
+class ProdutosSearch extends Produtos
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class EncomendasSearch extends Encomendas
     public function rules()
     {
         return [
-            [['encomendaId', 'perfilId', 'estaPago'], 'integer'],
-            [['estado'], 'safe'],
+            [['produtoId', 'subcategoriaId', 'marcaId', 'digital'], 'integer'],
+            [['produtoNome', 'descricao', 'ficheiro'], 'safe'],
+            [['preco'], 'number'],
         ];
     }
 
@@ -40,7 +41,7 @@ class EncomendasSearch extends Encomendas
      */
     public function search($params)
     {
-        $query = Encomendas::find();
+        $query = Produtos::find();
 
         // add conditions that should always apply here
 
@@ -58,12 +59,16 @@ class EncomendasSearch extends Encomendas
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'encomendaId' => $this->encomendaId,
-            'perfilId' => $this->perfilId,
-            'estaPago' => $this->estaPago,
+            'produtoId' => $this->produtoId,
+            'subcategoriaId' => $this->subcategoriaId,
+            'marcaId' => $this->marcaId,
+            'digital' => $this->digital,
+            'preco' => $this->preco,
         ]);
 
-        $query->andFilterWhere(['like', 'estado', $this->estado]);
+        $query->andFilterWhere(['like', 'produtoNome', $this->produtoNome])
+            ->andFilterWhere(['like', 'descricao', $this->descricao])
+            ->andFilterWhere(['like', 'ficheiro', $this->ficheiro]);
 
         return $dataProvider;
     }

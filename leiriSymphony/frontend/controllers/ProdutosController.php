@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use common\models\Produtos;
 use common\models\ProdutosSearch;
@@ -57,62 +57,6 @@ class ProdutosController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($produtoId),
         ]);
-    }
-
-    /**
-     * Creates a new Produtos model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Produtos();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'produtoId' => $model->produtoId]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Produtos model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $produtoId Produto ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($produtoId)
-    {
-        $model = $this->findModel($produtoId);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'produtoId' => $model->produtoId]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Produtos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $produtoId Produto ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($produtoId)
-    {
-        $this->findModel($produtoId)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

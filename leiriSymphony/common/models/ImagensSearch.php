@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Marcas;
+use common\models\Imagens;
 
 /**
- * MarcasSearch represents the model behind the search form of `app\models\Marcas`.
+ * ImagensSearch represents the model behind the search form of `common\models\Imagens`.
  */
-class MarcasSearch extends Marcas
+class ImagensSearch extends Imagens
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class MarcasSearch extends Marcas
     public function rules()
     {
         return [
-            [['marcaId'], 'integer'],
-            [['marcaNome'], 'safe'],
+            [['imagemId', 'produtoId'], 'integer'],
+            [['imagem'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class MarcasSearch extends Marcas
      */
     public function search($params)
     {
-        $query = Marcas::find();
+        $query = Imagens::find();
 
         // add conditions that should always apply here
 
@@ -58,10 +58,11 @@ class MarcasSearch extends Marcas
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'marcaId' => $this->marcaId,
+            'imagemId' => $this->imagemId,
+            'produtoId' => $this->produtoId,
         ]);
 
-        $query->andFilterWhere(['like', 'marcaNome', $this->marcaNome]);
+        $query->andFilterWhere(['like', 'imagem', $this->imagem]);
 
         return $dataProvider;
     }

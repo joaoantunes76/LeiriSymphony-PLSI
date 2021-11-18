@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\Produtos;
-use common\models\ProdutosSearch;
+use common\models\Imagens;
+use common\models\ImagensSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProdutosController implements the CRUD actions for Produtos model.
+ * ImagensController implements the CRUD actions for Imagens model.
  */
-class ProdutosController extends Controller
+class ImagensController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,12 +32,12 @@ class ProdutosController extends Controller
     }
 
     /**
-     * Lists all Produtos models.
+     * Lists all Imagens models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProdutosSearch();
+        $searchModel = new ImagensSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -47,30 +47,30 @@ class ProdutosController extends Controller
     }
 
     /**
-     * Displays a single Produtos model.
-     * @param int $produtoId Produto ID
+     * Displays a single Imagens model.
+     * @param int $imagemId Imagem ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($produtoId)
+    public function actionView($imagemId)
     {
         return $this->render('view', [
-            'model' => $this->findModel($produtoId),
+            'model' => $this->findModel($imagemId),
         ]);
     }
 
     /**
-     * Creates a new Produtos model.
+     * Creates a new Imagens model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Produtos();
+        $model = new Imagens();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'produtoId' => $model->produtoId]);
+                return $this->redirect(['view', 'imagemId' => $model->imagemId]);
             }
         } else {
             $model->loadDefaultValues();
@@ -82,18 +82,18 @@ class ProdutosController extends Controller
     }
 
     /**
-     * Updates an existing Produtos model.
+     * Updates an existing Imagens model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $produtoId Produto ID
+     * @param int $imagemId Imagem ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($produtoId)
+    public function actionUpdate($imagemId)
     {
-        $model = $this->findModel($produtoId);
+        $model = $this->findModel($imagemId);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'produtoId' => $model->produtoId]);
+            return $this->redirect(['view', 'imagemId' => $model->imagemId]);
         }
 
         return $this->render('update', [
@@ -102,29 +102,29 @@ class ProdutosController extends Controller
     }
 
     /**
-     * Deletes an existing Produtos model.
+     * Deletes an existing Imagens model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $produtoId Produto ID
+     * @param int $imagemId Imagem ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($produtoId)
+    public function actionDelete($imagemId)
     {
-        $this->findModel($produtoId)->delete();
+        $this->findModel($imagemId)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Produtos model based on its primary key value.
+     * Finds the Imagens model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $produtoId Produto ID
-     * @return Produtos the loaded model
+     * @param int $imagemId Imagem ID
+     * @return Imagens the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($produtoId)
+    protected function findModel($imagemId)
     {
-        if (($model = Produtos::findOne($produtoId)) !== null) {
+        if (($model = Imagens::findOne($id)) !== null) {
             return $model;
         }
 

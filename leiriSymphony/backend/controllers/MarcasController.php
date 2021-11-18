@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use app\models\Marcas;
-use app\models\MarcasSearch;
+use common\models\Marcas;
+use common\models\MarcasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

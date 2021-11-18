@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use app\models\Encomendas;
-use app\models\EncomendasSearch;
+use common\models\Encomendas;
+use common\models\EncomendasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
