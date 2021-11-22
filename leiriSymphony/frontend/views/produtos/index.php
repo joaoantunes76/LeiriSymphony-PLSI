@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -8,16 +9,15 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Produtos';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="produtos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Resultados: </h1>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
-    <?= GridView::widget([
+    <?php /*= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -34,7 +34,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]); */ ?>
+
+
+    <?php
+    $idProduto = 0;
+    for ($linha = 0; $linha < 2; $linha++) {
+    ?>
+        <div class="row mt-5">
+            <?php
+            for ($produto = 0; $produto < 6; $produto++) {
+                $idProduto++;
+            ?>
+                <a style="display:block;" class="col ls-produto" id="<?= $idProduto ?>" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $idProduto]) ?>">
+                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
+                    <p class="mt-2">Nome do produto</p>
+                    <p>0.00€</p>
+                </a>
+            <?php
+            }
+            ?>
+        </div>
+
+    <?php
+    }
+    ?>
+
+
 
 
 </div>
