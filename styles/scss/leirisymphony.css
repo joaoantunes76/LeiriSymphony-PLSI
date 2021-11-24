@@ -1,0 +1,137 @@
+/*
+    Base - Typography
+*/
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/*
+    Base - Colors
+*/
+.ls-bg-primary {
+  background-color: #ff8b07;
+}
+
+.ls-bg-secondary {
+  background-color: #2a2a2a;
+}
+
+.ls-bg-brand-primary {
+  background-color: #227ece;
+}
+
+.ls-bg-brand-success {
+  background-color: #4fd56e;
+}
+
+.ls-bg-brand-danger {
+  background-color: #e33232;
+}
+
+.ls-bg-brand-warning {
+  background-color: #ffe53b;
+}
+
+.ls-text-primary {
+  color: #ff8b07;
+}
+
+.ls-text-secondary {
+  color: #2a2a2a;
+}
+
+.ls-text-brand-primary {
+  color: #227ece;
+}
+
+.ls-text-brand-success {
+  color: #4fd56e;
+}
+
+.ls-text-brand-danger {
+  color: #e33232;
+}
+
+.ls-text-brand-warning {
+  color: #ffe53b;
+}
+
+/*
+    Components - Sidemenu
+*/
+.ls-sidemenu {
+  height: calc(100% - 61px);
+  margin-top: 61px;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.81);
+  overflow-x: hidden;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
+.ls-sidemenu-content {
+  width: 250px;
+  background-color: #fff;
+  height: 100%;
+}
+
+.ls-sidemenu-content a {
+  display: block;
+  padding: 20px 30px;
+  text-decoration: none;
+  color: #2a2a2a;
+  font-size: 25px;
+}
+
+/*
+    Components - Navbar
+*/
+@media screen and (max-width: 1000px) {
+  .navbar-brand {
+    display: none;
+  }
+}
+
+.ls-navbar {
+  padding: 5px;
+  color: #ff8b07;
+}
+
+.ls-navbar-search {
+  width: 100%;
+}
+
+.ls-navbar-brand {
+  padding-bottom: 0;
+}
+
+.ls-navbar-search {
+  background-color: #2a2a2a;
+  border-color: #ff8b07;
+  color: #ff8b07;
+}
+
+.ls-navbar-search:focus {
+  background-color: #222;
+  border-color: #ff8b07;
+  color: #ff8b07;
+}
+
+.ls-navbar-icons {
+  color: #ff8b07;
+  font-size: 34px;
+  margin-right: 25px;
+}
+
+/*
+    Components - Logo
+*/
+.ls-logo {
+  vertical-align: baseline;
+}
+/*# sourceMappingURL=leirisymphony.css.map */

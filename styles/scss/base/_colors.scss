@@ -1,0 +1,61 @@
+/*
+    Base - Colors
+*/
+
+.ls {
+    &-bg {
+        &-primary {
+            background-color: $primary;
+        }
+
+        &-secondary {
+            background-color: $secondary;
+        }
+
+        &-brand {
+            &-primary {
+                background-color: $brand-primary;
+            }
+
+            &-success {
+                background-color: $brand-success;
+            }
+
+            &-danger {
+                background-color: $brand-danger;
+            }
+
+            &-warning {
+                background-color: $brand-warning;
+            }
+        }
+    }
+
+    &-text {
+        &-primary {
+            color: $primary;
+        }
+
+        &-secondary {
+            color: $secondary;
+        }
+
+        &-brand {
+            &-primary {
+                color: $brand-primary;
+            }
+
+            &-success {
+                color: $brand-success;
+            }
+
+            &-danger {
+                color: $brand-danger;
+            }
+
+            &-warning {
+                color: $brand-warning;
+            }
+        }
+    }
+}

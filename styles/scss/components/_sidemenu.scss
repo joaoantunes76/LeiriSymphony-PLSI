@@ -1,0 +1,33 @@
+/*
+    Components - Sidemenu
+*/
+
+.ls {
+    &-sidemenu {
+        height: calc(100% - 61px);
+        margin-top: 61px;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.81);
+        overflow-x: hidden;
+        transition: 0.4s;
+        overflow: hidden;
+
+        &-content {
+            width: 250px;
+            background-color: $neutral-10;
+            height: 100%;
+
+            & a {
+                display: block;
+                padding: 20px 30px;
+                text-decoration: none;
+                color: $secondary;
+                font-size: 25px;
+            }
+        }
+    }
+}
