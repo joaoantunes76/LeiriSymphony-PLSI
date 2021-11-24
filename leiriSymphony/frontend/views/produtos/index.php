@@ -36,29 +36,19 @@ $this->title = 'Produtos';
         ],
     ]); */ ?>
 
-
-    <?php
-    $idProduto = 0;
-    for ($linha = 0; $linha < 2; $linha++) {
-    ?>
-        <div class="row mt-5">
-            <?php
-            for ($produto = 0; $produto < 6; $produto++) {
-                $idProduto++;
-            ?>
-                <a style="display:block;" class="col ls-produto" id="<?= $idProduto ?>" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $idProduto]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            <?php
-            }
-            ?>
-        </div>
-
-    <?php
-    }
-    ?>
+    <div class="row mt-5">
+        <?php
+        for ($produto = 1; $produto <= 12; $produto++) {
+        ?>
+            <a style="display:block;" class="col ls-produto" id="<?= $produto ?>" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produto]) ?>">
+                <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
+                <p class="mt-2">Nome do produto</p>
+                <p>0.00€</p>
+            </a>
+        <?php
+        }
+        ?>
+    </div>
 
 
 
