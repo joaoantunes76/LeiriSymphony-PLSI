@@ -78,6 +78,28 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+
+
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionEventos()
+    {
+        return $this->render('evento');
+    }
+
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionEncomendas()
+    {
+        return $this->render('perfil');
+    }
+
     /**
      * Displays homepage.
      *

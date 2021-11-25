@@ -27,7 +27,7 @@ $this->title = $model->produtoNome;
     ]) */ ?>
 
     <div class="row">
-        <div class="col-4 text-center">
+        <div class="col-5 text-center">
             <div class="row">
                 <div class="col align-self-center">
                     <i class="ls-navbar-icons bi bi-chevron-left"></i>
@@ -39,7 +39,7 @@ $this->title = $model->produtoNome;
                 </div>
             </div>
             <div class="row mt-5">
-                <div class="col">
+                <div class="col d-flex justify-content-center">
                     <div class="ls-preview">
                         <div class="ls-preview-row">
                             <span>Instrumento Exemplo 1</span>
@@ -57,7 +57,7 @@ $this->title = $model->produtoNome;
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="row mb-2">
                 <div class="col">
                     <i class="ls-navbar-icons bi bi-star"></i>
@@ -73,7 +73,7 @@ $this->title = $model->produtoNome;
                 <div class="col">
                     <h6>Preço</h6>
                     <h4><?= Html::encode($model->preco) ?></h4>
-                    <button class="btn ls-btn-primary"> Adicionar ao carrinho</button>
+                    <button class="btn btn-primary"> Adicionar ao carrinho</button>
                 </div>
             </div>
         </div>

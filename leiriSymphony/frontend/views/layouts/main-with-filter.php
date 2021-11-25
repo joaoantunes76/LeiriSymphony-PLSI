@@ -44,20 +44,20 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
 
     <header>
-        <nav class="ls-navbar ls-bg-dark">
-            <div class="row ls-flex">
+        <nav class="ls-navbar ls-bg-secondary">
+            <div class="row d-flex">
                 <div class="col-md-4 col-sm-2">
                     <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
-                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'logo']); ?></a>
+                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'ls-logo']); ?></a>
                 </div>
-                <div class="col-md-4 col-sm-5 ls-flex">
+                <div class="col-md-4 col-sm-5 d-flex align-self-center">
                     <div class="ls-navbar-search">
                         <form action="search" method="GET">
-                            <input class="form-control ls-nav-text-input mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                         </form>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-5 ls-flex ls-flex-end">
+                <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
                     <div class="ls-navbar-buttons">
                         <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
                         <a href="#favoritos"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>

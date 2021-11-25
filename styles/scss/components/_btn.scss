@@ -1,0 +1,25 @@
+/*
+    Components - Btn
+*/
+
+.btn {
+    &-primary {
+        color: $neutral-10;
+        background-color: $primary;
+        border-color: $primary;
+        &:hover {
+            background-color: $primary-light;
+            border-color: $primary-light;
+        }
+        &:not(:disabled):not(.disabled):active {
+            background-color: $primary-darker;
+            border-color: $primary-darker;
+        }
+        &:focus {
+            color: $neutral-10;
+            background-color: $primary;
+            border-color: $primary;
+            box-shadow: 0 0 0 0.2rem rgba(255, 166, 0, 0.705);
+        }
+    }
+}

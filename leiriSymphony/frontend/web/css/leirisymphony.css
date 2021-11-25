@@ -3,63 +3,149 @@
 */
 body {
     font-family: "Roboto", sans-serif;
-}
-
-/*
+  }
+  
+  /*
       Base - Colors
   */
-.ls-bg-primary {
+  .ls-bg-primary {
     background-color: #ff8b07;
-}
-
-.ls-bg-secondary {
+  }
+  
+  .ls-bg-secondary {
     background-color: #2a2a2a;
-}
-
-.ls-bg-brand-primary {
+  }
+  
+  .ls-bg-brand-primary {
     background-color: #227ece;
-}
-
-.ls-bg-brand-success {
+  }
+  
+  .ls-bg-brand-success {
     background-color: #4fd56e;
-}
-
-.ls-bg-brand-danger {
+  }
+  
+  .ls-bg-brand-danger {
     background-color: #e33232;
-}
-
-.ls-bg-brand-warning {
+  }
+  
+  .ls-bg-brand-warning {
     background-color: #ffe53b;
-}
-
-.ls-text-primary {
+  }
+  
+  .ls-text-primary {
     color: #ff8b07;
-}
-
-.ls-text-secondary {
+  }
+  
+  .ls-text-secondary {
     color: #2a2a2a;
-}
-
-.ls-text-brand-primary {
+  }
+  
+  .ls-text-brand-primary {
     color: #227ece;
-}
-
-.ls-text-brand-success {
+  }
+  
+  .ls-text-brand-success {
     color: #4fd56e;
-}
-
-.ls-text-brand-danger {
+  }
+  
+  .ls-text-brand-danger {
     color: #e33232;
-}
-
-.ls-text-brand-warning {
+  }
+  
+  .ls-text-brand-warning {
     color: #ffe53b;
-}
-
-/*
+  }
+  
+  /*
+      Components - Btn
+  */
+  .btn-primary {
+    color: #fff;
+    background-color: #ff8b07;
+    border-color: #ff8b07;
+  }
+  
+  .btn-primary:hover {
+    background-color: #ffa807;
+    border-color: #ffa807;
+  }
+  
+  .btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #ee8105;
+    border-color: #ee8105;
+  }
+  
+  .btn-primary:focus {
+    color: #fff;
+    background-color: #ff8b07;
+    border-color: #ff8b07;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 166, 0, 0.705);
+            box-shadow: 0 0 0 0.2rem rgba(255, 166, 0, 0.705);
+  }
+  
+  /*
+      Components - Logo
+  */
+  .ls-logo {
+    vertical-align: baseline;
+  }
+  
+  /*
+      Components - Navbar
+  */
+  @media screen and (max-width: 1000px) {
+    .navbar-brand {
+      display: none;
+    }
+  }
+  
+  .ls-navbar {
+    padding: 5px;
+    color: #ff8b07;
+  }
+  
+  .ls-navbar-search {
+    width: 100%;
+  }
+  
+  .ls-navbar-brand {
+    padding-bottom: 0;
+  }
+  
+  .ls-navbar-search {
+    background-color: #2a2a2a;
+    border-color: #ff8b07;
+    color: #ff8b07;
+  }
+  
+  .ls-navbar-search:focus {
+    background-color: #222;
+    border-color: #ff8b07;
+    color: #ff8b07;
+  }
+  
+  .ls-navbar-icons {
+    color: #ff8b07;
+    font-size: 34px;
+    margin-right: 25px;
+  }
+  
+  /*
+      Components - Preview
+  */
+  .ls-preview {
+    border-radius: 8px;
+    border: 2px solid #ff8b07;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 10px;
+  }
+  
+  /*
       Components - Sidemenu
   */
-.ls-sidemenu {
+  .ls-sidemenu {
     height: calc(100% - 61px);
     margin-top: 61px;
     width: 0;
@@ -72,66 +158,20 @@ body {
     -webkit-transition: 0.4s;
     transition: 0.4s;
     overflow: hidden;
-}
-
-.ls-sidemenu-content {
+  }
+  
+  .ls-sidemenu-content {
     width: 250px;
     background-color: #fff;
     height: 100%;
-}
-
-.ls-sidemenu-content a {
+  }
+  
+  .ls-sidemenu-content a {
     display: block;
     padding: 20px 30px;
     text-decoration: none;
     color: #2a2a2a;
     font-size: 25px;
-}
-
-/*
-      Components - Navbar
-  */
-@media screen and (max-width: 1000px) {
-    .navbar-brand {
-        display: none;
-    }
-}
-
-.ls-navbar {
-    padding: 5px;
-    color: #ff8b07;
-}
-
-.ls-navbar-search {
-    width: 100%;
-}
-
-.ls-navbar-brand {
-    padding-bottom: 0;
-}
-
-.ls-navbar-search {
-    background-color: #2a2a2a;
-    border-color: #ff8b07;
-    color: #ff8b07;
-}
-
-.ls-navbar-search:focus {
-    background-color: #222;
-    border-color: #ff8b07;
-    color: #ff8b07;
-}
-
-.ls-navbar-icons {
-    color: #ff8b07;
-    font-size: 34px;
-    margin-right: 25px;
-}
-
-/*
-      Components - Logo
-  */
-.ls-logo {
-    vertical-align: baseline;
-}
-/*# sourceMappingURL=leirisymphony.css.map */
+  }
+  /*# sourceMappingURL=leirisymphony.css.map */
+  .-
