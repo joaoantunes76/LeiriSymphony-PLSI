@@ -131,6 +131,17 @@ body {
 }
 
 /*
+    Components - Perfil Form
+*/
+.ls-form {
+  border: 2px solid #ff8b07;
+  border-radius: 8px;
+  padding: 20px;
+  padding-left: 180px;
+  padding-right: 180px;
+}
+
+/*
     Components - Preview
 */
 .ls-preview {

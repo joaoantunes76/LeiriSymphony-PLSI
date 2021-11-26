@@ -45,7 +45,7 @@ AppAsset::register($this);
 
     <header>
         <nav class="ls-navbar ls-bg-secondary">
-            <div class="row d-flex">
+            <div class="row  m-0 d-flex">
                 <div class="col-md-4 col-sm-2">
                     <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
                     <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'ls-logo']); ?></a>
