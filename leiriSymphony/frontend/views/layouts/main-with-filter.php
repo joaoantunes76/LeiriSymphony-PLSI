@@ -60,7 +60,7 @@ AppAsset::register($this);
                 <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
                     <div class="ls-navbar-buttons">
                         <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
-                        <a href="#favoritos"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
+                        <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
                         <a href="#carrinho"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
                     </div>
                 </div>
@@ -83,6 +83,56 @@ AppAsset::register($this);
 
         </div>
     </div>
+
+    <div id="carrinhocompras" class="ls-sidemenu-right" onclick="closeCarrinhoCompras()">
+        <div class="ls-sidemenu-right-content d-flex flex-column text-center justify-content-between" onclick="sideMenuClick()">
+            <div>
+                <br>
+                <h5>Carrinho de compras</h5>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="produto">
+                            <div class="quantidade pr-5 pl-5">
+                                <label for="quantidade">Quantidade</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
+                                <p class="mt-2">Nome do produto</p>
+                                <p>0.00€</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="produto">
+                            <div class="quantidade pr-5 pl-5">
+                                <label for="quantidade">Quantidade</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
+                                <p class="mt-2">Nome do produto</p>
+                                <p>0.00€</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <button class="btn btn-primary">Comprar</button>
+                </div>
+            </div>
+
+        </div>
+        <div style="width: 100%; height:100%">
+
+        </div>
+    </div>
+
     <main role="main" class="d-inline-flex">
 
 

@@ -91,7 +91,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays encomedas page.
      *
      * @return mixed
      */
@@ -101,7 +101,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays perfil page.
      *
      * @return mixed
      */
@@ -174,6 +174,18 @@ class SiteController extends Controller
         ]);
     }
 
+
+
+    /**
+     * Displays favoritos page.
+     *
+     * @return mixed
+     */
+    public function actionFavoritos()
+    {
+        return $this->render('favoritos');
+    }
+
     /**
      * Displays about page.
      *
@@ -196,6 +208,9 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
+
+
+        $this->layout = 'blank';
 
         return $this->render('signup', [
             'model' => $model,
