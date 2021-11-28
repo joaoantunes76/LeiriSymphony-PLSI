@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\bootstrap4\Html;
 /* @var $this yii\web\View */
 
@@ -8,9 +9,9 @@ $this->title = 'My Yii Application';
 <div class="site-index">
     <div class="row">
         <div class="col-2">
-            <a href="#" class="btn btn-link">Perfil</a>
+            <a href="<?= Url::toRoute("site/perfil") ?>" class="btn btn-link">Perfil</a>
             <br>
-            <a href="#" class="btn btn-link">Encomendas</a>
+            <a href="<?= Url::toRoute("site/encomendas") ?>" class="btn btn-link">Encomendas</a>
             <?=
             Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(

@@ -97,7 +97,7 @@ class SiteController extends Controller
      */
     public function actionEncomendas()
     {
-        return $this->render('perfil');
+        return $this->render('encomendas');
     }
 
     /**
