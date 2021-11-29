@@ -79,6 +79,17 @@ class SiteController extends Controller
     }
 
 
+    /**
+     * Displays comprar page.
+     *
+     * @return mixed
+     */
+    public function actionComprar()
+    {
+        return $this->render('comprar');
+    }
+
+
 
     /**
      * Displays homepage.

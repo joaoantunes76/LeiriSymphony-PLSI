@@ -299,6 +299,27 @@ body {
 }
 
 /*
+    Components - Wizzard
+*/
+.ls-wizzard-step {
+  border-radius: 100%;
+  background-color: #2a2a2a;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  padding-top: 3px;
+  text-align: center;
+}
+
+.ls-wizzard-step.done {
+  background-color: #ff8b07;
+}
+
+.ls-wizzard-step.active {
+  background-color: #ffa807;
+}
+
+/*
     Layout - Site-login
 */
 .login-register {

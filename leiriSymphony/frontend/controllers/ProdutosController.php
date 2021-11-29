@@ -40,9 +40,6 @@ class ProdutosController extends Controller
         $searchModel = new ProdutosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-
-        $this->layout = 'main-with-filter';
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

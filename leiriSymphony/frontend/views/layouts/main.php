@@ -28,6 +28,7 @@ AppAsset::register($this);
         function openSlideMenu() {
             document.getElementById('menu').style.width = '100%';
             document.body.style.overflow = "hidden";
+            closeCarrinhoCompras();
         }
 
         function closeSlideMenu() {
@@ -41,6 +42,7 @@ AppAsset::register($this);
         function openCarrinhoCompras() {
             document.getElementById('carrinhocompras').style.width = '100%';
             document.body.style.overflow = "hidden";
+            closeSlideMenu();
         }
 
         function closeCarrinhoCompras() {
