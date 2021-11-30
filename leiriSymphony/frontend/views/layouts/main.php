@@ -48,6 +48,11 @@ AppAsset::register($this);
         function closeCarrinhoCompras() {
             document.getElementById('carrinhocompras').style.width = '0';
         }
+
+        function goToComprar() {
+            var url = "<?= Url::toRoute("site/comprar") ?>";
+            window.location = url;
+        }
     </script>
 </head>
 
@@ -134,7 +139,7 @@ AppAsset::register($this);
 
             <div class="row mb-5">
                 <div class="col">
-                    <button class="btn btn-primary">Comprar</button>
+                    <btn onclick="goToComprar()" class="btn btn-primary">Comprar</btn>
                 </div>
             </div>
 

@@ -90,6 +90,17 @@ class SiteController extends Controller
     }
 
 
+    /**
+     * Displays Sucesso page.
+     *
+     * @return mixed
+     */
+    public function actionSucesso()
+    {
+        return $this->render('sucesso');
+    }
+
+
 
     /**
      * Displays homepage.
