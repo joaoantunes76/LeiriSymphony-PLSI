@@ -1,0 +1,12 @@
+/*
+    Components - Preview
+*/
+
+.ls {
+    &-preview {
+        border-radius: 8px;
+        border: 2px solid $primary;
+        width: fit-content;
+        padding: 10px;
+    }
+}

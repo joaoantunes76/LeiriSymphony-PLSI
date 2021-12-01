@@ -28,6 +28,7 @@ AppAsset::register($this);
         function openSlideMenu() {
             document.getElementById('menu').style.width = '100%';
             document.body.style.overflow = "hidden";
+            closeCarrinhoCompras();
         }
 
         function closeSlideMenu() {
@@ -37,6 +38,21 @@ AppAsset::register($this);
         function sideMenuClick() {
             event.stopPropagation();
         }
+
+        function openCarrinhoCompras() {
+            document.getElementById('carrinhocompras').style.width = '100%';
+            document.body.style.overflow = "hidden";
+            closeSlideMenu();
+        }
+
+        function closeCarrinhoCompras() {
+            document.getElementById('carrinhocompras').style.width = '0';
+        }
+
+        function goToComprar() {
+            var url = "<?= Url::toRoute("site/comprar") ?>";
+            window.location = url;
+        }
     </script>
 </head>
 
@@ -44,24 +60,24 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
 
     <header>
-        <nav class="ls-navbar ls-bg-dark">
-            <div class="row ls-flex">
+        <nav class="ls-navbar ls-bg-secondary">
+            <div class="row m-0 d-flex">
                 <div class="col-md-4 col-sm-2">
                     <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
-                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'logo']); ?></a>
+                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'ls-logo']); ?></a>
                 </div>
-                <div class="col-md-4 col-sm-5 ls-flex">
+                <div class="col-md-4 col-sm-5 d-flex align-self-center">
                     <div class="ls-navbar-search">
                         <form action="search" method="GET">
-                            <input class="form-control ls-nav-text-input mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                         </form>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-5 ls-flex ls-flex-end">
+                <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
                     <div class="ls-navbar-buttons">
                         <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
-                        <a href="#favoritos"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
-                        <a href="#carrinho"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
+                        <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
+                        <a href="#carrinho" onclick="openCarrinhoCompras()"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
                     </div>
                 </div>
             </div>
@@ -78,6 +94,55 @@ AppAsset::register($this);
             <a href="#tradicionais">Tradicionais</a>
             <a href="#acessorios">Acessórios</a>
             <a href="#musica">Música</a>
+        </div>
+        <div style="width: 100%; height:100%">
+
+        </div>
+    </div>
+
+    <div id="carrinhocompras" class="ls-sidemenu-right" onclick="closeCarrinhoCompras()">
+        <div class="ls-sidemenu-right-content d-flex flex-column text-center justify-content-between" onclick="sideMenuClick()">
+            <div>
+                <br>
+                <h5>Carrinho de compras</h5>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="produto">
+                            <div class="quantidade pr-5 pl-5">
+                                <label for="quantidade">Quantidade</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
+                                <p class="mt-2">Nome do produto</p>
+                                <p>0.00€</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="produto">
+                            <div class="quantidade pr-5 pl-5">
+                                <label for="quantidade">Quantidade</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
+                                <p class="mt-2">Nome do produto</p>
+                                <p>0.00€</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <btn onclick="goToComprar()" class="btn btn-primary">Comprar</btn>
+                </div>
+            </div>
+
         </div>
         <div style="width: 100%; height:100%">
 

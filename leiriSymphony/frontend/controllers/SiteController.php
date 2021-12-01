@@ -78,8 +78,52 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+
+    /**
+     * Displays comprar page.
+     *
+     * @return mixed
+     */
+    public function actionComprar()
+    {
+        return $this->render('comprar');
+    }
+
+
+    /**
+     * Displays Sucesso page.
+     *
+     * @return mixed
+     */
+    public function actionSucesso()
+    {
+        return $this->render('sucesso');
+    }
+
+
+
     /**
      * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionEventos()
+    {
+        return $this->render('evento');
+    }
+
+    /**
+     * Displays encomedas page.
+     *
+     * @return mixed
+     */
+    public function actionEncomendas()
+    {
+        return $this->render('encomendas');
+    }
+
+    /**
+     * Displays perfil page.
      *
      * @return mixed
      */
@@ -152,6 +196,18 @@ class SiteController extends Controller
         ]);
     }
 
+
+
+    /**
+     * Displays favoritos page.
+     *
+     * @return mixed
+     */
+    public function actionFavoritos()
+    {
+        return $this->render('favoritos');
+    }
+
     /**
      * Displays about page.
      *
@@ -174,6 +230,9 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
+
+
+        $this->layout = 'blank';
 
         return $this->render('signup', [
             'model' => $model,
