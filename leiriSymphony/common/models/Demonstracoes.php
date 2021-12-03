@@ -5,23 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "imagens".
+ * This is the model class for table "demonstracoes".
  *
  * @property int $id
- * @property resource $imagem
- * @property int|null $idproduto
+ * @property int $idproduto
+ * @property resource|null $demo
  *
- * @property Albuns[] $albuns
  * @property Produtos $idproduto0
  */
-class Imagens extends \yii\db\ActiveRecord
+class Demonstracoes extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'imagens';
+        return 'demonstracoes';
     }
 
     /**
@@ -30,9 +29,9 @@ class Imagens extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['imagem'], 'required'],
-            [['imagem'], 'string'],
+            [['idproduto'], 'required'],
             [['idproduto'], 'integer'],
+            [['demo'], 'string'],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
         ];
     }
@@ -44,19 +43,9 @@ class Imagens extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'imagem' => 'Imagem',
             'idproduto' => 'Idproduto',
+            'demo' => 'Demo',
         ];
-    }
-
-    /**
-     * Gets query for [[Albuns]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAlbuns()
-    {
-        return $this->hasMany(Albuns::className(), ['idimagem' => 'id']);
     }
 
     /**
