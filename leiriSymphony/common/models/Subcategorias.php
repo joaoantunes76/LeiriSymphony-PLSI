@@ -8,10 +8,10 @@ use Yii;
  * This is the model class for table "subcategorias".
  *
  * @property int $id
- * @property int $idsubcategoria
+ * @property int $idcategoria
  * @property string $nome
  *
- * @property Categorias $idsubcategoria0
+ * @property Categorias $idcategoria0
  * @property Produtos[] $produtos
  */
 class Subcategorias extends \yii\db\ActiveRecord
@@ -30,10 +30,10 @@ class Subcategorias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idsubcategoria', 'nome'], 'required'],
-            [['idsubcategoria'], 'integer'],
+            [['idcategoria', 'nome'], 'required'],
+            [['idcategoria'], 'integer'],
             [['nome'], 'string', 'max' => 45],
-            [['idsubcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['idsubcategoria' => 'id']],
+            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['idcategoria' => 'id']],
         ];
     }
 
@@ -44,19 +44,19 @@ class Subcategorias extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idsubcategoria' => 'Idsubcategoria',
+            'idcategoria' => 'Idcategoria',
             'nome' => 'Nome',
         ];
     }
 
     /**
-     * Gets query for [[Idsubcategoria0]].
+     * Gets query for [[Idcategoria0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdsubcategoria0()
+    public function getIdcategoria0()
     {
-        return $this->hasOne(Categorias::className(), ['id' => 'idsubcategoria']);
+        return $this->hasOne(Categorias::className(), ['id' => 'idcategoria']);
     }
 
     /**

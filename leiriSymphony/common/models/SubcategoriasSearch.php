@@ -17,7 +17,7 @@ class SubcategoriasSearch extends Subcategorias
     public function rules()
     {
         return [
-            [['id', 'idsubcategoria'], 'integer'],
+            [['id', 'idcategoria'], 'integer'],
             [['nome'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class SubcategoriasSearch extends Subcategorias
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idsubcategoria' => $this->idsubcategoria,
+            'idcategoria' => $this->idcategoria,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);
