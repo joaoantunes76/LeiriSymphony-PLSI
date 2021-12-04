@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $idproduto
- * @property string|null $demo
+ * @property string|null $nome
  *
  * @property Produtos $idproduto0
  */
@@ -31,7 +31,7 @@ class Demonstracoes extends \yii\db\ActiveRecord
         return [
             [['idproduto'], 'required'],
             [['idproduto'], 'integer'],
-            [['demo'], 'string', 'max' => 255],
+            [['nome'], 'string', 'max' => 255],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
         ];
     }
@@ -44,7 +44,7 @@ class Demonstracoes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'idproduto' => 'Idproduto',
-            'demo' => 'Demo',
+            'nome' => 'Nome',
         ];
     }
 
