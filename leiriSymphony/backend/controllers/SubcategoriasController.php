@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Categorias;
 use common\models\Subcategorias;
 use common\models\SubcategoriasSearch;
 use yii\web\Controller;
@@ -67,6 +68,7 @@ class SubcategoriasController extends Controller
     public function actionCreate()
     {
         $model = new Subcategorias();
+        $categorias = Categorias::find()->all();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -78,6 +80,7 @@ class SubcategoriasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categorias' => $categorias,
         ]);
     }
 

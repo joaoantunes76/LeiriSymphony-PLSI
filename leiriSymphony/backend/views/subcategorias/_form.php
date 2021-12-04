@@ -12,7 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idcategoria')->textInput() ?>
+    <label for="Subcategorias[idcategoria]">Categoria</label>
+    <select name="Subcategorias[idcategoria]" class="form-control">
+        <?php
+        foreach ($categorias as $categoria) {
+        ?>
+            <option value="<?= $categoria->id ?>"><?= $categoria->nome ?></option>
+        <?php
+        }
+        ?>
+    </select>
+    <br>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 

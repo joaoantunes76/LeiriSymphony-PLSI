@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
-use common\models\Produtos;
-use common\models\ProdutosSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use common\models\Marcas;
+use common\models\Produtos;
 use yii\filters\VerbFilter;
+use common\models\Subcategorias;
+use common\models\ProdutosSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
@@ -67,6 +69,8 @@ class ProdutosController extends Controller
     public function actionCreate()
     {
         $model = new Produtos();
+        $marcas = Marcas::find()->all();
+        $subcategorias = Subcategorias::find()->all();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -78,6 +82,8 @@ class ProdutosController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'marcas' => $marcas,
+            'subcategorias' => $subcategorias,
         ]);
     }
 
@@ -91,6 +97,8 @@ class ProdutosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $marcas = Marcas::find()->all();
+        $subcategorias = Subcategorias::find()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,6 +106,8 @@ class ProdutosController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'marcas' => $marcas,
+            'subcategorias' => $subcategorias,
         ]);
     }
 
