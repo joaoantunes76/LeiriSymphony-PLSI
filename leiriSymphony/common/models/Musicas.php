@@ -31,9 +31,9 @@ class Musicas extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'idalbuns'], 'required'],
-            [['ficheiro'], 'string'],
             [['idalbuns'], 'integer'],
             [['nome'], 'string', 'max' => 45],
+            [['ficheiro'], 'string', 'max' => 255],
             [['idalbuns'], 'exist', 'skipOnError' => true, 'targetClass' => Albuns::className(), 'targetAttribute' => ['idalbuns' => 'id']],
         ];
     }

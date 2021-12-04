@@ -10,17 +10,17 @@ use Yii;
  * @property int $id
  * @property int $iduser
  * @property string $nome
- * @property string|null $NIF
+ * @property string|null $nif
  * @property string|null $endereco
  * @property string|null $cidade
- * @property string|null $codigoPostal
+ * @property string|null $codigopostal
  * @property string|null $telefone
  *
  * @property Avaliacao[] $avaliacaos
  * @property Encomendas[] $encomendas
  * @property Eventosperfis[] $eventosperfis
  * @property Eventos[] $ideventos
- * @property Informacoes[] $idproblemas
+ * @property Tipoinformacoes[] $idproblemas
  * @property Produtos[] $idprodutos
  * @property Produtos[] $idprodutos0
  * @property User $iduser0
@@ -45,8 +45,8 @@ class Perfis extends \yii\db\ActiveRecord
         return [
             [['iduser', 'nome'], 'required'],
             [['iduser'], 'integer'],
-            [['nome', 'endereco', 'cidade', 'codigoPostal'], 'string', 'max' => 45],
-            [['NIF', 'telefone'], 'string', 'max' => 9],
+            [['nome', 'endereco', 'cidade', 'codigopostal'], 'string', 'max' => 45],
+            [['nif', 'telefone'], 'string', 'max' => 9],
             [['telefone'], 'unique'],
             [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['iduser' => 'id']],
         ];
@@ -61,10 +61,10 @@ class Perfis extends \yii\db\ActiveRecord
             'id' => 'ID',
             'iduser' => 'Iduser',
             'nome' => 'Nome',
-            'NIF' => 'Nif',
+            'nif' => 'Nif',
             'endereco' => 'Endereco',
             'cidade' => 'Cidade',
-            'codigoPostal' => 'Codigo Postal',
+            'codigopostal' => 'Codigopostal',
             'telefone' => 'Telefone',
         ];
     }
@@ -116,7 +116,7 @@ class Perfis extends \yii\db\ActiveRecord
      */
     public function getIdproblemas()
     {
-        return $this->hasMany(Informacoes::className(), ['id' => 'idproblema'])->viaTable('pedidosdecontacto', ['idperfil' => 'id']);
+        return $this->hasMany(Tipoinformacoes::className(), ['id' => 'idproblema'])->viaTable('pedidosdecontacto', ['idperfil' => 'id']);
     }
 
     /**

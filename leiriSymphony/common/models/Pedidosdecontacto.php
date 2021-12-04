@@ -13,7 +13,7 @@ use Yii;
  * @property string $email
  *
  * @property Perfis $idperfil0
- * @property Informacoes $idproblema0
+ * @property Tipoinformacoes $idproblema0
  */
 class Pedidosdecontacto extends \yii\db\ActiveRecord
 {
@@ -37,7 +37,7 @@ class Pedidosdecontacto extends \yii\db\ActiveRecord
             [['email'], 'string', 'max' => 64],
             [['idproblema', 'idperfil'], 'unique', 'targetAttribute' => ['idproblema', 'idperfil']],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
-            [['idproblema'], 'exist', 'skipOnError' => true, 'targetClass' => Informacoes::className(), 'targetAttribute' => ['idproblema' => 'id']],
+            [['idproblema'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoinformacoes::className(), 'targetAttribute' => ['idproblema' => 'id']],
         ];
     }
 
@@ -71,6 +71,6 @@ class Pedidosdecontacto extends \yii\db\ActiveRecord
      */
     public function getIdproblema0()
     {
-        return $this->hasOne(Informacoes::className(), ['id' => 'idproblema']);
+        return $this->hasOne(Tipoinformacoes::className(), ['id' => 'idproblema']);
     }
 }

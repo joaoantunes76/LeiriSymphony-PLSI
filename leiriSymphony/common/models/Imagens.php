@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "imagens".
  *
  * @property int $id
- * @property resource $imagem
+ * @property string $imagem
  * @property int|null $idproduto
  *
  * @property Albuns[] $albuns
@@ -31,8 +31,8 @@ class Imagens extends \yii\db\ActiveRecord
     {
         return [
             [['imagem'], 'required'],
-            [['imagem'], 'string'],
             [['idproduto'], 'integer'],
+            [['imagem'], 'string', 'max' => 255],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
         ];
     }

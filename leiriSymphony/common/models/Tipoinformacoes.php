@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "informacoes".
+ * This is the model class for table "tipoinformacoes".
  *
  * @property int $id
  * @property string $nome
@@ -14,14 +14,14 @@ use Yii;
  * @property Perfis[] $idperfils
  * @property Pedidosdecontacto[] $pedidosdecontactos
  */
-class Informacoes extends \yii\db\ActiveRecord
+class Tipoinformacoes extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'informacoes';
+        return 'tipoinformacoes';
     }
 
     /**
