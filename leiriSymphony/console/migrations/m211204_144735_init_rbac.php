@@ -2,7 +2,10 @@
 
 use yii\db\Migration;
 
-class m130524_201442_init_rbac extends Migration
+/**
+ * Class m211204_144735_init_rbac
+ */
+class m211204_144735_init_rbac extends Migration
 {
     public function up()
     {
@@ -260,7 +263,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->add($eliminarImagem);
 
 
-            //Roles
+        //Roles
         //admin
         $admin = $auth->createRole('Administrador');
         $auth->add($admin);
@@ -321,7 +324,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($admin, $verImagem);
         $auth->addChild($admin, $editarImagem);
         $auth->addChild($admin, $eliminarImagem);
-        
+
 
         //gestor de loja
         $gestor = $auth->createRole('Gestor de loja');
@@ -380,7 +383,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($apoio, $verImagem);
         $auth->addChild($apoio, $verTipoInformacao);
         $auth->addChild($apoio, $editarTipoInformacao);
-        
+
 
         //cliente
         $cliente = $auth->createRole('Cliente');
