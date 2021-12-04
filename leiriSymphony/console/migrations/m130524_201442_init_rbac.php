@@ -242,6 +242,24 @@ class m130524_201442_init_rbac extends Migration
         $auth->add($eliminarTipoInformacao);
 
 
+        //imagens
+        $criarImagem = $auth->createPermission('criarImagem');
+        $criarImagem->description = 'Criar uma Imagem';
+        $auth->add($criarImagem);
+
+        $verImagem = $auth->createPermission('verImagem');
+        $verImagem->description = 'Ver uma Imagem';
+        $auth->add($verImagem);
+
+        $editarImagem = $auth->createPermission('editarImagem');
+        $editarImagem->description = 'Editar uma Imagem';
+        $auth->add($editarImagem);
+
+        $eliminarImagem = $auth->createPermission('eliminarImagem');
+        $eliminarImagem->description = 'Eliminar uma Imagem';
+        $auth->add($eliminarImagem);
+
+
             //Roles
         //admin
         $admin = $auth->createRole('Administrador');
@@ -299,6 +317,10 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($admin, $verTipoInformacao);
         $auth->addChild($admin, $editarTipoInformacao);
         $auth->addChild($admin, $eliminarTipoInformacao);
+        $auth->addChild($admin, $criarImagem);
+        $auth->addChild($admin, $verImagem);
+        $auth->addChild($admin, $editarImagem);
+        $auth->addChild($admin, $eliminarImagem);
         
 
         //gestor de loja
@@ -335,6 +357,10 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($gestor, $eliminarMusica);
         $auth->addChild($gestor, $editarEncomenda);
         $auth->addChild($gestor, $verEncomenda);
+        $auth->addChild($gestor, $criarImagem);
+        $auth->addChild($gestor, $verImagem);
+        $auth->addChild($gestor, $editarImagem);
+        $auth->addChild($gestor, $eliminarImagem);
 
 
         //apoio ao cliente
@@ -351,6 +377,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($apoio, $verEvento);
         $auth->addChild($apoio, $editarEncomenda);
         $auth->addChild($apoio, $verEncomenda);
+        $auth->addChild($apoio, $verImagem);
         $auth->addChild($apoio, $verTipoInformacao);
         $auth->addChild($apoio, $editarTipoInformacao);
         
@@ -372,6 +399,7 @@ class m130524_201442_init_rbac extends Migration
         $auth->addChild($cliente, $verDemonstracao);
         $auth->addChild($cliente, $editarEncomenda);
         $auth->addChild($cliente, $verEncomenda);
+        $auth->addChild($cliente, $verImagem);
         $auth->addChild($cliente, $criarTipoInformacao);
 
 
