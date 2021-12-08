@@ -56,7 +56,7 @@
                         'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Eventos', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],
