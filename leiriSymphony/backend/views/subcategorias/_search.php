@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SubcategoriasSearch */
+/* @var $model common\models\SubcategoriasSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,9 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'subcategoriaId') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'categoriaId') ?>
+    <?= $form->field($model, 'idcategoria') ?>
 
     <?= $form->field($model, 'nome') ?>
 

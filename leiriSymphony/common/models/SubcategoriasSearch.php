@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Subcategorias;
 
 /**
- * SubcategoriasSearch represents the model behind the search form of `app\models\Subcategorias`.
+ * SubcategoriasSearch represents the model behind the search form of `common\models\Subcategorias`.
  */
 class SubcategoriasSearch extends Subcategorias
 {
@@ -17,7 +17,7 @@ class SubcategoriasSearch extends Subcategorias
     public function rules()
     {
         return [
-            [['subcategoriaId', 'categoriaId'], 'integer'],
+            [['id', 'idcategoria'], 'integer'],
             [['nome'], 'safe'],
         ];
     }
@@ -58,8 +58,8 @@ class SubcategoriasSearch extends Subcategorias
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'subcategoriaId' => $this->subcategoriaId,
-            'categoriaId' => $this->categoriaId,
+            'id' => $this->id,
+            'idcategoria' => $this->idcategoria,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

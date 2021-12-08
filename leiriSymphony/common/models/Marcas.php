@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "marcas".
  *
- * @property int $marcaId
- * @property string $marcaNome
+ * @property int $id
+ * @property string $nome
  *
  * @property Produtos[] $produtos
  */
@@ -28,8 +28,8 @@ class Marcas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['marcaNome'], 'required'],
-            [['marcaNome'], 'string', 'max' => 45],
+            [['nome'], 'required'],
+            [['nome'], 'string', 'max' => 45],
         ];
     }
 
@@ -39,8 +39,8 @@ class Marcas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'marcaId' => 'Marca ID',
-            'marcaNome' => 'Marca Nome',
+            'id' => 'ID',
+            'nome' => 'Nome',
         ];
     }
 
@@ -51,6 +51,6 @@ class Marcas extends \yii\db\ActiveRecord
      */
     public function getProdutos()
     {
-        return $this->hasMany(Produtos::className(), ['marcaId' => 'marcaId']);
+        return $this->hasMany(Produtos::className(), ['idmarca' => 'id']);
     }
 }

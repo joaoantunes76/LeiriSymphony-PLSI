@@ -7,11 +7,12 @@ use Yii;
 /**
  * This is the model class for table "imagens".
  *
- * @property int $imagemId
- * @property resource $imagem
- * @property int $produtoId
+ * @property int $id
+ * @property string $nome
+ * @property int|null $idproduto
  *
- * @property Produtos $produto
+ * @property Albuns[] $albuns
+ * @property Produtos $idproduto0
  */
 class Imagens extends \yii\db\ActiveRecord
 {
@@ -29,10 +30,10 @@ class Imagens extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['imagem', 'produtoId'], 'required'],
-            [['imagem'], 'string'],
-            [['produtoId'], 'integer'],
-            [['produtoId'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['produtoId' => 'produtoId']],
+            [['nome'], 'required'],
+            [['idproduto'], 'integer'],
+            [['nome'], 'string', 'max' => 255],
+            [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
         ];
     }
 
@@ -42,19 +43,29 @@ class Imagens extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'imagemId' => 'Imagem ID',
-            'imagem' => 'Imagem',
-            'produtoId' => 'Produto ID',
+            'id' => 'ID',
+            'nome' => 'Nome',
+            'idproduto' => 'Idproduto',
         ];
     }
 
     /**
-     * Gets query for [[Produto]].
+     * Gets query for [[Albuns]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProduto()
+    public function getAlbuns()
     {
-        return $this->hasOne(Produtos::className(), ['produtoId' => 'produtoId']);
+        return $this->hasMany(Albuns::className(), ['idimagem' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idproduto0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdproduto0()
+    {
+        return $this->hasOne(Produtos::className(), ['id' => 'idproduto']);
     }
 }

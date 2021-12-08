@@ -1,30 +1,31 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
  * This is the model class for table "perfis".
  *
- * @property int $perfilId
- * @property int $user_id
+ * @property int $id
+ * @property int $iduser
  * @property string $nome
- * @property string|null $NIF
+ * @property string|null $nif
  * @property string|null $endereco
  * @property string|null $cidade
- * @property string|null $codigoPostal
+ * @property string|null $codigopostal
  * @property string|null $telefone
  *
+ * @property Avaliacao[] $avaliacaos
  * @property Encomendas[] $encomendas
- * @property Eventos[] $eventosEventos
- * @property EventosPerfis[] $eventosPerfis
- * @property Notificacoes[] $notificacoes
+ * @property Eventosperfis[] $eventosperfis
+ * @property Eventos[] $ideventos
+ * @property Tipoinformacoes[] $idproblemas
+ * @property Produtos[] $idprodutos
+ * @property Produtos[] $idprodutos0
+ * @property User $iduser0
  * @property Pedidosdecontacto[] $pedidosdecontactos
- * @property Problemas[] $problemasProblemas
- * @property Produtos[] $produtos
- * @property ProdutosFavoritos[] $produtosFavoritos
- * @property User $user
+ * @property Produtosfavoritos[] $produtosfavoritos
  */
 class Perfis extends \yii\db\ActiveRecord
 {
@@ -42,12 +43,12 @@ class Perfis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'nome'], 'required'],
-            [['user_id'], 'integer'],
-            [['nome', 'endereco', 'cidade', 'codigoPostal'], 'string', 'max' => 45],
-            [['NIF', 'telefone'], 'string', 'max' => 9],
+            [['iduser', 'nome'], 'required'],
+            [['iduser'], 'integer'],
+            [['nome', 'endereco', 'cidade', 'codigopostal'], 'string', 'max' => 45],
+            [['nif', 'telefone'], 'string', 'max' => 9],
             [['telefone'], 'unique'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['iduser' => 'id']],
         ];
     }
 
@@ -57,15 +58,25 @@ class Perfis extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'perfilId' => 'Perfil ID',
-            'user_id' => 'User ID',
+            'id' => 'ID',
+            'iduser' => 'Iduser',
             'nome' => 'Nome',
-            'NIF' => 'Nif',
+            'nif' => 'Nif',
             'endereco' => 'Endereco',
             'cidade' => 'Cidade',
-            'codigoPostal' => 'Codigo Postal',
+            'codigopostal' => 'Codigopostal',
             'telefone' => 'Telefone',
         ];
+    }
+
+    /**
+     * Gets query for [[Avaliacaos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAvaliacaos()
+    {
+        return $this->hasMany(Avaliacao::className(), ['idperfil' => 'id']);
     }
 
     /**
@@ -75,37 +86,67 @@ class Perfis extends \yii\db\ActiveRecord
      */
     public function getEncomendas()
     {
-        return $this->hasMany(Encomendas::className(), ['perfilId' => 'perfilId']);
+        return $this->hasMany(Encomendas::className(), ['idperfil' => 'id']);
     }
 
     /**
-     * Gets query for [[EventosEventos]].
+     * Gets query for [[Eventosperfis]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEventosEventos()
+    public function getEventosperfis()
     {
-        return $this->hasMany(Eventos::className(), ['eventoId' => 'eventos_eventoId'])->viaTable('eventos_perfis', ['perfis_perfilId' => 'perfilId']);
+        return $this->hasMany(Eventosperfis::className(), ['idperfil' => 'id']);
     }
 
     /**
-     * Gets query for [[EventosPerfis]].
+     * Gets query for [[Ideventos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEventosPerfis()
+    public function getIdeventos()
     {
-        return $this->hasMany(EventosPerfis::className(), ['perfis_perfilId' => 'perfilId']);
+        return $this->hasMany(Eventos::className(), ['id' => 'idevento'])->viaTable('eventosperfis', ['idperfil' => 'id']);
     }
 
     /**
-     * Gets query for [[Notificacoes]].
+     * Gets query for [[Idproblemas]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getNotificacoes()
+    public function getIdproblemas()
     {
-        return $this->hasMany(Notificacoes::className(), ['perfilId' => 'perfilId']);
+        return $this->hasMany(Tipoinformacoes::className(), ['id' => 'idproblema'])->viaTable('pedidosdecontacto', ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idprodutos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdprodutos()
+    {
+        return $this->hasMany(Produtos::className(), ['id' => 'idproduto'])->viaTable('avaliacao', ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idprodutos0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdprodutos0()
+    {
+        return $this->hasMany(Produtos::className(), ['id' => 'idproduto'])->viaTable('produtosfavoritos', ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Iduser0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIduser0()
+    {
+        return $this->hasOne(User::className(), ['id' => 'iduser']);
     }
 
     /**
@@ -115,46 +156,16 @@ class Perfis extends \yii\db\ActiveRecord
      */
     public function getPedidosdecontactos()
     {
-        return $this->hasMany(Pedidosdecontacto::className(), ['perfis_perfilId' => 'perfilId']);
+        return $this->hasMany(Pedidosdecontacto::className(), ['idperfil' => 'id']);
     }
 
     /**
-     * Gets query for [[ProblemasProblemas]].
+     * Gets query for [[Produtosfavoritos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProblemasProblemas()
+    public function getProdutosfavoritos()
     {
-        return $this->hasMany(Problemas::className(), ['problemaId' => 'problemas_problemaId'])->viaTable('pedidosdecontacto', ['perfis_perfilId' => 'perfilId']);
-    }
-
-    /**
-     * Gets query for [[Produtos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProdutos()
-    {
-        return $this->hasMany(Produtos::className(), ['produtoId' => 'produtoId'])->viaTable('produtos_favoritos', ['perfilId' => 'perfilId']);
-    }
-
-    /**
-     * Gets query for [[ProdutosFavoritos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProdutosFavoritos()
-    {
-        return $this->hasMany(ProdutosFavoritos::className(), ['perfilId' => 'perfilId']);
-    }
-
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasMany(Produtosfavoritos::className(), ['idperfil' => 'id']);
     }
 }

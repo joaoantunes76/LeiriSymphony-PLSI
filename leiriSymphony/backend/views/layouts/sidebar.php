@@ -45,7 +45,7 @@
                             ['label' => 'Categorias', 'url' => ['categorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'SubCategorias', 'url' => ['subcategorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'Produtos', 'url' => ['produtos/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Produtos Imagens', 'url' => ['imagens/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Imagens', 'url' => ['imagens/index'], 'iconStyle' => 'far'],
                             ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
@@ -56,7 +56,7 @@
                         'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Eventos', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],

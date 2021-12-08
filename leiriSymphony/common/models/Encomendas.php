@@ -7,14 +7,16 @@ use Yii;
 /**
  * This is the model class for table "encomendas".
  *
- * @property int $encomendaId
- * @property int $perfilId
+ * @property int $id
+ * @property int $idperfil
  * @property string $estado
- * @property int $estaPago
+ * @property int $pago
+ * @property float $preco
+ * @property string $tipoexpedicao
  *
- * @property EncomendasProdutos[] $encomendasProdutos
- * @property Perfis $perfil
- * @property Produtos[] $produtos
+ * @property Encomendasprodutos[] $encomendasprodutos
+ * @property Perfis $idperfil0
+ * @property Produtos[] $idprodutos
  */
 class Encomendas extends \yii\db\ActiveRecord
 {
@@ -32,10 +34,11 @@ class Encomendas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['perfilId', 'estado', 'estaPago'], 'required'],
-            [['perfilId', 'estaPago'], 'integer'],
-            [['estado'], 'string', 'max' => 45],
-            [['perfilId'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['perfilId' => 'perfilId']],
+            [['idperfil', 'estado', 'pago', 'preco', 'tipoexpedicao'], 'required'],
+            [['idperfil', 'pago'], 'integer'],
+            [['estado', 'tipoexpedicao'], 'string'],
+            [['preco'], 'number'],
+            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
         ];
     }
 
@@ -45,40 +48,42 @@ class Encomendas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'encomendaId' => 'Encomenda ID',
-            'perfilId' => 'Perfil ID',
+            'id' => 'ID',
+            'idperfil' => 'Idperfil',
             'estado' => 'Estado',
-            'estaPago' => 'Esta Pago',
+            'pago' => 'Pago',
+            'preco' => 'Preco',
+            'tipoexpedicao' => 'Tipoexpedicao',
         ];
     }
 
     /**
-     * Gets query for [[EncomendasProdutos]].
+     * Gets query for [[Encomendasprodutos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEncomendasProdutos()
+    public function getEncomendasprodutos()
     {
-        return $this->hasMany(EncomendasProdutos::className(), ['encomendaId' => 'encomendaId']);
+        return $this->hasMany(Encomendasprodutos::className(), ['idencomenda' => 'id']);
     }
 
     /**
-     * Gets query for [[Perfil]].
+     * Gets query for [[Idperfil0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPerfil()
+    public function getIdperfil0()
     {
-        return $this->hasOne(Perfis::className(), ['perfilId' => 'perfilId']);
+        return $this->hasOne(Perfis::className(), ['id' => 'idperfil']);
     }
 
     /**
-     * Gets query for [[Produtos]].
+     * Gets query for [[Idprodutos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProdutos()
+    public function getIdprodutos()
     {
-        return $this->hasMany(Produtos::className(), ['produtoId' => 'produtoId'])->viaTable('encomendas_produtos', ['encomendaId' => 'encomendaId']);
+        return $this->hasMany(Produtos::className(), ['id' => 'idproduto'])->viaTable('encomendasprodutos', ['idencomenda' => 'id']);
     }
 }

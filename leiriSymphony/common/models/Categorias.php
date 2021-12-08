@@ -7,10 +7,10 @@ use Yii;
 /**
  * This is the model class for table "categorias".
  *
- * @property int $categoriaId
+ * @property int $id
  * @property string $nome
  *
- * @property Subcategoria[] $subcategorias
+ * @property Subcategorias[] $subcategorias
  */
 class Categorias extends \yii\db\ActiveRecord
 {
@@ -39,7 +39,7 @@ class Categorias extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'categoriaId' => 'Categoria ID',
+            'id' => 'ID',
             'nome' => 'Nome',
         ];
     }
@@ -51,6 +51,6 @@ class Categorias extends \yii\db\ActiveRecord
      */
     public function getSubcategorias()
     {
-        return $this->hasMany(Subcategoria::className(), ['categoriaId' => 'categoriaId']);
+        return $this->hasMany(Subcategorias::className(), ['idsubcategoria' => 'id']);
     }
 }

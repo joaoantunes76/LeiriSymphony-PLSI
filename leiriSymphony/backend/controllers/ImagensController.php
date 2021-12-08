@@ -51,14 +51,14 @@ class ImagensController extends Controller
 
     /**
      * Displays a single Imagens model.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($imagemId)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($imagemId),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -99,16 +99,16 @@ class ImagensController extends Controller
     /**
      * Updates an existing Imagens model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($imagemId)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($imagemId);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'imagemId' => $model->imagemId]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -119,13 +119,13 @@ class ImagensController extends Controller
     /**
      * Deletes an existing Imagens model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($imagemId)
+    public function actionDelete($id)
     {
-        $this->findModel($imagemId)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -133,13 +133,13 @@ class ImagensController extends Controller
     /**
      * Finds the Imagens model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return Imagens the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($imagemId)
+    protected function findModel($id)
     {
-        if (($model = Imagens::findOne($imagemId)) !== null) {
+        if (($model = Imagens::findOne($id)) !== null) {
             return $model;
         }
 

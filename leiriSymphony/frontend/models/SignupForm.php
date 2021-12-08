@@ -57,7 +57,7 @@ class SignupForm extends Model
             $auth = Yii::$app->authManager;
             $cliente = $auth->getRole('Cliente');
             $auth->assign($cliente, $user->getId());
-            
+
             return $user;
         }
 

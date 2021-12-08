@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EncomendasSearch */
+/* @var $searchModel common\models\EncomendasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Encomendas';
@@ -26,10 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'encomendaId',
-            'perfilId',
+            'id',
+            'idperfil',
             'estado',
-            'estaPago',
+            'pago',
+            'preco',
+            //'tipoexpedicao',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

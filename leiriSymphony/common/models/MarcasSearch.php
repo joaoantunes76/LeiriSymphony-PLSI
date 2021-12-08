@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Marcas;
 
 /**
- * MarcasSearch represents the model behind the search form of `app\models\Marcas`.
+ * MarcasSearch represents the model behind the search form of `common\models\Marcas`.
  */
 class MarcasSearch extends Marcas
 {
@@ -17,8 +17,8 @@ class MarcasSearch extends Marcas
     public function rules()
     {
         return [
-            [['marcaId'], 'integer'],
-            [['marcaNome'], 'safe'],
+            [['id'], 'integer'],
+            [['nome'], 'safe'],
         ];
     }
 
@@ -58,10 +58,10 @@ class MarcasSearch extends Marcas
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'marcaId' => $this->marcaId,
+            'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'marcaNome', $this->marcaNome]);
+        $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }
