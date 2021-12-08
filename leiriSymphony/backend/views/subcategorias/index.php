@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SubcategoriasSearch */
+/* @var $searchModel common\models\SubcategoriasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Subcategorias';
@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'subcategoriaId',
-            'categoriaId',
+            'id',
+            'idcategoria',
             'nome',
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
-use common\models\Produtos;
-use common\models\ProdutosSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use common\models\Marcas;
+use common\models\Produtos;
 use yii\filters\VerbFilter;
+use common\models\Subcategorias;
+use common\models\ProdutosSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
@@ -48,14 +50,14 @@ class ProdutosController extends Controller
 
     /**
      * Displays a single Produtos model.
-     * @param int $produtoId Produto ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($produtoId)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($produtoId),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -67,10 +69,12 @@ class ProdutosController extends Controller
     public function actionCreate()
     {
         $model = new Produtos();
+        $marcas = Marcas::find()->all();
+        $subcategorias = Subcategorias::find()->all();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'produtoId' => $model->produtoId]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -78,39 +82,45 @@ class ProdutosController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'marcas' => $marcas,
+            'subcategorias' => $subcategorias,
         ]);
     }
 
     /**
      * Updates an existing Produtos model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $produtoId Produto ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($produtoId)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($produtoId);
+        $model = $this->findModel($id);
+        $marcas = Marcas::find()->all();
+        $subcategorias = Subcategorias::find()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'produtoId' => $model->produtoId]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'marcas' => $marcas,
+            'subcategorias' => $subcategorias,
         ]);
     }
 
     /**
      * Deletes an existing Produtos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $produtoId Produto ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($produtoId)
+    public function actionDelete($id)
     {
-        $this->findModel($produtoId)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -118,13 +128,13 @@ class ProdutosController extends Controller
     /**
      * Finds the Produtos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $produtoId Produto ID
+     * @param int $id ID
      * @return Produtos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($produtoId)
+    protected function findModel($id)
     {
-        if (($model = Produtos::findOne($produtoId)) !== null) {
+        if (($model = Produtos::findOne($id)) !== null) {
             return $model;
         }
 

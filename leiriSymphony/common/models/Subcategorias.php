@@ -7,11 +7,11 @@ use Yii;
 /**
  * This is the model class for table "subcategorias".
  *
- * @property int $subcategoriaId
- * @property int $categoriaId
+ * @property int $id
+ * @property int $idcategoria
  * @property string $nome
  *
- * @property Categorias $categoria
+ * @property Categorias $idcategoria0
  * @property Produtos[] $produtos
  */
 class Subcategorias extends \yii\db\ActiveRecord
@@ -30,10 +30,10 @@ class Subcategorias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['categoriaId', 'nome'], 'required'],
-            [['categoriaId'], 'integer'],
+            [['idcategoria', 'nome'], 'required'],
+            [['idcategoria'], 'integer'],
             [['nome'], 'string', 'max' => 45],
-            [['categoriaId'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoriaId' => 'categoriaId']],
+            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['idcategoria' => 'id']],
         ];
     }
 
@@ -43,20 +43,20 @@ class Subcategorias extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'subcategoriaId' => 'Subcategoria ID',
-            'categoriaId' => 'Categoria ID',
+            'id' => 'ID',
+            'idcategoria' => 'Idcategoria',
             'nome' => 'Nome',
         ];
     }
 
     /**
-     * Gets query for [[Categoria]].
+     * Gets query for [[Idcategoria0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoria()
+    public function getIdcategoria0()
     {
-        return $this->hasOne(Categorias::className(), ['categoriaId' => 'categoriaId']);
+        return $this->hasOne(Categorias::className(), ['id' => 'idcategoria']);
     }
 
     /**
@@ -66,6 +66,6 @@ class Subcategorias extends \yii\db\ActiveRecord
      */
     public function getProdutos()
     {
-        return $this->hasMany(Produtos::className(), ['subcategoriaId' => 'subcategoriaId']);
+        return $this->hasMany(Produtos::className(), ['idsubcategoria' => 'id']);
     }
 }

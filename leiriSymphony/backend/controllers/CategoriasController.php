@@ -48,14 +48,14 @@ class CategoriasController extends Controller
 
     /**
      * Displays a single Categorias model.
-     * @param int $categoriaId Categoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($categoriaId)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($categoriaId),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -70,7 +70,7 @@ class CategoriasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'categoriaId' => $model->categoriaId]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -84,16 +84,16 @@ class CategoriasController extends Controller
     /**
      * Updates an existing Categorias model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $categoriaId Categoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($categoriaId)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($categoriaId);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'categoriaId' => $model->categoriaId]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -104,13 +104,13 @@ class CategoriasController extends Controller
     /**
      * Deletes an existing Categorias model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $categoriaId Categoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($categoriaId)
+    public function actionDelete($id)
     {
-        $this->findModel($categoriaId)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -118,13 +118,13 @@ class CategoriasController extends Controller
     /**
      * Finds the Categorias model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $categoriaId Categoria ID
+     * @param int $id ID
      * @return Categorias the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($categoriaId)
+    protected function findModel($id)
     {
-        if (($model = Categorias::findOne($categoriaId)) !== null) {
+        if (($model = Categorias::findOne($id)) !== null) {
             return $model;
         }
 

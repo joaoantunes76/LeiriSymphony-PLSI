@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MarcasSearch */
+/* @var $model common\models\MarcasSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,9 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'marcaId') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'marcaNome') ?>
+    <?= $form->field($model, 'nome') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

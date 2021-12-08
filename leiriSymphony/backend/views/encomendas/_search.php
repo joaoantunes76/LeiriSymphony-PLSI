@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EncomendasSearch */
+/* @var $model common\models\EncomendasSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,13 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'encomendaId') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'perfilId') ?>
+    <?= $form->field($model, 'idperfil') ?>
 
     <?= $form->field($model, 'estado') ?>
 
-    <?= $form->field($model, 'estaPago') ?>
+    <?= $form->field($model, 'pago') ?>
+
+    <?= $form->field($model, 'preco') ?>
+
+    <?php // echo $form->field($model, 'tipoexpedicao') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

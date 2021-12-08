@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ProdutosSearch */
+/* @var $model common\models\ProdutosSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,21 +15,21 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'produtoId') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'subcategoriaId') ?>
+    <?= $form->field($model, 'idsubcategoria') ?>
 
-    <?= $form->field($model, 'marcaId') ?>
+    <?= $form->field($model, 'idmarca') ?>
 
-    <?= $form->field($model, 'produtoNome') ?>
+    <?= $form->field($model, 'nome') ?>
 
     <?= $form->field($model, 'descricao') ?>
 
-    <?php // echo $form->field($model, 'digital') ?>
+    <?php // echo $form->field($model, 'usado') ?>
 
     <?php // echo $form->field($model, 'preco') ?>
 
-    <?php // echo $form->field($model, 'ficheiro') ?>
+    <?php // echo $form->field($model, 'stock') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

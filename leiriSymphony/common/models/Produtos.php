@@ -7,23 +7,25 @@ use Yii;
 /**
  * This is the model class for table "produtos".
  *
- * @property int $produtoId
- * @property int $subcategoriaId
- * @property int $marcaId
- * @property string $produtoNome
+ * @property int $id
+ * @property int $idsubcategoria
+ * @property int $idmarca
+ * @property string $nome
  * @property string $descricao
- * @property int $digital
+ * @property int $usado
  * @property float $preco
- * @property string|null $ficheiro
+ * @property int $stock
  *
+ * @property Avaliacao[] $avaliacaos
  * @property Demonstracoes[] $demonstracoes
- * @property Encomendas[] $encomendas
- * @property EncomendasProdutos[] $encomendasProdutos
+ * @property Encomendasprodutos[] $encomendasprodutos
+ * @property Encomendas[] $idencomendas
+ * @property Marcas $idmarca0
+ * @property Perfis[] $idperfils
+ * @property Perfis[] $idperfils0
+ * @property Subcategorias $idsubcategoria0
  * @property Imagens[] $imagens
- * @property Marcas $marca
- * @property Perfis[] $perfils
- * @property ProdutosFavoritos[] $produtosFavoritos
- * @property Subcategorias $subcategoria
+ * @property Produtosfavoritos[] $produtosfavoritos
  */
 class Produtos extends \yii\db\ActiveRecord
 {
@@ -41,13 +43,13 @@ class Produtos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subcategoriaId', 'marcaId', 'produtoNome', 'descricao', 'digital', 'preco'], 'required'],
-            [['subcategoriaId', 'marcaId', 'digital'], 'integer'],
-            [['descricao', 'ficheiro'], 'string'],
+            [['idsubcategoria', 'idmarca', 'nome', 'descricao', 'usado', 'preco', 'stock'], 'required'],
+            [['idsubcategoria', 'idmarca', 'usado', 'stock'], 'integer'],
+            [['descricao'], 'string'],
             [['preco'], 'number'],
-            [['produtoNome'], 'string', 'max' => 45],
-            [['marcaId'], 'exist', 'skipOnError' => true, 'targetClass' => Marcas::className(), 'targetAttribute' => ['marcaId' => 'marcaId']],
-            [['subcategoriaId'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategorias::className(), 'targetAttribute' => ['subcategoriaId' => 'subcategoriaId']],
+            [['nome'], 'string', 'max' => 45],
+            [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marcas::className(), 'targetAttribute' => ['idmarca' => 'id']],
+            [['idsubcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategorias::className(), 'targetAttribute' => ['idsubcategoria' => 'id']],
         ];
     }
 
@@ -57,15 +59,25 @@ class Produtos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'produtoId' => 'Produto ID',
-            'subcategoriaId' => 'Subcategoria ID',
-            'marcaId' => 'Marca ID',
-            'produtoNome' => 'Produto Nome',
+            'id' => 'ID',
+            'idsubcategoria' => 'Idsubcategoria',
+            'idmarca' => 'Idmarca',
+            'nome' => 'Nome',
             'descricao' => 'Descricao',
-            'digital' => 'Digital',
+            'usado' => 'Usado',
             'preco' => 'Preco',
-            'ficheiro' => 'Ficheiro',
+            'stock' => 'Stock',
         ];
+    }
+
+    /**
+     * Gets query for [[Avaliacaos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAvaliacaos()
+    {
+        return $this->hasMany(Avaliacao::className(), ['idproduto' => 'id']);
     }
 
     /**
@@ -75,27 +87,67 @@ class Produtos extends \yii\db\ActiveRecord
      */
     public function getDemonstracoes()
     {
-        return $this->hasMany(Demonstracoes::className(), ['produtos_produtoId' => 'produtoId']);
+        return $this->hasMany(Demonstracoes::className(), ['idproduto' => 'id']);
     }
 
     /**
-     * Gets query for [[Encomendas]].
+     * Gets query for [[Encomendasprodutos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEncomendas()
+    public function getEncomendasprodutos()
     {
-        return $this->hasMany(Encomendas::className(), ['encomendaId' => 'encomendaId'])->viaTable('encomendas_produtos', ['produtoId' => 'produtoId']);
+        return $this->hasMany(Encomendasprodutos::className(), ['idproduto' => 'id']);
     }
 
     /**
-     * Gets query for [[EncomendasProdutos]].
+     * Gets query for [[Idencomendas]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEncomendasProdutos()
+    public function getIdencomendas()
     {
-        return $this->hasMany(EncomendasProdutos::className(), ['produtoId' => 'produtoId']);
+        return $this->hasMany(Encomendas::className(), ['id' => 'idencomenda'])->viaTable('encomendasprodutos', ['idproduto' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idmarca0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdmarca0()
+    {
+        return $this->hasOne(Marcas::className(), ['id' => 'idmarca']);
+    }
+
+    /**
+     * Gets query for [[Idperfils]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdperfils()
+    {
+        return $this->hasMany(Perfis::className(), ['id' => 'idperfil'])->viaTable('avaliacao', ['idproduto' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idperfils0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdperfils0()
+    {
+        return $this->hasMany(Perfis::className(), ['id' => 'idperfil'])->viaTable('produtosfavoritos', ['idproduto' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idsubcategoria0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdsubcategoria0()
+    {
+        return $this->hasOne(Subcategorias::className(), ['id' => 'idsubcategoria']);
     }
 
     /**
@@ -105,46 +157,16 @@ class Produtos extends \yii\db\ActiveRecord
      */
     public function getImagens()
     {
-        return $this->hasMany(Imagens::className(), ['produtoId' => 'produtoId']);
+        return $this->hasMany(Imagens::className(), ['idproduto' => 'id']);
     }
 
     /**
-     * Gets query for [[Marca]].
+     * Gets query for [[Produtosfavoritos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMarca()
+    public function getProdutosfavoritos()
     {
-        return $this->hasOne(Marcas::className(), ['marcaId' => 'marcaId']);
-    }
-
-    /**
-     * Gets query for [[Perfils]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPerfils()
-    {
-        return $this->hasMany(Perfis::className(), ['perfilId' => 'perfilId'])->viaTable('produtos_favoritos', ['produtoId' => 'produtoId']);
-    }
-
-    /**
-     * Gets query for [[ProdutosFavoritos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProdutosFavoritos()
-    {
-        return $this->hasMany(ProdutosFavoritos::className(), ['produtoId' => 'produtoId']);
-    }
-
-    /**
-     * Gets query for [[Subcategoria]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubcategoria()
-    {
-        return $this->hasOne(Subcategorias::className(), ['subcategoriaId' => 'subcategoriaId']);
+        return $this->hasMany(Produtosfavoritos::className(), ['idproduto' => 'id']);
     }
 }

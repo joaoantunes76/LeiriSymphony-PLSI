@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Encomendas;
 
 /**
- * EncomendasSearch represents the model behind the search form of `app\models\Encomendas`.
+ * EncomendasSearch represents the model behind the search form of `common\models\Encomendas`.
  */
 class EncomendasSearch extends Encomendas
 {
@@ -17,8 +17,9 @@ class EncomendasSearch extends Encomendas
     public function rules()
     {
         return [
-            [['encomendaId', 'perfilId', 'estaPago'], 'integer'],
-            [['estado'], 'safe'],
+            [['id', 'idperfil', 'pago'], 'integer'],
+            [['estado', 'tipoexpedicao'], 'safe'],
+            [['preco'], 'number'],
         ];
     }
 
@@ -58,12 +59,14 @@ class EncomendasSearch extends Encomendas
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'encomendaId' => $this->encomendaId,
-            'perfilId' => $this->perfilId,
-            'estaPago' => $this->estaPago,
+            'id' => $this->id,
+            'idperfil' => $this->idperfil,
+            'pago' => $this->pago,
+            'preco' => $this->preco,
         ]);
 
-        $query->andFilterWhere(['like', 'estado', $this->estado]);
+        $query->andFilterWhere(['like', 'estado', $this->estado])
+            ->andFilterWhere(['like', 'tipoexpedicao', $this->tipoexpedicao]);
 
         return $dataProvider;
     }

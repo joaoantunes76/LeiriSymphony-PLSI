@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Categorias;
 
 /**
- * CategoriasSearch represents the model behind the search form of `app\models\Categorias`.
+ * CategoriasSearch represents the model behind the search form of `common\models\Categorias`.
  */
 class CategoriasSearch extends Categorias
 {
@@ -17,7 +17,7 @@ class CategoriasSearch extends Categorias
     public function rules()
     {
         return [
-            [['categoriaId'], 'integer'],
+            [['id'], 'integer'],
             [['nome'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class CategoriasSearch extends Categorias
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'categoriaId' => $this->categoriaId,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

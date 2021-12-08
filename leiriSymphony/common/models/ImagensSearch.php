@@ -17,8 +17,8 @@ class ImagensSearch extends Imagens
     public function rules()
     {
         return [
-            [['imagemId', 'produtoId'], 'integer'],
-            [['imagem'], 'safe'],
+            [['id', 'idproduto'], 'integer'],
+            [['nome'], 'safe'],
         ];
     }
 
@@ -58,11 +58,11 @@ class ImagensSearch extends Imagens
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'imagemId' => $this->imagemId,
-            'produtoId' => $this->produtoId,
+            'id' => $this->id,
+            'idproduto' => $this->idproduto,
         ]);
 
-        $query->andFilterWhere(['like', 'imagem', $this->imagem]);
+        $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }
