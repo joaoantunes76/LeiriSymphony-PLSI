@@ -12,16 +12,29 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'lotacao')->textInput() ?>
-
+    <p></p>
+    <label for="Eventos[lotacao]">Lotação</label>
+    <br>
+    <input type="number" name="Eventos[lotacao]">
+    
+    <p></p>
     <?= $form->field($model, 'descricao')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'data')->textInput() ?>
+    <label for="Eventos[data]">Data</label>
+    <br>
+    <input type="date" name="Eventos[data]">
+    
+    <p></p>
+    <label for="Eventos[horainicio]">Hora de Início</label>
+    <br>
+    <input type="time" name="Eventos[horainicio]">
 
-    <?= $form->field($model, 'horainicio')->textInput() ?>
+    <p></p>
+    <label for="Eventos[horafim]">Hora de Fim</label>
+    <br>
+    <input type="time" name="Eventos[horafim]">
 
-    <?= $form->field($model, 'horafim')->textInput() ?>
-
+    <p></p>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
