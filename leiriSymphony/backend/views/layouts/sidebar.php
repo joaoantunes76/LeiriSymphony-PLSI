@@ -36,27 +36,37 @@
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
                     [
-                        'label' => 'Gestão de loja',
+                        'label' => 'Administração',
                         'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
+                        ]
+                    ],
+                    [
+                        'label' => 'Gestão de loja',
+                        'icon' => 'tachometer-alt',
+                        'items' => [
+                            ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categorias', 'url' => ['categorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'SubCategorias', 'url' => ['subcategorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'Produtos', 'url' => ['produtos/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Artistas', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Álbuns', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Músicas', 'url' => ['#'], 'iconStyle' => 'far'],
                             ['label' => 'Imagens', 'url' => ['imagens/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [
                         'label' => 'Apoio ao Cliente',
                         'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
+                            ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
                             ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],
