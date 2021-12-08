@@ -26,18 +26,41 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'produtoId',
-            'subcategoriaId',
-            'marcaId',
-            'produtoNome',
-            'descricao:ntext',
-            'digital',
-            'preco',
-            'ficheiro:ntext',
-        ],
-    ]) ?>
+    <table class="table table-striped table-bordered detail-view">
+        <tbody>
+            <tr>
+                <td><b>ID</b></td>
+                <td><?= $model->id ?></td>
+            </tr>
+            <tr>
+                <td><b>SubCategoria</b></td>
+                <td><?= $model->idsubcategoria0->nome ?></td>
+            </tr>
+            <tr>
+                <td><b>Marca</b></td>
+                <td><?= $model->idmarca0->nome ?></td>
+            </tr>
+            <tr>
+                <td><b>Nome</b></td>
+                <td><?= $model->nome ?></td>
+            </tr>
+            <tr>
+                <td><b>Descrição</b></td>
+                <td><?= $model->descricao ?></td>
+            </tr>
+            <tr>
+                <td><b>Usado</b></td>
+                <td><?= $model->usado ? "Sim" : "Não" ?></td>
+            </tr>
+            <tr>
+                <td><b>Preço</b></td>
+                <td><?= $model->preco ?></td>
+            </tr>
+            <tr>
+                <td><b>Stock</b></td>
+                <td><?= $model->stock ?></td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
