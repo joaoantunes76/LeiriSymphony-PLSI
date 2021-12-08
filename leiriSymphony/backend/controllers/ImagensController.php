@@ -2,11 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\Imagens;
-use common\models\ImagensSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
+use app\models\UploadForm;
+use common\models\Imagens;
 use yii\filters\VerbFilter;
+use common\models\ImagensSearch;
+use common\models\Produtos;
+use yii\web\NotFoundHttpException;
 
 /**
  * ImagensController implements the CRUD actions for Imagens model.
@@ -67,17 +70,29 @@ class ImagensController extends Controller
     public function actionCreate()
     {
         $model = new Imagens();
+        $uploadForm = new UploadForm();
+        $produtos = Produtos::find()->all();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+            $now = date("mdyhis");
+            if ($uploadForm->upload($now)) {
+                $model->load($this->request->post());
+                $model->nome = $now . "." . $uploadForm->imageFile->extension;
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+                return $this->redirect(['index', 'error' => $model->errors]);
             }
+            return $this->redirect(['index', 'error' => $uploadForm->errors]);
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
+            'produtos' => $produtos,
         ]);
     }
 

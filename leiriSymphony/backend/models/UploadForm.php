@@ -20,10 +20,10 @@ class UploadForm extends Model
         ];
     }
 
-    public function upload()
+    public function upload($name)
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs(\Yii::getAlias("@web") . 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            $this->imageFile->saveAs(\Yii::getAlias("@web") . 'uploads/' . $name . '.' . $this->imageFile->extension);
             return true;
         } else {
             return false;

@@ -12,9 +12,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($uploadForm, 'imageFile')->fileInput() ?>
 
-    <?= $form->field($model, 'idproduto')->textInput() ?>
+    <label for="Imagens[idproduto]">Produto</label>
+    <select name="Imagens[idproduto]" class="form-control">
+        <?php
+        foreach ($produtos as $produto) {
+        ?>
+            <option value="<?= $produto->id ?>"><?= $produto->nome ?></option>
+        <?php
+        }
+        ?>
+    </select>
+    <br>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Produtos */
 
-$this->title = $model->produtoNome;
+$this->title = $model->nome;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="produtos-view">
@@ -33,7 +33,7 @@ $this->title = $model->produtoNome;
                     <i class="ls-navbar-icons bi bi-chevron-left"></i>
                 </div>
                 <div class="col align-self-center">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "300px", 'class' => 'logo']); ?></div>
+                    <?= Html::img(Yii::getAlias('@imageurl') . '/' . $model->imagens[0]->nome, ['width' => "250px", 'class' => 'logo']); ?></div>
                 <div class="col align-self-center">
                     <i class="ls-navbar-icons bi bi-chevron-right"></i>
                 </div>
