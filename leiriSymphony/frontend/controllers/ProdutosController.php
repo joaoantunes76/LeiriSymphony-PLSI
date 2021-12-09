@@ -37,12 +37,39 @@ class ProdutosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProdutosSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (!isset($_GET["categoria"])) {
+            $produtos = Produtos::find()->all();
+        } else {
+            switch ($_GET["categoria"]) {
+                case "Guitarras":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Baterias":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Teclas":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Sopros":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Clássicos":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Tradicionais":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Acessórios":
+                    $produtos = Produtos::find()->all();
+                    break;
+                case "Musicas":
+                    $produtos = Produtos::find()->all();
+                    break;
+            }
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'produtos' => $produtos
         ]);
     }
 

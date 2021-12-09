@@ -9,6 +9,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Produtos';
+
 ?>
 
 <div class="produtos-index d-flex">
@@ -52,35 +53,35 @@ $this->title = 'Produtos';
             <b>Categoria</b>
             <hr>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Guitarras" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Guitarras" ? "checked" : "" ?> id="Guitarras" name="radio-stacked">
                 <label class="custom-control-label" for="Guitarras">Guitarras</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Baterias" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Baterias" ? "checked" : "" ?> id="Baterias" name="radio-stacked">
                 <label class="custom-control-label" for="Baterias">Baterias</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Teclas" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Teclas" ? "checked" : "" ?> id="Teclas" name="radio-stacked">
                 <label class="custom-control-label" for="Teclas">Teclas</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Sopros" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Sopros" ? "checked" : "" ?> id="Sopros" name="radio-stacked">
                 <label class="custom-control-label" for="Sopros">Sopros</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Classicos" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Clássicos" ? "checked" : "" ?> id="Classicos" name="radio-stacked">
                 <label class="custom-control-label" for="Classicos">Clássicos</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Tradicionais" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Tradicionais" ? "checked" : "" ?> id="Tradicionais" name="radio-stacked">
                 <label class="custom-control-label" for="Tradicionais">Tradicionais</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Acessorios" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Acessórios" ? "checked" : "" ?> id="Acessorios" name="radio-stacked">
                 <label class="custom-control-label" for="Acessorios">Acessórios</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="Musica" name="radio-stacked">
+                <input type="radio" class="custom-control-input" <?= $_GET["categoria"] == "Musicas" ? "checked" : "" ?> id="Musica" name="radio-stacked">
                 <label class="custom-control-label" for="Musica">Música</label>
             </div>
     </div>
@@ -89,11 +90,17 @@ $this->title = 'Produtos';
 
         <div class="row mt-5">
             <?php
-            for ($produto = 1; $produto <= 12; $produto++) {
+            foreach ($produtos as $produto) {
+
+                if ($produto->imagens != null) {
+                    $imagemNome = $produto->imagens[0]->nome;
+                } else {
+                    $imagemNome = "";
+                }
             ?>
-                <a style="display:block;" class="col ls-produto" id="<?= $produto ?>" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produto]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
+                <a style="display:block;" class="col ls-produto" id="<?= $produto->id ?>" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produto->id]) ?>">
+                    <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "154px", 'class' => 'Guitarra-classica']); ?>
+                    <p class="mt-2"><?= $produto->nome ?></p>
                     <p>0.00€</p>
                 </a>
             <?php

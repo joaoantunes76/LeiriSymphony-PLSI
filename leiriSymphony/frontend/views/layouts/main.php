@@ -86,14 +86,14 @@ AppAsset::register($this);
 
     <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
         <div class="ls-sidemenu-content" onclick="sideMenuClick()">
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=guitarras">Guitarras</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=baterias">Baterias</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=teclas">Teclas</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=sopros">Sopros</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=classicos">Clássicos</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=tradicionais">Tradicionais</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=acessorios">Acessórios</a>
-            <a href="#musica">Música</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Guitarras">Guitarras</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Baterias">Baterias</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Teclas">Teclas</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Sopros">Sopros</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Clássicos">Clássicos</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Tradicionais">Tradicionais</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Acessórios">Acessórios</a>
+            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Musicas">Música</a>
         </div>
         <div style="width: 100%; height:100%">
 
