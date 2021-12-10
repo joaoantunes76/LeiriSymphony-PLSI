@@ -162,6 +162,13 @@ body {
   line-height: 10px;
 }
 
+/*
+    Components - Filtros
+*/
+.ls-filtros {
+  max-width: 300px;
+}
+
 .ls-favorite-toggle {
   color: #ff8b07;
   font-size: 34px;

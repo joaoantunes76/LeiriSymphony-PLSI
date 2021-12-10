@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Produtos;
 use common\models\ProdutosSearch;
+use common\models\Subcategorias;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -42,28 +43,28 @@ class ProdutosController extends Controller
         } else {
             switch ($_GET["categoria"]) {
                 case "Guitarras":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 1])->all();
                     break;
                 case "Baterias":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 2])->all();
                     break;
                 case "Teclas":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 3])->all();
                     break;
                 case "Sopros":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 4])->all();
                     break;
                 case "Clássicos":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 5])->all();
                     break;
                 case "Tradicionais":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 6])->all();
                     break;
                 case "Acessórios":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 7])->all();
                     break;
                 case "Musicas":
-                    $produtos = Produtos::find()->all();
+                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 8])->all();
                     break;
             }
         }
