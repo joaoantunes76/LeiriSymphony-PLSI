@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Eventos */
@@ -12,27 +14,32 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <p></p>
-    <label for="Eventos[lotacao]">Lotação</label>
-    <br>
-    <input type="number" name="Eventos[lotacao]">
-    
-    <p></p>
-    <?= $form->field($model, 'descricao')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'lotacao')->textInput(['type' => 'number', 'maxlength' => 1])->label('Lotação') ?>
 
-    <label for="Eventos[data]">Data</label>
-    <br>
-    <input type="date" name="Eventos[data]">
-    
-    <p></p>
-    <label for="Eventos[horainicio]">Hora de Início</label>
-    <br>
-    <input type="time" name="Eventos[horainicio]">
+    <?= $form->field($model, 'descricao')->textarea(['rows' => 6])->label('Descrição') ?>
 
-    <p></p>
-    <label for="Eventos[horafim]">Hora de Fim</label>
-    <br>
-    <input type="time" name="Eventos[horafim]">
+    <?= $form->field($model,'data')->widget(DatePicker::classname(),[
+        'language' => 'pt',
+        'dateFormat' => 'php:Y-m-d'
+    ])->label('Data') ?>
+
+    <?= $form->field($model, 'horainicio')->widget(\janisto\timepicker\TimePicker::className(),[
+        'language' => 'pt',
+        'mode' => 'time',
+        'clientOptions'=>[
+            'timeFormat' => 'HH:mm',
+            'showSecond' => false,
+        ]
+    ])->label('Hora de Início') ?>
+
+    <?= $form->field($model, 'horafim')->widget(\janisto\timepicker\TimePicker::className(),[
+        'language' => 'pt',
+        'mode' => 'time',
+        'clientOptions'=>[
+            'timeFormat' => 'HH:mm',
+            'showSecond' => false,
+        ]
+    ])->label('Hora de encerramento') ?>
 
     <p></p>
     <div class="form-group">
