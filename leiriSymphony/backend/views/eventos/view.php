@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => date('H:i', strtotime($model->horainicio)),
             ],
             [
-                'label' => 'Hora de Início',
+                'label' => 'Hora de Encerramento',
                 'value' => date('H:i', strtotime($model->horafim)),
             ],
         ],
