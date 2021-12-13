@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
             'timeFormat' => 'HH:mm',
             'showSecond' => false,
         ]
-    ])->label('Hora de encerramento') ?>
+    ])->label('Hora de Encerramento') ?>
 
     <p></p>
     <div class="form-group">

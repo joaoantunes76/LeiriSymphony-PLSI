@@ -12,30 +12,52 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="eventos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Lista de Eventos</h1>
 
     <p>
-        <?= Html::a('Create Eventos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Evento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
+        $eventos = $dataProvider->getModels();
+    ?>
 
-    <?= GridView::widget([
+    <?=  GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'header' => 'Lotação',
+                'attribute' => 'lotacao',
+                'format' => ['text'],
+            ],
+            [
+                'header' => 'Descrição',
+                'attribute' => 'descricao',
+                'format' => ['text'],
+                'contentOptions' => ['style' => 'text-overflow: ellipsis; white-space: nowrap; max-width: 25vw; overflow: hidden;'],
+            ],
+            [
+                'header' => 'Data',
+                'attribute' => 'data',
+                'format' => ['date', 'php:Y-m-d'],
+            ],
+            [
+                'header' => 'Hora de Início',
+                'attribute' => 'horainicio',
+                'format' => ['time', 'H:m'],
+            ],
+            [
+                'header' => 'Hora de Encerramento',
+                'attribute' => 'horafim',
+                'format' => ['time', 'H:m'],
+            ],
 
-            //'id',
-            'lotacao',
-            'descricao:ntext',
-            'data',
-            'horainicio',
-            'horafim',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'contentOptions' => ['width' => '80px']],
         ],
     ]); ?>
+
+
 
 
 </div>
