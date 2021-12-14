@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $produtos common\models\Produtos */
 
 $this->title = 'My Yii Application';
 ?>
@@ -41,57 +42,49 @@ $this->title = 'My Yii Application';
         <div class="row mt-3">
             <?php
 
-            foreach ($ultimosProdutos as $produto) {
-                if ($produto->imagens != null) {
-                    $imagemNome = $produto->imagens[0]->nome;
-                } else {
-                    $imagemNome = "";
-                }
+            foreach ($produtos as $produto) {
             ?>
                 <div class="col text-center">
-                    <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produto->id]) ?>">
-                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "154px", 'class' => 'Guitarra-classica']); ?>
-                        <p class="mt-2"><?= $produto->nome ?></p>
-                        <p><?= $produto->preco ?>€</p>
-                    </a>
+                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
                 </div>
             <?php
             }
             ?>
         </div>
 
+        <br>
         <h4>Populares</h4>
         <div class="row mt-3">
             <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                <a style="display:block;" class="col ls-product-link d-flex flex-column justify-content-between" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
                     <p class="mt-2">Nome do produto</p>
                     <p>0.00€</p>
                 </a>
             </div>
             <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                <a style="display:block;" class="col ls-product-link" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
                     <p class="mt-2">Nome do produto</p>
                     <p>0.00€</p>
                 </a>
             </div>
             <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                <a style="display:block;" class="col ls-product-link" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
                     <p class="mt-2">Nome do produto</p>
                     <p>0.00€</p>
                 </a>
             </div>
             <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                <a style="display:block;" class="col ls-product-link" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
                     <p class="mt-2">Nome do produto</p>
                     <p>0.00€</p>
                 </a>
             </div>
             <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                <a style="display:block;" class="col ls-product-link" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
                     <p class="mt-2">Nome do produto</p>
                     <p>0.00€</p>

@@ -10,7 +10,6 @@ use yii\captcha\Captcha;
 use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Comprar';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-comprar">
     <div class="ls-wizzard">

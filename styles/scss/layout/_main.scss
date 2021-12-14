@@ -1,0 +1,15 @@
+/*
+    Layout - main
+*/
+
+body {
+    background-color: #f2f2f2;
+    & > main {
+        background-color: #f2f2f2;
+
+        & > div.container {
+            display: grid;
+            place-items: center;
+        }
+    }
+}

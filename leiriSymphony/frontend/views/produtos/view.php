@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->nome;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="produtos-view">
+<div class="ls-product-view">
 
 
     <?php /*= DetailView::widget([
@@ -73,7 +74,14 @@ $this->title = $model->nome;
                 <div class="col">
                     <h6>Preço</h6>
                     <h4><?= Html::encode($model->preco) ?></h4>
-                    <button class="btn btn-primary"> Adicionar ao carrinho</button>
+
+                    <?php $form = ActiveForm::begin(); ?>
+
+                    <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
+
+                    <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn btn-primary']) ?>
+
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>

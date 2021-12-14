@@ -2,9 +2,13 @@
 
 namespace frontend\controllers;
 
+use common\models\Categorias;
+use common\models\Marcas;
 use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
+use phpDocumentor\Reflection\Types\Array_;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,39 +42,54 @@ class ProdutosController extends Controller
      */
     public function actionIndex()
     {
-        if (!isset($_GET["categoria"])) {
+        $marcas = Marcas::find()->all();
+        $categorias = Categorias::find()->all();
+        $subcategorias = Subcategorias::find()->all();
+
+        if (!isset($_GET["Categoria"]) && !isset($_GET["Marca"]) && !isset($_GET["Subcategoria"]) && !isset($_GET["nome"])) {
             $produtos = Produtos::find()->all();
         } else {
-            switch ($_GET["categoria"]) {
-                case "Guitarras":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 1])->all();
-                    break;
-                case "Baterias":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 2])->all();
-                    break;
-                case "Teclas":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 3])->all();
-                    break;
-                case "Sopros":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 4])->all();
-                    break;
-                case "Clássicos":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 5])->all();
-                    break;
-                case "Tradicionais":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 6])->all();
-                    break;
-                case "Acessórios":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 7])->all();
-                    break;
-                case "Musicas":
-                    $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where(['idcategoria' => 8])->all();
-                    break;
+            $whereCondition = null;
+            if(isset($_GET["Categoria"])) {
+                $categoriaId = $_GET["Categoria"];
+                $whereCondition = ['idcategoria' => $categoriaId];
             }
+            if(isset($_GET["Marca"])){
+                $marcaId = $_GET["Marca"];
+                if($whereCondition != null){
+                    $whereCondition += ['idmarca' => $marcaId];
+                }
+                else {
+                    $whereCondition = ['idmarca' => $marcaId];
+                }
+            }
+            if(isset($_GET["Subcategoria"])){
+                $subcategoriaId = $_GET["Subcategoria"];
+                if($whereCondition != null){
+                    $whereCondition += ['idsubcategoria' => $subcategoriaId];
+                }
+                else {
+                    $whereCondition = ['idsubcategoria' => $subcategoriaId];
+                }
+            }
+            if(isset($_GET["nome"])){
+                $nome = $_GET["nome"];
+                if($whereCondition != null){
+                    $whereCondition += ['nome' => $nome];
+                }
+                else {
+                    $whereCondition = ['like', 'produtos.nome', '%'. $nome . '%', false];
+                }
+            }
+
+            $produtos = Produtos::find()->innerJoinWith('idsubcategoria0')->where($whereCondition)->all();
         }
 
         return $this->render('index', [
-            'produtos' => $produtos
+            'produtos' => $produtos,
+            'marcas' => $marcas,
+            'categorias' => $categorias,
+            'subcategorias' => $subcategorias,
         ]);
     }
 
@@ -82,9 +101,35 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($produtoId),
-        ]);
+        $categorias = Categorias::find()->all();
+
+        if ($this->request->isPost) {
+            $produtoId = $_POST["Produtos"]["id"];
+            $produto = Produtos::find()->where(['id' => $produtoId])->one();
+            $session = Yii::$app->session;
+
+            if ($session->isActive) {
+                $produtos = $session->get('produtos');
+                array_push($produtos, $produto);
+                $session->set("produtos", $produtos);
+            }
+            else {
+                $session->open();;
+                $produtos = array();
+                array_push($produtos, $produto);
+                $session->set("produtos", $produtos);
+            }
+
+            print_r($_SESSION);
+
+        } else {
+            return $this->render('view', [
+                'model' => $this->findModel($produtoId),
+                'categorias' => $categorias,
+            ]);
+        }
+
+
     }
 
     /**

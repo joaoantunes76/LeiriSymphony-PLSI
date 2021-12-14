@@ -11,6 +11,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -68,8 +69,8 @@ AppAsset::register($this);
                 </div>
                 <div class="col-md-4 col-sm-5 d-flex align-self-center">
                     <div class="ls-navbar-search">
-                        <form action="search" method="GET">
-                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                        <form action="<?= Url::toRoute("produtos/index") ?>" method="GET">
+                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="nome" placeholder="Search" aria-label="Search">
                         </form>
                     </div>
                 </div>
@@ -86,14 +87,14 @@ AppAsset::register($this);
 
     <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
         <div class="ls-sidemenu-content" onclick="sideMenuClick()">
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Guitarras">Guitarras</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Baterias">Baterias</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Teclas">Teclas</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Sopros">Sopros</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Clássicos">Clássicos</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Tradicionais">Tradicionais</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Acessórios">Acessórios</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=Musicas">Música</a>
+            <?php
+                $categorias = \common\models\Categorias::find()->all();
+                foreach($categorias as $categoria){
+                ?>
+                    <a href="<?= Url::toRoute('produtos/index') ?>?Categorias=<?= $categoria->id?>"><?= $categoria->nome ?></a>
+                <?php
+                }
+            ?>
         </div>
         <div style="width: 100%; height:100%">
 
@@ -110,7 +111,7 @@ AppAsset::register($this);
                         <div class="produto">
                             <div class="quantidade pr-5 pl-5">
                                 <label for="quantidade">Quantidade</label>
-                                <input type="number" class="form-control">
+                                <input type="number" class="form-control" id="quantidade">
                             </div>
                             <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                                 <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>

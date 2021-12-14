@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Categorias;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -79,7 +80,7 @@ class SiteController extends Controller
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(5)->all();
 
         return $this->render('index', [
-            'ultimosProdutos' => $produtos,
+            'produtos' => $produtos,
         ]);
     }
 
