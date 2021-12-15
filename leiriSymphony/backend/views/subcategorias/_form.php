@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Subcategorias */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $categorias common\models\Categorias */
 ?>
 
 <div class="subcategorias-form">
@@ -17,7 +18,7 @@ use yii\widgets\ActiveForm;
         <?php
         foreach ($categorias as $categoria) {
         ?>
-            <option value="<?= $categoria->id ?>"><?= $categoria->nome ?></option>
+            <option value="<?= $categoria->id ?>" <?= $categoria->id == $model->idcategoria ? 'selected' : "" ?>><?= $categoria->nome ?></option>
         <?php
         }
         ?>

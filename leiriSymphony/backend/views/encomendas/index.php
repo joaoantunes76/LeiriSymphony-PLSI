@@ -24,16 +24,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'idperfil',
+            [
+                'attribute' => 'idperfil0',
+                'header' => 'Cliente',
+                'value' => 'idperfil0.nome',
+                'format' => ['text'],
+            ],
             'estado',
             'pago',
-            'preco',
-            //'tipoexpedicao',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'preco',
+                'header' => 'Preço',
+                'value' => 'preco',
+                'format' => ['text'],
+            ],
+            [
+                'attribute' => 'tipoexpedicao',
+                'header' => 'Tipo de Expedição',
+                'value' => 'tipoexpedicao',
+                'format' => ['text'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'header'=>'Actions',
+                'template' => '{update} {delete}',
+            ],
         ],
     ]); ?>
 

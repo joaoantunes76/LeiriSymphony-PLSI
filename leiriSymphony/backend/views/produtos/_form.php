@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Produtos */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $subcategorias \common\models\Subcategorias */
+/* @var $marcas \common\models\Marcas */
 ?>
 
 <div class="produtos-form">
@@ -17,7 +19,7 @@ use yii\widgets\ActiveForm;
         <?php
         foreach ($subcategorias as $subcategoria) {
         ?>
-            <option value="<?= $subcategoria->id ?>"><?= $subcategoria->nome ?></option>
+            <option value="<?= $subcategoria->id ?>" <?= $subcategoria->id == $model->idsubcategoria ? 'selected' : "" ?>><?= $subcategoria->nome ?></option>
         <?php
         }
         ?>
@@ -29,7 +31,7 @@ use yii\widgets\ActiveForm;
         <?php
         foreach ($marcas as $marca) {
         ?>
-            <option value="<?= $marca->id ?>"><?= $marca->nome ?></option>
+            <option value="<?= $marca->id ?>" <?= $marca->id == $model->idmarca ? 'selected' : "" ?>><?= $marca->nome ?></option>
         <?php
         }
         ?>
@@ -42,8 +44,8 @@ use yii\widgets\ActiveForm;
 
     <label for="Produtos[usado]">Usado</label>
     <select name="Produtos[usado]" class="form-control">
-        <option value="0">Não</option>
-        <option value="1">Sim</option>
+        <option value="0" <?= 0 == $model->usado ? 'selected' : "" ?>>Não</option>
+        <option value="1" <?= 1 == $model->usado ? 'selected' : "" ?>>Sim</option>
     </select>
     <br>
 
