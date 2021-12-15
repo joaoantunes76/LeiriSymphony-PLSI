@@ -7,12 +7,14 @@ use common\models\ProdutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
  */
 class ProdutosController extends Controller
 {
+
     /**
      * @inheritDoc
      */
@@ -74,4 +76,5 @@ class ProdutosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }
