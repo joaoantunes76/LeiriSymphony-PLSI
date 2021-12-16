@@ -27,28 +27,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'header' => 'Lotação',
+                'label' => 'Lotação',
                 'attribute' => 'lotacao',
                 'format' => ['text'],
             ],
             [
-                'header' => 'Descrição',
+                'label' => 'Descrição',
                 'attribute' => 'descricao',
                 'format' => ['text'],
                 'contentOptions' => ['style' => 'text-overflow: ellipsis; white-space: nowrap; max-width: 25vw; overflow: hidden;'],
             ],
             [
-                'header' => 'Data',
+                'label' => 'Data',
                 'attribute' => 'data',
                 'format' => ['date', 'php:Y-m-d'],
             ],
             [
-                'header' => 'Hora de Início',
+                'label' => 'Hora de Início',
                 'attribute' => 'horainicio',
                 'format' => ['time', 'H:m'],
             ],
             [
-                'header' => 'Hora de Encerramento',
+                'label' => 'Hora de Encerramento',
                 'attribute' => 'horafim',
                 'format' => ['time', 'H:m'],
             ],
