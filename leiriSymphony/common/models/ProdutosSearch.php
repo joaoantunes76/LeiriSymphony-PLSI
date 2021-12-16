@@ -47,8 +47,6 @@ class ProdutosSearch extends Produtos
     {
         $query = Produtos::find();
 
-        // add conditions that should always apply here
-
         $query->joinWith(['idsubcategoria0', 'idmarca0']);
 
         $dataProvider = new ActiveDataProvider([

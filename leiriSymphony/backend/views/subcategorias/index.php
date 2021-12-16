@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'idcategoria0',
-                'header' => 'Categoria',
+                'label' => 'Categoria',
                 'value' => 'idcategoria0.nome',
                 'format' => ['text'],
             ],
