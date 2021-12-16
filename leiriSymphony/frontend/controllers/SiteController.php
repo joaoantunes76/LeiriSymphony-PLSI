@@ -170,6 +170,7 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+        $signup = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
@@ -177,6 +178,7 @@ class SiteController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'signup' => $signup
         ]);
     }
 

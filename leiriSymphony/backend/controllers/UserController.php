@@ -2,10 +2,14 @@
 
 namespace backend\controllers;
 
+use app\controllers\PerfisController;
 use app\models\User;
+use common\models\Perfis;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\UserSearch;
+use frontend\models\SignupForm;
+use yii\rbac\Role;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -80,6 +84,9 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $perfil = new Perfis();
+        $signup = new SignupForm();
+        $role = new Role();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -91,6 +98,9 @@ class UserController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'perfis' => $perfil,
+            'signup' => $signup,
+            'role' => $role
         ]);
     }
 
@@ -104,13 +114,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+     
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            
         ]);
     }
 

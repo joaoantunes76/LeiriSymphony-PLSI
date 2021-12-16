@@ -17,5 +17,6 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+    <input type="text" id="user-auth_key" class="form-control" name="User[auth_key]" value="<?=   $model->perfis->email ?>" maxlength="32" aria-required="true" aria-invalid="false">
 
 </div>
