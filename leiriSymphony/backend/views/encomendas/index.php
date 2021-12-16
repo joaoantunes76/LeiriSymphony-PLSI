@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'idperfil0',
-                'header' => 'Cliente',
+                'label' => 'Cliente',
                 'value' => 'idperfil0.nome',
                 'format' => ['text'],
             ],
@@ -31,20 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'pago',
             [
                 'attribute' => 'preco',
-                'header' => 'Preço',
+                'label' => 'Preço',
                 'value' => 'preco',
                 'format' => ['text'],
             ],
             [
                 'attribute' => 'tipoexpedicao',
-                'header' => 'Tipo de Expedição',
+                'label' => 'Tipo de Expedição',
                 'value' => 'tipoexpedicao',
                 'format' => ['text'],
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],
-                'header'=>'Actions',
                 'template' => '{update} {delete}',
             ],
         ],
