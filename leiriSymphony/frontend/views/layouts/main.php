@@ -2,6 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+/* @var $form \yii\widgets\ActiveForm */
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
@@ -10,6 +11,7 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 
 AppAsset::register($this);
@@ -106,21 +108,29 @@ AppAsset::register($this);
             <div>
                 <br>
                 <h5>Carrinho de compras</h5>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="produto">
-                            <div class="quantidade pr-5 pl-5">
-                                <label for="quantidade">Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade">
+
+                <?php
+                    $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
+                    foreach ($produtosCarrinho as $produto){
+                ?>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="produto">
+                                <div class="quantidade pr-5 pl-5">
+                                    <label for="quantidade">Quantidade</label>
+                                    <?= $form->field($produto, 'quantidade')->textInput(['type' => 'number']) ?>
+                                </div>
+                                <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
+                                    <p class="mt-2"><?php print_r($nome); ?></p>
+                                    <p>0.00€</p>
+                                </a>
                             </div>
-                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                                <p class="mt-2">Nome do produto</p>
-                                <p>0.00€</p>
-                            </a>
                         </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
                 <div class="row mt-3">
                     <div class="col">
                         <div class="produto">
