@@ -39,12 +39,12 @@ $this->title = 'My Yii Application';
 
     <div class="body-content mt-5">
         <h4>Recentemente adicionados</h4>
-        <div class="row mt-3">
+        <div class="row mt-3 justify-content-center">
             <?php
 
             foreach ($produtos as $produto) {
             ?>
-                <div class="col text-center">
+                <div class=" text-center">
                     <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
                 </div>
             <?php
@@ -54,7 +54,7 @@ $this->title = 'My Yii Application';
 
         <br>
         <h4>Populares</h4>
-        <div class="row mt-3">
+        <div class="row mt-3 justify-content-center">
             <div class="col text-center">
                 <a style="display:block;" class="col ls-product-link d-flex flex-column justify-content-between" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
                     <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
