@@ -12,7 +12,6 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
