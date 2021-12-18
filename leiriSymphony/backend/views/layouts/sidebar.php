@@ -53,9 +53,9 @@
                             ['label' => 'Categorias', 'url' => ['categorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'SubCategorias', 'url' => ['subcategorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'Produtos', 'url' => ['produtos/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Artistas', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Álbuns', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Músicas', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Artistas', 'url' => ['artistas/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Álbuns', 'url' => ['albuns/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Músicas', 'url' => ['musicas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Imagens', 'url' => ['imagens/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
