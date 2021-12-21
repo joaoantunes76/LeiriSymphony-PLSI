@@ -2,7 +2,6 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-/* @var $form \yii\widgets\ActiveForm */
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
@@ -108,44 +107,32 @@ AppAsset::register($this);
             <div>
                 <br>
                 <h5>Carrinho de compras</h5>
-
                 <?php
                     $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
-                    foreach ($produtosCarrinho as $produto){
+                    foreach ($produtosCarrinho as $produtoCarrinho){
+                        $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
                 ?>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="produto">
-                                <div class="quantidade pr-5 pl-5">
-                                    <label for="quantidade">Quantidade</label>
-                                    <?= $form->field($produto, 'quantidade')->textInput(['type' => 'number']) ?>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="produto">
+                                    <div class="quantidade pr-5 pl-5">
+                                        <label for="quantidade">Quantidade</label>
+                                        <label><?php  ?></label>
+                                        <input type="number" id="quantidade" name="quantidade" min="1" value="1">
+                                    </div>
+                                    <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
+                                        <p class="mt-2">
+                                        <p><?= Html::encode($produto->nome) ?></p>
+                                        <p><?= Html::encode($produto->preco) ?> €</p>
+                                    </a>
                                 </div>
-                                <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                                    <p class="mt-2"><?php print_r($nome); ?></p>
-                                    <p>0.00€</p>
-                                </a>
                             </div>
                         </div>
-                    </div>
                 <?php
-                }
+                    }
                 ?>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="produto">
-                            <div class="quantidade pr-5 pl-5">
-                                <label for="quantidade">Quantidade</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                                <p class="mt-2">Nome do produto</p>
-                                <p>0.00€</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="row mb-5">

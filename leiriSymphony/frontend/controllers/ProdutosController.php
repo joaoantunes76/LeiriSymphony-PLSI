@@ -7,6 +7,9 @@ use common\models\Marcas;
 use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
+use common\models\Carrinho;
+use common\models\Perfis;
+use common\models\User;
 use phpDocumentor\Reflection\Types\Array_;
 use Yii;
 use yii\web\Controller;
@@ -102,36 +105,30 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
-        $categorias = Categorias::find()->all();
-
         if ($this->request->isPost) {
             $produtoId = $_POST["Produtos"]["id"];
-            $produto = Produtos::find()->where(['id' => $produtoId])->one();
-            $session = Yii::$app->session;
+            $iduser = Yii::$app->user->id;
 
-            if ($session->isActive) {
-                $produtos = $session->get('produtos');
-                array_push($produtos, $produto);
-                $session->set("produtos", $produtos);
-            }
-            else {
-                $session->open();;
-                $produtos = array();
-                array_push($produtos, $produto);
-                $session->set("produtos", $produtos);
-            }
+            $carrinho = new Carrinho();
+            $carrinho->idproduto = $produtoId;
+            $carrinho->idperfil = $iduser;
+            $carrinho->save();
 
-            print_r($_SESSION);
+
+            return $this->render('view', [
+                'model' => $this->findModel($produtoId),
+            ]);
 
         } else {
             return $this->render('view', [
                 'model' => $this->findModel($produtoId),
-                'categorias' => $categorias,
             ]);
         }
 
 
     }
+
+
 
     /**
      * Finds the Produtos model based on its primary key value.

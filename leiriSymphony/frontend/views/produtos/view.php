@@ -73,7 +73,7 @@ $this->title = $model->nome;
             <div class="row text-right">
                 <div class="col">
                     <h6>Preço</h6>
-                    <h4><?= Html::encode($model->preco) ?></h4>
+                    <h4><?= Html::encode($model->preco) ?> €</h4>
 
                     <?php $form = ActiveForm::begin(); ?>
 
