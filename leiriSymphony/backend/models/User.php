@@ -54,7 +54,7 @@ class User extends \yii\db\ActiveRecord
             'username' => 'Username',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
+            'password_reset_token' => 'Password Re  set Token',
             'email' => 'Email',
             'status' => 'Status',
             'created_at' => 'Created At',

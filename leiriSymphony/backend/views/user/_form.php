@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($signup, 'password')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($role, 'role')->dropDownList([]) ?>
-
     <?= $form->field($perfis, 'nome')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($perfis, 'NIF')->textInput(['maxlength' => true]) ?>

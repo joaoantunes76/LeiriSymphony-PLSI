@@ -84,9 +84,9 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $perfil = new Perfis();
+        $perfis = new Perfis();
         $signup = new SignupForm();
-        $role = new Role();
+     
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -98,12 +98,11 @@ class UserController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'perfis' => $perfil,
-            'signup' => $signup,
-            'role' => $role
+            'perfis' => $perfis,
+            'signup' => $signup
         ]);
     }
-
+    
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -114,6 +113,8 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $perfis = new Perfis();
+        $signup = new SignupForm();
      
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -121,7 +122,10 @@ class UserController extends Controller
         }
 
         return $this->render('update', [
-            
+            'model' => $model,
+            'perfis' => $perfis,
+            'signup' => $signup
+        
         ]);
     }
 
