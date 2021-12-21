@@ -1,7 +1,7 @@
 <?php
-
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="albuns-view">
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -54,17 +54,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <br>
     <p>
-        <?= Html::a('Adicionar Musica', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Musica', ['musicas/create?albumId='.$model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
             'nome',
             'ficheiro',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{view} {update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return Url::to(['musicas/'.$action, 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+                }
+            ],
         ],
     ]); ?>
 
