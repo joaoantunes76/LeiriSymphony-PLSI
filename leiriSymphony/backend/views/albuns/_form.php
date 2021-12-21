@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Albuns */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $uploadForm app\models\UploadForm */
 ?>
 
 <div class="albuns-form">
@@ -16,9 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'datalancamento')->textInput() ?>
+    <?= $form->field($model, 'datalancamento')->widget(DatePicker::classname(),[
 
-    <?= $form->field($model, 'idimagem')->textInput() ?>
+        'options' => ['class' => 'form-control'],
+        'language' => 'pt',
+        'dateFormat' => 'php:Y-m-d',
+        'class' => 'form-control',
+    ]) ?>
+
+    <?= $form->field($uploadForm, 'imageFile')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

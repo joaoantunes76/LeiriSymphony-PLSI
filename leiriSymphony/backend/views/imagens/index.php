@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             'id',
             'nome',
             [
@@ -35,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img("@web/uploads/$data->nome", ['height' => '150px']);
                 },
             ],
-            'idproduto',
+            [
+                'label' => 'Produto',
+                'attribute' => 'idproduto0',
+                'value' => 'idproduto0.nome'
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],

@@ -30,7 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'preco',
             'datalancamento',
-            'idimagem',
+             [
+                 'attribute' => 'idimagem0',
+                 'label' => 'Imagem',
+                 'format' => 'html',
+                 'value' => function ($data) {
+                    return Html::img(Yii::getAlias('@imageurl') . '/' . $data->idimagem0->nome, ['width' => "154px"]);
+                 }
+             ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

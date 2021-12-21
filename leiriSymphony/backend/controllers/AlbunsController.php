@@ -2,11 +2,16 @@
 
 namespace backend\controllers;
 
+use app\models\UploadForm;
 use common\models\Albuns;
 use common\models\AlbunsSearch;
+use common\models\Imagens;
+use common\models\Musicas;
+use common\models\MusicasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * AlbunsController implements the CRUD actions for Albuns model.
@@ -54,8 +59,14 @@ class AlbunsController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new MusicasSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['idalbuns' => $id]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
@@ -67,17 +78,31 @@ class AlbunsController extends Controller
     public function actionCreate()
     {
         $model = new Albuns();
+        $uploadForm = new UploadForm();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if($this->request->isPost){
+            $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+            $now = date("mdyhis");
+            if ($uploadForm->upload($now)) {
+                $model->load($this->request->post());
+                $image = new Imagens();
+                $image->nome = $now . "." . $uploadForm->imageFile->extension;
+                if($image->save()) {
+                    $model->idimagem = $image->id;
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+                return $this->redirect(['index', 'error' => $model->errors]);
             }
+            return $this->redirect(['index', 'error' => $uploadForm->errors]);
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
         ]);
     }
 
