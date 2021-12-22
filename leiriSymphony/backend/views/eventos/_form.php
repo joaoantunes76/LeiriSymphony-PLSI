@@ -20,7 +20,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model,'data')->widget(DatePicker::classname(),[
         'language' => 'pt',
-        'dateFormat' => 'php:Y-m-d'
+        'dateFormat' => 'php:Y-m-d',
+        'options' => ['class' => 'form-control'],
     ])->label('Data') ?>
 
     <?= $form->field($model, 'horainicio')->widget(\janisto\timepicker\TimePicker::className(),[
