@@ -148,7 +148,7 @@ class MusicasController extends Controller
     {
         $this->findModel($id, $idalbuns)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['albuns/view?id='.$idalbuns]);
     }
 
     /**
