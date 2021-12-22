@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="albunsartistas-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
         <?= Html::a('Update', ['update', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista], ['class' => 'btn btn-primary']) ?>
