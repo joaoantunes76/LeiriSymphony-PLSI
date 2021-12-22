@@ -49,10 +49,10 @@ class AlbunsartistasController extends Controller
 
     /**
      * Lists all Albunsartistas models.
-     * @param int $idartista Idartista
+     * @param int $album Album
      * @return mixed
      */
-    public function actionSelecionarArtista($idArtista)
+    public function actionSelecionarArtista($album)
     {
         $searchModel = new ArtistasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -82,13 +82,20 @@ class AlbunsartistasController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idalbum, $idartista = null)
     {
         $model = new Albunsartistas();
+        $searchModel = new ArtistasSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista]);
+        if (isset($idartista)) {
+            $model->idalbum = $idalbum;
+            $model->idartista = $idartista;
+            if($model->save()){
+                return $this->redirect(['albuns/view', 'id' => $model->idalbum]);
+            }
+            else {
+                return $this->redirect(['albuns/view', 'id' => $model->idalbum, 'error' => 1]);
             }
         } else {
             $model->loadDefaultValues();
@@ -96,6 +103,8 @@ class AlbunsartistasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -126,13 +135,12 @@ class AlbunsartistasController extends Controller
      * @param int $idalbum Idalbum
      * @param int $idartista Idartista
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($idalbum, $idartista)
     {
         $this->findModel($idalbum, $idartista)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['albuns/view?id='.$idalbum]);
     }
 
     /**

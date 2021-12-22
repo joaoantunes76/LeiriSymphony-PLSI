@@ -1,6 +1,7 @@
 <?php
 
 use hosanna\audiojs\AudioJs;
+use yii\bootstrap4\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -53,16 +54,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
         <div>
-            <pre>
-            <?= print_r($model->idartistas); ?>
-            </pre>
+            <table class="table table-striped table-bordered ml-5">
+                <thead>
+                    <tr>
+                        <th>Artista(s)</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    foreach($model->idartistas as $artista) {
+                    ?>
+                        <tr>
+                            <td><?= $artista->nome ?></td>
+                            <td>
+                                <?= Html::a('Remover', ['albunsartistas/delete?idalbum='.$model->id.'&idartista='.$artista->id], ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
+                        </tr>
+                    <?php
+                    }
+                ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <br>
     <p>
         <?= Html::a('Adicionar Musica', ['musicas/create?albumId='.$model->id], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Adicionar Artista', ['albunsartistas/selecionar-artista?albumId='.$model->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Artista', ['albunsartistas/create?idalbum='.$model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
