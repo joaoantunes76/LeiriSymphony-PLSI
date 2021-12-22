@@ -52,11 +52,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         </div>
+        <div>
+            <pre>
+            <?= print_r($model->idartistas); ?>
+            </pre>
+        </div>
     </div>
 
     <br>
     <p>
         <?= Html::a('Adicionar Musica', ['musicas/create?albumId='.$model->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Artista', ['albunsartistas/selecionar-artista?albumId='.$model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -87,6 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
 
 
 

@@ -12,32 +12,31 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="albuns-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Create Albuns', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'nome',
-            'preco',
-            'datalancamento',
-             [
-                 'attribute' => 'idimagem0',
-                 'label' => 'Imagem',
-                 'format' => 'html',
-                 'value' => function ($data) {
-                    return Html::img(Yii::getAlias('@imageurl') . '/' . $data->idimagem0->nome, ['width' => "154px"]);
-                 }
-             ],
+            [
+                'attribute' => 'preco',
+                'label' => 'Preço',
+            ],
+            [
+             'attribute' => 'datalancamento',
+             'label' => 'Data de Lançamento',
+            ],
+            [
+             'attribute' => 'idimagem0',
+             'label' => 'Imagem',
+             'format' => 'html',
+             'value' => function ($data) {
+                return Html::img(Yii::getAlias('@imageurl') . '/' . $data->idimagem0->nome, ['width' => "154px"]);
+             }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
