@@ -4,6 +4,9 @@ namespace backend\controllers;
 
 use common\models\Musicas;
 use common\models\MusicasSearch;
+use Yii;
+use yii\web\UploadedFile;
+use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -68,26 +71,27 @@ class MusicasController extends Controller
     public function actionCreate()
     {
         $model = new Musicas();
+        $uploadForm = new UploadForm();
 
         if(isset($_GET["albumId"])){
             $albumId = $_GET["albumId"];
             if ($this->request->isPost) {
-                echo'<pre>';
-                print_r($_POST);
-                echo '</pre>';
                 $model->load($this->request->post());
-                $model->idalbuns = $albumId;
-                if($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
-                }
-                else{
-                    print_r($model->errors);
+                $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
+                $now = date("mdyhis");
+                if ($uploadForm->uploadMusic($now)) {
+                    $model->ficheiro =  $now . "." . $uploadForm->musicFile->extension;
+                    $model->idalbuns = $albumId;
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+                    }
                 }
             } else {
                 $model->loadDefaultValues();
             }
             return $this->render('create', [
                 'model' => $model,
+                'uploadForm' => $uploadForm
             ]);
         }
         else {
@@ -110,13 +114,25 @@ class MusicasController extends Controller
     public function actionUpdate($id, $idalbuns)
     {
         $model = $this->findModel($id, $idalbuns);
+        $uploadForm = new UploadForm();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+        if ($this->request->isPost) {
+            $model->load($this->request->post());
+            $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
+            $now = date("mdyhis");
+            if ($uploadForm->uploadMusic($now)) {
+                unlink(   \Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
+                $model->ficheiro = $now . "." . $uploadForm->musicFile->extension;
+                $model->idalbuns = $idalbuns;
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'uploadForm' => $uploadForm
         ]);
     }
 

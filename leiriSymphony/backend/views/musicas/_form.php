@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Musicas */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $uploadForm \app\models\UploadForm*/
 ?>
 
 <div class="musicas-form">
@@ -14,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ficheiro')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($uploadForm, 'musicFile')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

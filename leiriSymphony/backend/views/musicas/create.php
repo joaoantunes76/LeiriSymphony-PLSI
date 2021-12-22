@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Musicas */
+/* @var $uploadForm app\models\UploadForm */
 
 $this->title = 'Create Musicas';
 $this->params['breadcrumbs'][] = ['label' => 'Musicas', 'url' => ['index']];
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'uploadForm' => $uploadForm
     ]) ?>
 
 </div>

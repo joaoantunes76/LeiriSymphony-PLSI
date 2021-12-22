@@ -116,13 +116,29 @@ class AlbunsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $uploadForm = new UploadForm();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+            $now = date("mdyhis");
+            if ($uploadForm->upload($now)) {
+                $model->load($this->request->post());
+                $image = new Imagens();
+                $image->nome = $now . "." . $uploadForm->imageFile->extension;
+                if($image->save()) {
+                    $model->idimagem = $image->id;
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+                return $this->redirect(['index', 'error' => $model->errors]);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
         ]);
     }
 

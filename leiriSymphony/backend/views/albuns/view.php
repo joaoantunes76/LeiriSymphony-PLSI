@@ -1,4 +1,6 @@
 <?php
+
+use hosanna\audiojs\AudioJs;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -63,6 +65,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'nome',
             'ficheiro',
+            [
+                    'label' => 'Musica',
+                    'format' => 'raw',
+                    'value' => function($data) {
+                        if($data->ficheiro != ""){
+                            return '<audio controls><source src="http://leirysymphony-be/uploads/musics/'.$data->ficheiro.'" type="audio/ogg"></audio>';
+                        }
+                        else {
+                            return "";
+                        }
+                    },
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],
