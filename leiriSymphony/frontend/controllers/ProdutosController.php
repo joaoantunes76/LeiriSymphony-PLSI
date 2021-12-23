@@ -8,8 +8,6 @@ use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
 use common\models\Carrinho;
-use common\models\Perfis;
-use common\models\User;
 use phpDocumentor\Reflection\Types\Array_;
 use Yii;
 use yii\web\Controller;
@@ -109,11 +107,16 @@ class ProdutosController extends Controller
             $produtoId = $_POST["Produtos"]["id"];
             $iduser = Yii::$app->user->id;
 
+            $exists = Carrinho::find()->where( [ 'idproduto' => $produtoId ] )->andWhere( [ 'idperfil' => $iduser ] )->exists();
+
             $carrinho = new Carrinho();
             $carrinho->idproduto = $produtoId;
             $carrinho->idperfil = $iduser;
-            $carrinho->save();
-
+            if ($exists){
+                Yii::$app->session->setFlash('success', "Este produto já foi adicionado ao carrinho.");
+            }else{
+                $carrinho->save();
+            }
 
             return $this->render('view', [
                 'model' => $this->findModel($produtoId),
