@@ -7,18 +7,22 @@ use yii\data\ActiveDataProvider;
 use common\models\Produtos;
 
 /**
- * ProdutosSearch represents the model behind the search form of `app\models\Produtos`.
+ * ProdutosSearch represents the model behind the search form of `common\models\Produtos`.
  */
 class ProdutosSearch extends Produtos
 {
+
+    public $idsubcategoria0;
+    public $idmarca0;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['produtoId', 'subcategoriaId', 'marcaId', 'digital'], 'integer'],
-            [['produtoNome', 'descricao', 'ficheiro'], 'safe'],
+            [['id', 'idsubcategoria', 'idmarca', 'usado', 'stock'], 'integer'],
+            [['nome', 'descricao', 'idsubcategoria0', 'idmarca0'], 'safe'],
             [['preco'], 'number'],
         ];
     }
@@ -43,11 +47,21 @@ class ProdutosSearch extends Produtos
     {
         $query = Produtos::find();
 
-        // add conditions that should always apply here
+        $query->joinWith(['idsubcategoria0', 'idmarca0']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['idsubcategoria0'] = [
+            'asc' => ['subcategorias.nome' => SORT_ASC],
+            'desc' => ['subcategorias.nome' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['idmarca0'] = [
+            'asc' => ['marcas.nome' => SORT_ASC],
+            'desc' => ['marcas.nome' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -59,16 +73,18 @@ class ProdutosSearch extends Produtos
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'produtoId' => $this->produtoId,
-            'subcategoriaId' => $this->subcategoriaId,
-            'marcaId' => $this->marcaId,
-            'digital' => $this->digital,
+            'id' => $this->id,
+            'idsubcategoria' => $this->idsubcategoria,
+            'idmarca' => $this->idmarca,
+            'usado' => $this->usado,
             'preco' => $this->preco,
+            'stock' => $this->stock,
         ]);
 
-        $query->andFilterWhere(['like', 'produtoNome', $this->produtoNome])
+        $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'ficheiro', $this->ficheiro]);
+            ->andFilterWhere(['like', 'subcategorias.nome', $this->idsubcategoria0])
+            ->andFilterWhere(['like', 'marcas.nome', $this->idmarca0]);
 
         return $dataProvider;
     }

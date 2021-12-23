@@ -113,16 +113,23 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $perfis = new Perfis();
+        $perfis = Perfis::findOne($id);
+
+        if($perfis === null){
+            $perfis = new Perfis();
+        }
 
 
         if ($this->request->isPost){
             $model->load($this->request->post());
-             //$model->save();
-             $perfis->load($this->request->post());
-             return '<pre>'.print_r($model).print_r($perfis);
-            //$perfis->save(); 
-           //return $this->redirect(['view', 'id' => $model->id]);
+            $perfis->load($this->request->post());
+            $perfis->iduser = $model->id;
+            if($model->save() && $perfis->save()) {
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'success']);
+            }
+            else{
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'failed']);
+            }
         }
 
         return $this->render('update', [

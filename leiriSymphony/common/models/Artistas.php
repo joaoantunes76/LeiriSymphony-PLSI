@@ -5,21 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "marcas".
+ * This is the model class for table "artistas".
  *
  * @property int $id
  * @property string $nome
  *
- * @property Produtos[] $produtos
+ * @property Albunsartistas[] $albunsartistas
+ * @property Albuns[] $idalbums
  */
-class Marcas extends \yii\db\ActiveRecord
+class Artistas extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'marcas';
+        return 'artistas';
     }
 
     /**
@@ -45,12 +46,22 @@ class Marcas extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Produtos]].
+     * Gets query for [[Albunsartistas]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProdutos()
+    public function getAlbunsartistas()
     {
-        return $this->hasMany(Produtos::className(), ['idmarca' => 'id']);
+        return $this->hasMany(Albunsartistas::className(), ['idartista' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idalbums]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdalbums()
+    {
+        return $this->hasMany(Albuns::className(), ['id' => 'idalbum'])->viaTable('albunsartistas', ['idartista' => 'id']);
     }
 }

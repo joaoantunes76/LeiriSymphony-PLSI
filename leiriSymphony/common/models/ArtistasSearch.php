@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\perfis;
+use common\models\Artistas;
 
 /**
- * perfisSearch represents the model behind the search form of `common\models\perfis`.
+ * ArtistasSearch represents the model behind the search form of `common\models\Artistas`.
  */
-class perfisSearch extends perfis
+class ArtistasSearch extends Artistas
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class perfisSearch extends perfis
     public function rules()
     {
         return [
-            [['perfilId', 'user_id'], 'integer'],
-            [['nome', 'NIF', 'endereco', 'cidade', 'codigoPostal', 'telefone'], 'safe'],
+            [['id'], 'integer'],
+            [['nome'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class perfisSearch extends perfis
      */
     public function search($params)
     {
-        $query = perfis::find();
+        $query = Artistas::find();
 
         // add conditions that should always apply here
 
@@ -58,16 +58,10 @@ class perfisSearch extends perfis
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'perfilId' => $this->perfilId,
-            'user_id' => $this->user_id,
+            'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'NIF', $this->NIF])
-            ->andFilterWhere(['like', 'endereco', $this->endereco])
-            ->andFilterWhere(['like', 'cidade', $this->cidade])
-            ->andFilterWhere(['like', 'codigoPostal', $this->codigoPostal])
-            ->andFilterWhere(['like', 'telefone', $this->telefone]);
+        $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }

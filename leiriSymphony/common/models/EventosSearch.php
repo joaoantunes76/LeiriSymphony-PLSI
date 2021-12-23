@@ -4,23 +4,21 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Subcategorias;
+use common\models\Eventos;
 
 /**
- * SubcategoriasSearch represents the model behind the search form of `common\models\Subcategorias`.
+ * EventosSearch represents the model behind the search form of `common\models\Eventos`.
  */
-class SubcategoriasSearch extends Subcategorias
+class EventosSearch extends Eventos
 {
-    public $idcategoria0;
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'idcategoria'], 'integer'],
-            [['nome', 'idcategoria0'], 'safe'],
+            [['id', 'lotacao'], 'integer'],
+            [['descricao', 'data', 'horainicio', 'horafim'], 'safe'],
         ];
     }
 
@@ -42,18 +40,13 @@ class SubcategoriasSearch extends Subcategorias
      */
     public function search($params)
     {
-        $query = Subcategorias::find();
+        $query = Eventos::find();
 
-        $query->joinWith(['idcategoria0']);
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $dataProvider->sort->attributes['idcategoria0'] = [
-            'asc' => ['categorias.nome' => SORT_ASC],
-            'desc' => ['categorias.nome' => SORT_DESC],
-        ];
 
         $this->load($params);
 
@@ -66,11 +59,13 @@ class SubcategoriasSearch extends Subcategorias
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idcategoria' => $this->idcategoria,
+            'lotacao' => $this->lotacao,
+            'data' => $this->data,
+            'horainicio' => $this->horainicio,
+            'horafim' => $this->horafim,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-        ->andFilterWhere(['like', 'categorias.nome', $this->idcategoria0]);
+        $query->andFilterWhere(['like', 'descricao', $this->descricao]);
 
         return $dataProvider;
     }

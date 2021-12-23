@@ -18,13 +18,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($perfis, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($perfis, 'NIF')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($perfis, 'nif')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($perfis, 'endereco')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($perfis, 'cidade')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($perfis, 'codigoPostal')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($perfis, 'codigopostal')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($perfis, 'telefone')->textInput(['maxlength' => true]) ?>
     
