@@ -282,6 +282,8 @@ body {
 }
 
 .ls-product-view {
+  max-width: 60vw;
+  width: 1000px;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
