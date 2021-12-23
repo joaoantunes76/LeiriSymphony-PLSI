@@ -114,13 +114,17 @@ AppAsset::register($this);
                 ?>
                         <div class="row mt-3">
                             <div class="col">
+                                <?= Html::a('Remover', Url::to(['produtos/delete-carrinho', 'idproduto' => $produtoCarrinho->idproduto]), [
+                                    'class' => 'btn btn-primary',
+                                    'data-method' => 'POST',
+                                ]) ?>
                                 <div class="produto">
                                     <div class="quantidade pr-5 pl-5">
                                         <label for="quantidade">Quantidade</label>
                                         <label><?php  ?></label>
                                         <input type="number" id="quantidade" name="quantidade" min="1" value="1">
                                     </div>
-                                    <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
+                                    <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoCarrinho->idproduto]) ?>">
                                         <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
                                         <p class="mt-2">
                                         <p><?= Html::encode($produto->nome) ?></p>

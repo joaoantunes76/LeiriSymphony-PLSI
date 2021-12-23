@@ -106,18 +106,20 @@ class ProdutosController extends Controller
         if ($this->request->isPost) {
             $produtoId = $_POST["Produtos"]["id"];
             $iduser = Yii::$app->user->id;
+            if (Yii::$app->user->isGuest){
+                Yii::$app->session->setFlash('error', "É necessário fazer login para adicionar produtos ao carrinho.");
+            } else {
+                $exists = Carrinho::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $iduser])->exists();
 
-            $exists = Carrinho::find()->where( [ 'idproduto' => $produtoId ] )->andWhere( [ 'idperfil' => $iduser ] )->exists();
-
-            $carrinho = new Carrinho();
-            $carrinho->idproduto = $produtoId;
-            $carrinho->idperfil = $iduser;
-            if ($exists){
-                Yii::$app->session->setFlash('success', "Este produto já foi adicionado ao carrinho.");
-            }else{
-                $carrinho->save();
+                $carrinho = new Carrinho();
+                $carrinho->idproduto = $produtoId;
+                $carrinho->idperfil = $iduser;
+                if ($exists){
+                    Yii::$app->session->setFlash('error', "Este produto já foi adicionado ao carrinho.");
+                } else {
+                    $carrinho->save();
+                }
             }
-
             return $this->render('view', [
                 'model' => $this->findModel($produtoId),
             ]);
@@ -127,11 +129,25 @@ class ProdutosController extends Controller
                 'model' => $this->findModel($produtoId),
             ]);
         }
-
-
     }
 
-
+    public function actionDeleteCarrinho($idproduto)
+    {
+        $iduser = Yii::$app->user->id;
+        if ($this->request->isGet) {
+            $exists = Carrinho::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
+            if ($exists){
+                Yii::$app->db->createCommand()->delete('carrinho', ['idproduto' => $idproduto, 'idperfil' => $iduser])->execute();
+                Yii::$app->session->setFlash('success', "Produto removido do carrinho com sucesso.");
+            }else{
+                Yii::$app->session->setFlash('error', "Erro, este produto não se encontra no carrinho");
+            }
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        else{
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+    }
 
     /**
      * Finds the Produtos model based on its primary key value.
