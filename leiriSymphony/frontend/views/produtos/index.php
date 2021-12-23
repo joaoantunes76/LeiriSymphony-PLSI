@@ -24,11 +24,11 @@ $this->title = 'Produtos';
         <br>
         <h1>Resultados: </h1>
 
-        <div class="row mt-5 justify-content-center">
+        <div class="row mt-5 justify-content-start">
             <?php
             foreach ($produtos as $produto) {
             ?>
-                <div class="d-flex justify-content-center text-center">
+                <div class="col-md-3 text-center">
                     <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
                 </div>
             <?php
