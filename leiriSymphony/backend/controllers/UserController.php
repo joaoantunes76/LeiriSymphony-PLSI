@@ -114,18 +114,20 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
         $perfis = new Perfis();
-        $signup = new SignupForm();
-     
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if ($this->request->isPost){
+            $model->load($this->request->post());
+             //$model->save();
+             $perfis->load($this->request->post());
+             return '<pre>'.print_r($model).print_r($perfis);
+            //$perfis->save(); 
+           //return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'perfis' => $perfis,
-            'signup' => $signup
-        
+            'perfis' => $perfis
         ]);
     }
 
