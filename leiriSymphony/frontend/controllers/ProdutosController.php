@@ -118,6 +118,7 @@ class ProdutosController extends Controller
                     Yii::$app->session->setFlash('error', "Este produto já foi adicionado ao carrinho.");
                 } else {
                     $carrinho->save();
+                    Yii::$app->session->setFlash('success', "Produto adicionado ao carrinho.");
                 }
             }
             return $this->render('view', [

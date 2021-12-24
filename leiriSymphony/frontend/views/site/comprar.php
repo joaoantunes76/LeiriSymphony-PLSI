@@ -37,21 +37,19 @@ $this->title = 'Comprar';
                 <h3>Confirmar produtos da lista de compras</h3>
             </div>
             <div class="form-produtos">
-                <div class="form-group d-flex align-items-center">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                    <input type="text" class="form-control mr-2" value="Nome do produto (0.00€)">
-                    <input type="number" class="form-control ml-2">
-                </div>
-                <div class="form-group d-flex align-items-center">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                    <input type="text" class="form-control mr-2" value="Nome do produto (0.00€)">
-                    <input type="number" class="form-control ml-2">
-                </div>
-                <div class="form-group d-flex align-items-center">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                    <input type="text" class="form-control mr-2" value="Nome do produto (0.00€)">
-                    <input type="number" class="form-control ml-2">
-                </div>
+                <?php
+                    $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
+                    foreach ($produtosCarrinho as $produtoCarrinho){
+                        $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
+                ?>
+                    <div class="form-group d-flex align-items-center">
+                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
+                        <label ><?= Html::encode($produto->nome)?>  <?= Html::encode($produto->preco)?>€</label>
+                        <input type="number" id="quantidade" class="form-control ml-2" min="1" value="<?= $produtoCarrinho->quantidade ?>">
+                    </div>
+                <?php
+                    }
+                ?>
             </div>
             <div class="form-group text-center">
                 <input type="submit" value="Cancelar" class="btn btn-secondary">

@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use app\models\User;
+use common\models\Carrinho;
 use common\models\Categorias;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -105,7 +107,6 @@ class SiteController extends Controller
     {
         return $this->render('sucesso');
     }
-
 
 
     /**
