@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $produtos common\models\Produtos */
 /* @var $uploadForm app\models\UploadForm */
 
-$this->title = 'Create Imagens';
+$this->title = 'Adicionar Imagem';
 $this->params['breadcrumbs'][] = ['label' => 'Imagens', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

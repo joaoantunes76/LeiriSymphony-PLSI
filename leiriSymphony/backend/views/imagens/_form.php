@@ -17,19 +17,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($uploadForm, 'imageFile')->fileInput() ?>
 
     <div class="form-group">
-        <label for="Imagens[idproduto]">Produto</label>
-        <select name="Imagens[idproduto]" id="Imagens[idproduto]" class="form-control">
-            <?php
-            foreach ($produtos as $produto) {
-                ?>
-                <option value="<?= $produto->id ?>"><?= $produto->nome ?></option>
-                <?php
-            }
-            ?>
-        </select>
-    </div>
-
-    <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 

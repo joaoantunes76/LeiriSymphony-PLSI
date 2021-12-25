@@ -126,6 +126,7 @@ class AlbunsController extends Controller
                 $image = new Imagens();
                 $image->nome = $now . "." . $uploadForm->imageFile->extension;
                 if($image->save()) {
+                    unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
                     $model->idimagem = $image->id;
                     if ($model->save()) {
                         return $this->redirect(['view', 'id' => $model->id]);
@@ -151,7 +152,9 @@ class AlbunsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
+        $model->delete();
 
         return $this->redirect(['index']);
     }

@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
             [
                 'attribute' => 'idsubcategoria0',
                 'label' => 'Subcategoria',
@@ -40,7 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['text'],
             ],
             'nome',
-            'usado',
+            [
+                'attribute' => 'usado',
+                'label' => 'Usado',
+                'value' => function ($data){
+                    return $data->usado == 0 ? 'Não' : 'Sim';
+                },
+            ],
             'preco',
             'stock',
 
