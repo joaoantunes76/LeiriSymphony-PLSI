@@ -4,15 +4,15 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Encomendas;
+use common\models\Encomendasprodutos;
 
 /**
- * EncomendasSearch represents the model behind the search form of `common\models\Encomendas`.
+ * EncomendasprodutosSearch represents the model behind the search form of `common\models\Encomendasprodutos`.
  */
-class EncomendasSearch extends Encomendas
+class EncomendasprodutosSearch extends Encomendasprodutos
 {
 
-    public $idperfil0;
+    public $idproduto0;
 
     /**
      * {@inheritdoc}
@@ -20,9 +20,8 @@ class EncomendasSearch extends Encomendas
     public function rules()
     {
         return [
-            [['id', 'idperfil', 'pago'], 'integer'],
-            [['estado', 'tipoexpedicao', 'idperfil0'], 'safe'],
-            [['preco'], 'number'],
+            [['idencomenda', 'idproduto', 'quantidade'], 'integer'],
+            ['idproduto0', 'safe']
         ];
     }
 
@@ -44,17 +43,17 @@ class EncomendasSearch extends Encomendas
      */
     public function search($params)
     {
-        $query = Encomendas::find();
+        $query = Encomendasprodutos::find();
 
-        $query->joinWith(['idperfil0']);
+        $query->joinWith(['idproduto0']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $dataProvider->sort->attributes['idperfil0'] = [
-            'asc' => ['perfis.nome' => SORT_ASC],
-            'desc' => ['perfis.nome' => SORT_DESC],
+        $dataProvider->sort->attributes['idproduto0'] = [
+            'asc' => ['produtos.nome' => SORT_ASC],
+            'desc' => ['produtos.nome' => SORT_DESC],
         ];
 
         $this->load($params);
@@ -66,16 +65,8 @@ class EncomendasSearch extends Encomendas
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'idperfil' => $this->idperfil,
-            'pago' => $this->pago,
-            'preco' => $this->preco,
-        ]);
-
-        $query->andFilterWhere(['like', 'estado', $this->estado])
-            ->andFilterWhere(['like', 'tipoexpedicao', $this->tipoexpedicao])
-            ->andFilterWhere(['like', 'perfis.nome', $this->idperfil0]);
+        $query->andFilterWhere(['idencomenda' => $this->idencomenda, 'idproduto' => $this->idproduto, 'quantidade' => $this->quantidade,])
+            ->andFilterWhere(['like', 'produtos.nome', $this->idproduto0]);;
 
         return $dataProvider;
     }

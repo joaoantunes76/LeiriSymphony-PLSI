@@ -3,8 +3,10 @@
 namespace backend\controllers;
 
 use common\models\Encomendas;
+use common\models\EncomendasprodutosSearch;
 use common\models\EncomendasSearch;
 use common\models\Perfis;
+use common\models\ProdutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -55,7 +57,13 @@ class EncomendasController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new EncomendasprodutosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['idencomenda' => $id]);
+
         return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
         ]);
     }

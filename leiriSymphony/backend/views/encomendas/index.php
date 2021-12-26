@@ -27,7 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['text'],
             ],
             'estado',
-            'pago',
+            [
+                'attribute' => 'pago',
+                'label' => 'Pago',
+                'format' => ['text'],
+                'value' => function ($data){
+                    return $data->pago ? "Sim" : "Não";
+                },
+            ],
             [
                 'attribute' => 'preco',
                 'label' => 'Preço',
@@ -43,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],
-                'template' => '{update} {delete}',
+                'template' => '{view} {update} {delete}',
             ],
         ],
     ]); ?>
