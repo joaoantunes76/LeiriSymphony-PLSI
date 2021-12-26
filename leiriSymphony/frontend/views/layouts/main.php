@@ -107,23 +107,17 @@ AppAsset::register($this);
                     foreach ($produtosCarrinho as $produtoCarrinho){
                         $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
                 ?>
-                        <div class="row mt-3">
-                            <div class="col">
+                        <hr>
+                        <div class="mt-4">
                                 <?= Html::a('Remover', Url::to(['produtos/delete-carrinho', 'idproduto' => $produtoCarrinho->idproduto]), [
-                                    'class' => 'btn btn-primary',
+                                    'class' => 'btn btn-danger',
                                 ]) ?>
-                                <div class="produto">
-                                    <div class="quantidade pr-5 pl-5">
-                                        <label for="quantidade">Quantidade: <?= $produtoCarrinho->quantidade ?></label>
-                                    </div>
-                                    <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoCarrinho->idproduto]) ?>">
+                                <div class="produto mt-4">
+                                    <a href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoCarrinho->idproduto]) ?>">
                                         <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
-                                        <p class="mt-2">
-                                        <p><?= Html::encode($produto->nome) ?></p>
-                                        <p><?= Html::encode($produto->preco) ?> €</p>
+                                        <p><?= Html::encode($produto->nome) ?> (<?= Html::encode($produto->preco) ?> €)</p>
                                     </a>
                                 </div>
-                            </div>
                         </div>
                 <?php
                     }
