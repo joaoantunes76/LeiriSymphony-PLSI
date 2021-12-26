@@ -79,7 +79,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(5)->all();
+        $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
 
         return $this->render('index', [
             'produtos' => $produtos,
