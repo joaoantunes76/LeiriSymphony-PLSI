@@ -104,65 +104,71 @@ class SiteController extends Controller
         $erroCartao = false;
         $erroEncomendaProduto = false;
 
-        if($this->request->isPost){
-            $pagamentoOnline->load($this->request->post());
-            $encomenda = new Encomendas();
-            $encomenda->idperfil = $perfil->id;
-            $preco = 0;
-            foreach($_POST as $post){
-                if(isset($post["quantidade"]) && isset($post["id"])){
-                    $produtoParaCarrinho = Produtos::findOne($post["id"]);
-                    $preco += ($produtoParaCarrinho->preco * $post["quantidade"]);
-                }
-            }
-            $encomenda->preco = $preco;
-            $encomenda->tipoexpedicao = addslashes($_POST["entrega"]);
-            $encomenda->estado = 'Em Processamento';
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
 
-            if($this->request->post('pagamento') == 'pagamentoloja') {
-                $encomenda->pago = 0;
-            }
-            else {
-                if($pagamentoOnline->validate()) {
-                    $encomenda->pago = 1;
-                }
-                else{
-                    $erroCartao = true;
-                }
-            }
-
-            if($encomenda->validate() && $encomenda->save()){
+        } else {
+            if($this->request->isPost){
+                $pagamentoOnline->load($this->request->post());
+                $encomenda = new Encomendas();
+                $encomenda->idperfil = $perfil->id;
+                $preco = 0;
                 foreach($_POST as $post){
                     if(isset($post["quantidade"]) && isset($post["id"])){
-                        $encomendaProduto = new Encomendasprodutos();
-                        $encomendaProduto->idencomenda = $encomenda->id;
-                        $encomendaProduto->idproduto = $post["id"];
-                        $encomendaProduto->quantidade = $post["quantidade"];
-                        if(!$encomendaProduto->save()){
-                            $erroEncomendaProduto = true;
+                        $produtoParaCarrinho = Produtos::findOne($post["id"]);
+                        $preco += ($produtoParaCarrinho->preco * $post["quantidade"]);
+                    }
+                }
+                $encomenda->preco = $preco;
+                $encomenda->tipoexpedicao = addslashes($_POST["entrega"]);
+                $encomenda->estado = 'Em Processamento';
+
+                if($this->request->post('pagamento') == 'pagamentoloja') {
+                    $encomenda->pago = 0;
+                }
+                else {
+                    if($pagamentoOnline->validate()) {
+                        $encomenda->pago = 1;
+                    }
+                    else{
+                        $erroCartao = true;
+                    }
+                }
+
+                if($encomenda->validate() && $encomenda->save()){
+                    foreach($_POST as $post){
+                        if(isset($post["quantidade"]) && isset($post["id"])){
+                            $encomendaProduto = new Encomendasprodutos();
+                            $encomendaProduto->idencomenda = $encomenda->id;
+                            $encomendaProduto->idproduto = $post["id"];
+                            $encomendaProduto->quantidade = $post["quantidade"];
+                            if(!$encomendaProduto->save()){
+                                $erroEncomendaProduto = true;
+                            }
                         }
                     }
                 }
-            }
 
-            if(!$erroEncomendaProduto && !$erroCartao){
-                $this->redirect('sucesso');
+                if(!$erroEncomendaProduto && !$erroCartao){
+                    $this->redirect('sucesso');
+                }
+                else{
+                    return $this->render('comprar', [
+                        'model' => $produtosCarrinho,
+                        'perfil' => $perfil,
+                        'pagamentoOnline' => $pagamentoOnline,
+                        'erro' => 'falhou',
+                    ]);
+                }
             }
-            else{
-                return $this->render('comprar', [
-                    'model' => $produtosCarrinho,
-                    'perfil' => $perfil,
-                    'pagamentoOnline' => $pagamentoOnline,
-                    'erro' => 'falhou',
-                ]);
-            }
+            return $this->render('comprar', [
+                'model' => $produtosCarrinho,
+                'perfil' => $perfil,
+                'pagamentoOnline' => $pagamentoOnline,
+            ]);
         }
 
-        return $this->render('comprar', [
-            'model' => $produtosCarrinho,
-            'perfil' => $perfil,
-            'pagamentoOnline' => $pagamentoOnline,
-        ]);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 
