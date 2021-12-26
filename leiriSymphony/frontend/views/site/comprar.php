@@ -2,7 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
+/* @var $model common\models\Carrinho */
+/* @var $produtoCarrinho common\models\Carrinho */
+/* @var $perfil common\models\Perfis */
+/* @var $pagamentoOnline common\models\PagamentoOnline */
 
 use yii\helpers\Url;
 use yii\bootstrap4\Html;
@@ -31,23 +34,25 @@ $this->title = 'Comprar';
             </div>
         </div>
     </div>
-    <form action="" class="mt-5 ls-form">
+
+    <?php $form = ActiveForm::begin(['options' => ['class' => 'ls-form mt-5']]); ?>
         <div id="form-step-1" class="">
             <div class="text-center mb-5">
                 <h3>Confirmar produtos da lista de compras</h3>
             </div>
             <div class="form-produtos">
                 <?php
-                    $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
-                    foreach ($produtosCarrinho as $produtoCarrinho){
-                        $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
+                    $i = 0;
+                    foreach ($model as $produtoCarrinho){
                 ?>
                     <div class="form-group d-flex align-items-center">
-                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
-                        <label ><?= Html::encode($produto->nome)?>  <?= Html::encode($produto->preco)?>€</label>
-                        <input type="number" id="quantidade" class="form-control ml-2" min="1" value="<?= $produtoCarrinho->quantidade ?>">
+                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produtoCarrinho->idproduto0->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
+                        <label for="quantidade"><?= Html::encode($produtoCarrinho->idproduto0->nome)?>  <?= Html::encode($produtoCarrinho->idproduto0->preco)?>€</label>
+                        <input type="number" id="quantidade" class="form-control ml-2" min="1" name="<?= $i ?>[quantidade]" value="<?= $produtoCarrinho->quantidade ?>">
+                        <input type="hidden" name="<?= $i ?>[id]" value="<?= $produtoCarrinho->idproduto ?>">
                     </div>
                 <?php
+                        $i++;
                     }
                 ?>
             </div>
@@ -63,32 +68,32 @@ $this->title = 'Comprar';
             <div class="form-faturacao">
                 <div class="form-group">
                     <label for="Nome">Nome</label>
-                    <input type="text" class="form-control" name="Nome">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->nome ?>" id="Nome">
                 </div>
                 <div class="form-group">
                     <label for="Morada">Morada</label>
-                    <input type="text" class="form-control" name="Morada">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->endereco ?>" id="Morada">
                 </div>
                 <div class="form-group">
                     <label for="Email">Email</label>
-                    <input type="text" class="form-control" name="Email">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->iduser0->email ?>" id="Email">
                 </div>
                 <div class="form-group">
                     <label for="CodigoPostal">Codigo Postal</label>
-                    <input type="text" class="form-control" name="CodigoPostal">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->codigopostal ?>" id="CodigoPostal">
                 </div>
                 <div class="form-group">
                     <label for="NIF">NIF</label>
-                    <input type="text" class="form-control" name="NIF">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->nif ?>" id="NIF">
                 </div>
                 <div class="form-group">
                     <label for="Telefone">Telefone</label>
-                    <input type="text" class="form-control" name="Telefone">
+                    <input type="text" class="form-control" disabled value="<?= $perfil->telefone ?>" id="Telefone">
                 </div>
             </div>
             <div class="form-group text-center">
                 <a class="btn btn-secondary" onclick="goStep1()">Voltar</a>
-                <a class="btn btn-info">Preencher Automaticamente</a>
+                <a class="btn btn-info" href="<?= Url::toRoute('site/perfil') ?>">Alterar perfil</a>
                 <a class="btn btn-primary" onclick="goStep3()">Proximo</a>
             </div>
         </div>
@@ -105,38 +110,26 @@ $this->title = 'Comprar';
                     </select>
                 </div>
                 <div id="pagamentoOnline" class="d-none">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" name="nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="numerocartao" id="numerocartaolabel">Numero do Cartão</label>
-                        <input type="number" class="form-control" name="numerocartao" id="numerocartao" onkeyup="checkCardNumber()">
-                    </div>
-                    <div class="form-group">
-                        <label for="datavalidade">Data de Validade</label>
-                        <input type="number" class="form-control" name="datavalidade">
-                    </div>
-                    <div class="form-group">
-                        <label for="codigocartao">CVV/CVV2</label>
-                        <input type="number" class="form-control" name="codigocartao">
-                    </div>
+                    <?= $form->field($pagamentoOnline, 'nome')->textInput() ?>
+                    <?= $form->field($pagamentoOnline, 'numero')->textInput() ?>
+                    <?= $form->field($pagamentoOnline, 'validade')->textInput() ?>
+                    <?= $form->field($pagamentoOnline, 'cvv')->textInput() ?>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label for="entrega">Entrega</label>
                     <select name="entrega" id="" class="form-control">
-                        <option value="entregaloja">Em loja</option>
-                        <option value="correio">Correio</option>
+                        <option value="Levantamento em loja">Em loja</option>
+                        <option value="'Envio">Correio</option>
                     </select>
                 </div>
             </div>
             <div class="form-group text-center">
                 <a class="btn btn-secondary" onclick="goStep2()">Voltar</a>
-                <input type="submit" value="Pagar" class="btn btn-primary">
+                <?= Html::submitButton('Pagar', ['class' => 'btn btn-success']) ?>
             </div>
         </div>
-    </form>
+    <?php ActiveForm::end(); ?>
 </div>
 
 <script>
