@@ -7,6 +7,8 @@ use common\models\Carrinho;
 use common\models\Categorias;
 use common\models\Encomendas;
 use common\models\Encomendasprodutos;
+use common\models\Eventos;
+use common\models\Eventosperfis;
 use common\models\Perfis;
 use frontend\models\PagamentoOnline;
 use frontend\models\ResendVerificationEmailForm;
@@ -184,13 +186,20 @@ class SiteController extends Controller
 
 
     /**
-     * Displays homepage.
+     * Displays eventos page.
      *
      * @return mixed
      */
     public function actionEventos()
     {
-        return $this->render('evento');
+        $eventos = Eventos::find()->orderBy(['data' => SORT_ASC])->one();
+        $registos = Eventosperfis::find()->where(['idevento' => $eventos->id])->all();
+        $lugaresRestantes = ($eventos->lotacao - count($registos));
+
+        return $this->render('evento', [
+            'model' => $eventos,
+            'lugaresRestantes' => $lugaresRestantes,
+        ]);
     }
 
     /**
