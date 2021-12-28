@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Produtos */
+/* @var $existeFavorito common\models\Produtosfavoritos */
 
 $this->title = $model->nome;
 \yii\web\YiiAsset::register($this);
@@ -64,6 +65,13 @@ $this->title = $model->nome;
             <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn btn-primary']) ?>
 
             <?php ActiveForm::end(); ?>
+            <?php
+                if($existeFavorito){
+                    echo Html::a('<i class="bi bi-heart-fill ls-text-primary ls-favorite-toggle"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'btn btn-black', 'title' => 'Remover dos favoritos']);
+                }else{
+                    echo Html::a('<i class="bi bi-heart ls-text-primary ls-favorite-toggle"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'btn btn-black', 'title' => 'Adicionar aos favoritos']);
+                }
+            ?>
         </div>
     </div>
 </div>

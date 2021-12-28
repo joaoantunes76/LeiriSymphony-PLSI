@@ -8,6 +8,7 @@ use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
 use common\models\Carrinho;
+use common\models\Produtosfavoritos;
 use phpDocumentor\Reflection\Types\Array_;
 use Yii;
 use yii\web\Controller;
@@ -103,9 +104,10 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
+        $iduser = Yii::$app->user->id;
+        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $iduser])->exists();
         if ($this->request->isPost) {
             $produtoId = $_POST["Produtos"]["id"];
-            $iduser = Yii::$app->user->id;
             if (Yii::$app->user->isGuest){
                 Yii::$app->session->setFlash('error', "É necessário fazer login para adicionar produtos ao carrinho.");
             } else {
@@ -123,11 +125,13 @@ class ProdutosController extends Controller
             }
             return $this->render('view', [
                 'model' => $this->findModel($produtoId),
+                'existeFavorito' => $existeFavorito,
             ]);
 
         } else {
             return $this->render('view', [
                 'model' => $this->findModel($produtoId),
+                'existeFavorito' => $existeFavorito,
             ]);
         }
     }
@@ -148,6 +152,23 @@ class ProdutosController extends Controller
         else{
             return $this->redirect(Yii::$app->request->referrer);
         }
+    }
+
+    public function actionAddFavorito($idproduto){
+        $iduser = Yii::$app->user->id;
+        $exists = Produtosfavoritos::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
+
+        if ($exists){
+            Yii::$app->db->createCommand()->delete('produtosfavoritos', ['idproduto' => $idproduto, 'idperfil' => $iduser])->execute();
+            Yii::$app->session->setFlash('success', "Produto removido dos favoritos");
+        }else{
+            $favorito = new Produtosfavoritos();
+            $favorito->idproduto = $idproduto;
+            $favorito->idperfil = $iduser;
+            $favorito->save();
+            Yii::$app->session->setFlash('success', "Produto adicionado aos favoritos");
+        }
+        return $this->redirect('view?produtoId='.$idproduto);
     }
 
     /**
