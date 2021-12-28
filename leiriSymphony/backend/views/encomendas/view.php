@@ -2,6 +2,7 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -66,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a('Adicionar Produto', ['encomendasprodutos/create', 'encomendaid' => $model->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Produto', ['encomendasprodutos/selectproduto', 'idencomenda' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -81,7 +82,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'quantidade',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return Url::to(['encomendasprodutos/'.$action, 'idencomenda' => $model->idencomenda, 'idproduto' => $model->idproduto]);
+                }
+            ],
         ],
     ]); ?>
 

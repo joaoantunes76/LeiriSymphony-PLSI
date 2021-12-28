@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Encomendasprodutos;
 use common\models\EncomendasprodutosSearch;
+use common\models\ProdutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,24 +62,47 @@ class EncomendasprodutosController extends Controller
     }
 
     /**
+     * Displays a single Encomendasprodutos model.
+     * @param int $idencomenda Idencomenda
+     * @param int $idproduto Idproduto
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionSelectproduto($idencomenda)
+    {
+        $searchModel = new ProdutosSearch();
+        $subquery = Encomendasprodutos::find()->select('idproduto')->where(['idencomenda' => $idencomenda]);
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['not in', 'produtos.id', $subquery]);
+
+        return $this->render('selectproduto', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Creates a new Encomendasprodutos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idencomenda, $idproduto)
     {
         $model = new Encomendasprodutos();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idencomenda' => $model->idencomenda, 'idproduto' => $model->idproduto]);
+                return $this->redirect(['encomendas/view', 'id' => $model->idencomenda]);
             }
+
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'idproduto' => $idproduto,
+            'idencomenda' => $idencomenda,
         ]);
     }
 
@@ -95,11 +119,13 @@ class EncomendasprodutosController extends Controller
         $model = $this->findModel($idencomenda, $idproduto);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idencomenda' => $model->idencomenda, 'idproduto' => $model->idproduto]);
+            return $this->redirect(['encomendas/view', 'id' => $model->idencomenda]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'idproduto' => $idproduto,
+            'idencomenda' => $idencomenda,
         ]);
     }
 
@@ -115,7 +141,7 @@ class EncomendasprodutosController extends Controller
     {
         $this->findModel($idencomenda, $idproduto)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['encomendas/view', 'id' => $idencomenda]);
     }
 
     /**

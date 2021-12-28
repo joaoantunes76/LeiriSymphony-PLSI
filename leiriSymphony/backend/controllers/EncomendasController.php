@@ -59,7 +59,7 @@ class EncomendasController extends Controller
     {
         $searchModel = new EncomendasprodutosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->where(['idencomenda' => $id]);
+        $dataProvider->query->andWhere(['idencomenda' => $id]);
 
         return $this->render('view', [
             'searchModel' => $searchModel,

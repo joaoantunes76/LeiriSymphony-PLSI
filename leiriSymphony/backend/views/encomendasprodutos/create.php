@@ -4,17 +4,19 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Encomendasprodutos */
+/* @var $idproduto */
+/* @var $idencomenda */
 
-$this->title = 'Create Encomendasprodutos';
-$this->params['breadcrumbs'][] = ['label' => 'Encomendasprodutos', 'url' => ['index']];
+$this->title = 'Adicionar produto à encomenda';
+$this->params['breadcrumbs'][] = ['label' => 'Produtos das encomendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="encomendasprodutos-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'idproduto' => $idproduto,
+        'idencomenda' => $idencomenda,
     ]) ?>
 
 </div>
