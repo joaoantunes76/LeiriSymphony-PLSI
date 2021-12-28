@@ -124,6 +124,7 @@ class SiteController extends Controller
                 $encomenda->preco = $preco;
                 $encomenda->tipoexpedicao = addslashes($_POST["entrega"]);
                 $encomenda->estado = 'Em Processamento';
+                $encomenda->data = date('Y-m-d');
 
                 if($this->request->post('pagamento') == 'pagamentoloja') {
                     $encomenda->pago = 0;
@@ -200,30 +201,6 @@ class SiteController extends Controller
             'model' => $eventos,
             'lugaresRestantes' => $lugaresRestantes,
         ]);
-    }
-
-    /**
-     * Displays encomedas page.
-     *
-     * @return mixed
-     */
-    public function actionEncomendas()
-    {
-        return $this->render('encomendas');
-    }
-
-    /**
-     * Displays perfil page.
-     *
-     * @return mixed
-     */
-    public function actionPerfil()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
-        } else {
-            return $this->render('perfil');
-        }
     }
 
     /**
