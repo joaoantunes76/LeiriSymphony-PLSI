@@ -72,7 +72,7 @@ AppAsset::register($this);
                 </div>
                 <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
                     <div class="ls-navbar-buttons">
-                        <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
+                        <a href="<?= Url::toRoute('perfis/index'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
                         <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
                         <a href="#carrinho" onclick="openCarrinhoCompras()"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
                     </div>

@@ -10,6 +10,7 @@ use common\models\Encomendasprodutos;
 use common\models\Eventos;
 use common\models\Eventosperfis;
 use common\models\Perfis;
+use common\models\Produtosfavoritos;
 use frontend\models\PagamentoOnline;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -263,8 +264,6 @@ class SiteController extends Controller
         ]);
     }
 
-
-
     /**
      * Displays favoritos page.
      *
@@ -272,7 +271,13 @@ class SiteController extends Controller
      */
     public function actionFavoritos()
     {
-        return $this->render('favoritos');
+        $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
+
+
+        return $this->render('favoritos', [
+            'model' => $produtosFavoritos,
+        ]);
+
     }
 
     /**
