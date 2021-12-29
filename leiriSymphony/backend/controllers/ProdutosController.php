@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\DemonstracoesSearch;
 use yii\web\Controller;
 use common\models\Marcas;
 use common\models\Produtos;
@@ -56,8 +57,14 @@ class ProdutosController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new DemonstracoesSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['idproduto' => $id]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -98,9 +98,6 @@ class MusicasController extends Controller
             return $this->redirect('index');
         }
 
-
-
-
     }
 
     /**
@@ -121,7 +118,7 @@ class MusicasController extends Controller
             $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
             $now = date("mdyhis");
             if ($uploadForm->uploadMusic($now)) {
-                unlink(   \Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
+                unlink(\Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
                 $model->ficheiro = $now . "." . $uploadForm->musicFile->extension;
                 $model->idalbuns = $idalbuns;
                 if ($model->save()) {
@@ -129,7 +126,6 @@ class MusicasController extends Controller
                 }
             }
         }
-
         return $this->render('update', [
             'model' => $model,
             'uploadForm' => $uploadForm

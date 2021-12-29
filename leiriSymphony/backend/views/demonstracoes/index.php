@@ -7,12 +7,12 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\DemonstracoesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Demonstracoes';
+$this->title = 'Demonstrações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="demonstracoes-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
 
     <p>
         <?= Html::a('Create Demonstracoes', ['create'], ['class' => 'btn btn-success']) ?>

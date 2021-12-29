@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\MusicasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Musicas';
+$this->title = 'Músicas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="musicas-index">
