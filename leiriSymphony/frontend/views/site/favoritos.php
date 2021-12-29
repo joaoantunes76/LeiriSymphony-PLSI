@@ -10,36 +10,45 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
-    <h1 class="ls-text-primary">Lista de Desejos</h1>
 
-    <div class="body-content mt-5">
-        <div class="row mt-3">
-            <?php
-                foreach ($model as $produtoFavorito){
-            ?>
-                <div class="col text-right">
-                    <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="bi bi-heart-fill ls-text-primary ls-favorite-toggle"></i></a>
-                    <div class="text-left">
-                        <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoFavorito->idproduto]) ?>">
-                            <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produtoFavorito->idproduto0->imagens[0]->nome, ['height' => "185px", 'class' => 'logo']); ?>
-                            <p class="mt-2"><?= Html::encode($produtoFavorito->idproduto0->nome) ?></p>
-                            <p><?= Html::encode($produtoFavorito->idproduto0->preco) ?> €</p>
-                        </a>
-                        <?php $form = ActiveForm::begin(); ?>
-                        <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn btn-primary']) ?>
-                        <?php $form = ActiveForm::end(); ?>
-                    </div>
+<!-- product_list part start-->
+<section class="product_list best_seller section_padding">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>Favoritos</h2>
                 </div>
-            <?php
-                }
-            ?>
-
-
-
-
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="best_product_slider owl-carousel">
+                    <?php
+                    //TODO: está a mostrar produtos repetidos
+                    foreach ($model as $produtoFavorito) {
+                        $produto = $produtoFavorito->idproduto0;
+                        if ($produto->imagens != null) {
+                            $imagemNome = $produto->imagens[0]->nome;
+                        } else {
+                            $imagemNome = "";
+                        }
+                        ?>
+                            <div class="single_product_item">
+                                <a href="<?= Url::toRoute('view?produtoId='.$produto->id) ?>">
+                                    <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                                </a>
+                                <div class="single_product_text">
+                                    <h4><?= $produto->nome ?></h4>
+                                    <h3><?= $produto->preco ?>€</h3>
+                                    <a href="<?= Url::toRoute('produtos/add-favorito?idproduto='.$produto->id) ?>" class="add_cart">+ adicionar ao carrinho <a href="#2"><i class="ti-heart"></i></a></a>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-</div>
-</div>
+</section>

@@ -120,6 +120,9 @@ $this->title = 'Produtos';
                                     <div class="single_product_text">
                                         <h4><?= $produto->nome ?></h4>
                                         <h3><?= $produto->preco ?>€</h3>
+                                        <?php
+                                        //TODO: Bernardo, mete este <a> a funcionar
+                                        ?>
                                         <a href="#1" class="add_cart">+ adicionar ao carrinho <a href="#2"><i class="ti-heart"></i></a></a>
                                     </div>
                                 </div>

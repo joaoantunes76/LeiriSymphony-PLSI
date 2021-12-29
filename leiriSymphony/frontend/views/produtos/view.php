@@ -13,8 +13,9 @@ $this->title = $model->nome;
 
 ?>
 
+<section class="section_padding">
 <!--================Single Product Area =================-->
-<div class="product_image_area section_padding">
+<div class="product_image_area">
     <div class="container">
         <div class="row s_product_inner justify-content-between">
             <div class="col-lg-7 col-xl-7">
@@ -62,13 +63,20 @@ $this->title = $model->nome;
                         <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn_3']) ?>
 
                         <?php ActiveForm::end(); ?>
-                        <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                        <?php
+                        if($existeFavorito){
+                            echo Html::a('<i class="ti-heart-broken"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Remover dos favoritos']);
+                        }else{
+                            echo Html::a('<i class="ti-heart"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Adicionar aos favoritos']);
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</section>
 <!--================End Single Product Area =================-->
 
 
@@ -78,7 +86,7 @@ $this->title = $model->nome;
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" id="descricao-tab" data-toggle="tab" href="#descricao" role="tab" aria-controls="descricao"
+                <a class="nav-link active" id="descricao-tab" data-toggle="tab" href="#descricao" role="tab" aria-controls="descricao"
                    aria-selected="false">Descrição</a>
             </li>
             <li class="nav-item">
@@ -86,12 +94,12 @@ $this->title = $model->nome;
                    aria-selected="false">Comments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
                    aria-selected="false">Reviews</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade" id="descricao" role="tabpanel" aria-labelledby="descricao-tab">
+            <div class="tab-pane fade show active" id="descricao" role="tabpanel" aria-labelledby="descricao-tab">
                 <?= $model->descricao ?>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -190,7 +198,7 @@ $this->title = $model->nome;
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row total_rate">
