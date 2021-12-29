@@ -23,8 +23,6 @@ $this->title = 'My Yii Application';
         </div>
         <div class="row align-items-center justify-content-between">
             <?php
-            //TODO: está a mostrar produtos repetidos
-            $i = 0;
             foreach ($model as $produtoFavorito) {
                 $produto = $produtoFavorito->idproduto0;
                 if ($produto->imagens != null) {
