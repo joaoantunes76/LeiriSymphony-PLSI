@@ -6,13 +6,24 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Encomendas */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $perfis common\models\Perfis */
 ?>
 
 <div class="encomendas-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idperfil')->textInput() ?>
+    <label for="Encomendas[idperfil]">Perfil</label>
+    <select name="Encomendas[idperfil]" class="form-control">
+        <?php
+        foreach ($perfis as $perfil) {
+            ?>
+            <option value="<?= $perfil->id ?>" <?= $perfil->id == $model->idperfil ? 'selected' : "" ?>><?= $perfil->nome ?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <br>
 
     <?= $form->field($model, 'estado')->dropDownList([ 'Em Processamento' => 'Em Processamento', 'Expedido' => 'Expedido', 'Entregue' => 'Entregue', 'Pronto para Levantamento' => 'Pronto para Levantamento', 'Cancelada' => 'Cancelada', 'Erro' => 'Erro', ], ['prompt' => '']) ?>
 

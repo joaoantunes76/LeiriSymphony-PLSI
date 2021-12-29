@@ -29,12 +29,13 @@ AppAsset::register($this);
     <script>
         function openSlideMenu() {
             document.getElementById('menu').style.width = '100%';
-            document.body.style.overflow = "hidden";
             closeCarrinhoCompras();
+            document.body.style.overflow = "hidden";
         }
 
         function closeSlideMenu() {
             document.getElementById('menu').style.width = '0';
+            document.body.style = "";
         }
 
         function sideMenuClick() {
@@ -43,12 +44,13 @@ AppAsset::register($this);
 
         function openCarrinhoCompras() {
             document.getElementById('carrinhocompras').style.width = '100%';
-            document.body.style.overflow = "hidden";
             closeSlideMenu();
+            document.body.style.overflow = "hidden";
         }
 
         function closeCarrinhoCompras() {
             document.getElementById('carrinhocompras').style.width = '0';
+            document.body.style = "";
         }
     </script>
 </head>

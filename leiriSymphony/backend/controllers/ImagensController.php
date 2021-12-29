@@ -67,7 +67,7 @@ class ImagensController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idproduto)
     {
         $model = new Imagens();
         $uploadForm = new UploadForm();
@@ -79,8 +79,14 @@ class ImagensController extends Controller
             if ($uploadForm->upload($now)) {
                 $model->load($this->request->post());
                 $model->nome = $now . "." . $uploadForm->imageFile->extension;
+                $model->idproduto = $idproduto;
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    if($model->idproduto == null) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                    else{
+                        return $this->redirect(['produtos/view?id='.$model->idproduto]);
+                    }
                 }
                 return $this->redirect(['index', 'error' => $model->errors]);
             }
@@ -97,26 +103,6 @@ class ImagensController extends Controller
     }
 
     /**
-     * Updates an existing Imagens model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
      * Deletes an existing Imagens model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
@@ -125,9 +111,11 @@ class ImagensController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $idproduto = $model->idproduto;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['produtos/view?id='.$idproduto]);
     }
 
     /**
