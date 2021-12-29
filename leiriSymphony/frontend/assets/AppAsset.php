@@ -16,10 +16,11 @@ class AppAsset extends AssetBundle
         'css/animate.css',
         'css/owl.carousel.min.css',
         'css/all.css',
+        'css/lightslider.min.css',
         'css/flaticon.css',
+        'css/slick.css',
         'css/themify-icons.css',
         'css/magnific-popup.css',
-        'css/slick.css',
         'css/style.css',
     ];
     public $js = [
@@ -38,6 +39,7 @@ class AppAsset extends AssetBundle
         'js/jquery.form.js',
         'js/jquery.validate.min.js',
         'js/mail-script.js',
+        'js/lightslider.min.js',
         'js/custom.js',
     ];
     public $depends = [

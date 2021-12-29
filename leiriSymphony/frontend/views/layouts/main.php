@@ -62,7 +62,7 @@ AppAsset::register($this);
                                             $categorias = \common\models\Categorias::find()->all();
                                             foreach($categorias as $categoria){
                                         ?>
-                                                <a class="dropdown-item" href="<?= Url::toRoute('produtos/index') ?>?Categorias=<?= $categoria->id?>"><?= $categoria->nome ?></a>
+                                                <a class="dropdown-item" href="<?= Url::toRoute('produtos/index') ?>?Categoria=<?= $categoria->id?>"><?= $categoria->nome ?></a>
                                         <?php
                                             }
                                         ?>

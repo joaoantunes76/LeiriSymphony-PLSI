@@ -24,6 +24,11 @@ $this->title = 'Produtos';
 <!--================Category Product Area =================-->
 <section class="cat_product_area section_padding">
     <div class="container">
+        <?= $this->render('components/_filtertop.php', [
+            'marcas' => $marcas,
+            'categorias' => $categorias,
+            'subcategorias' => $subcategorias,
+        ]) ?>
         <div class="row">
             <div class="col-lg-3">
                 <div class="left_sidebar_area">
@@ -106,9 +111,12 @@ $this->title = 'Produtos';
                             $imagemNome = "";
                         }
                         ?>
+
                             <div class="col-lg-4 col-sm-6">
                                 <div class="single_product_item">
+                                    <a href="<?= Url::toRoute('view?produtoId='.$produto->id) ?>">
                                     <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                                    </a>
                                     <div class="single_product_text">
                                         <h4><?= $produto->nome ?></h4>
                                         <h3><?= $produto->preco ?>€</h3>
@@ -124,31 +132,3 @@ $this->title = 'Produtos';
         </div>
     </div>
 </section>
-
-<section class="section_padding">
-    <?= $this->render('components/_filtertop.php', [
-        'marcas' => $marcas,
-        'categorias' => $categorias,
-        'subcategorias' => $subcategorias,
-    ]) ?>
-    <br>
-    <h1>Resultados: </h1>
-
-    <div class="row mt-5 justify-content-start">
-        <?php
-        foreach ($produtos as $produto) {
-            ?>
-            <div class="col-md-3 text-center">
-                <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
-</section>
-
-<div class="produtos-index d-flex">
-    <div class="content">
-
-    </div>
-</div>
