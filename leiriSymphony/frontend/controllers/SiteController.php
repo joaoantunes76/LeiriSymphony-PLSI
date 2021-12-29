@@ -2,6 +2,16 @@
 
 namespace frontend\controllers;
 
+use app\models\User;
+use common\models\Carrinho;
+use common\models\Categorias;
+use common\models\Encomendas;
+use common\models\Encomendasprodutos;
+use common\models\Eventos;
+use common\models\Eventosperfis;
+use common\models\Perfis;
+use common\models\Produtosfavoritos;
+use frontend\models\PagamentoOnline;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -76,10 +86,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(5)->all();
+        $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
 
         return $this->render('index', [
-            'ultimosProdutos' => $produtos,
+            'produtos' => $produtos,
         ]);
     }
 
@@ -91,7 +101,78 @@ class SiteController extends Controller
      */
     public function actionComprar()
     {
-        return $this->render('comprar');
+        $produtosCarrinho = Carrinho::find()->where(['idperfil' => Yii::$app->user->id])->all();
+        $perfil = Perfis::findOne(Yii::$app->user->id);
+        $pagamentoOnline = new PagamentoOnline();
+        $erroCartao = false;
+        $erroEncomendaProduto = false;
+
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
+
+        } else {
+            if($this->request->isPost){
+                $pagamentoOnline->load($this->request->post());
+                $encomenda = new Encomendas();
+                $encomenda->idperfil = $perfil->id;
+                $preco = 0;
+                foreach($_POST as $post){
+                    if(isset($post["quantidade"]) && isset($post["id"])){
+                        $produtoParaCarrinho = Produtos::findOne($post["id"]);
+                        $preco += ($produtoParaCarrinho->preco * $post["quantidade"]);
+                    }
+                }
+                $encomenda->preco = $preco;
+                $encomenda->tipoexpedicao = addslashes($_POST["entrega"]);
+                $encomenda->estado = 'Em Processamento';
+                $encomenda->data = date('Y-m-d');
+
+                if($this->request->post('pagamento') == 'pagamentoloja') {
+                    $encomenda->pago = 0;
+                }
+                else {
+                    if($pagamentoOnline->validate()) {
+                        $encomenda->pago = 1;
+                    }
+                    else{
+                        $erroCartao = true;
+                    }
+                }
+
+                if($encomenda->validate() && $encomenda->save()){
+                    foreach($_POST as $post){
+                        if(isset($post["quantidade"]) && isset($post["id"])){
+                            $encomendaProduto = new Encomendasprodutos();
+                            $encomendaProduto->idencomenda = $encomenda->id;
+                            $encomendaProduto->idproduto = $post["id"];
+                            $encomendaProduto->quantidade = $post["quantidade"];
+                            if(!$encomendaProduto->save()){
+                                $erroEncomendaProduto = true;
+                            }
+                        }
+                    }
+                }
+
+                if(!$erroEncomendaProduto && !$erroCartao){
+                    $this->redirect('sucesso');
+                }
+                else{
+                    return $this->render('comprar', [
+                        'model' => $produtosCarrinho,
+                        'perfil' => $perfil,
+                        'pagamentoOnline' => $pagamentoOnline,
+                        'erro' => 'falhou',
+                    ]);
+                }
+            }
+            return $this->render('comprar', [
+                'model' => $produtosCarrinho,
+                'perfil' => $perfil,
+                'pagamentoOnline' => $pagamentoOnline,
+            ]);
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 
@@ -106,39 +187,21 @@ class SiteController extends Controller
     }
 
 
-
     /**
-     * Displays homepage.
+     * Displays eventos page.
      *
      * @return mixed
      */
     public function actionEventos()
     {
-        return $this->render('evento');
-    }
+        $eventos = Eventos::find()->orderBy(['data' => SORT_ASC])->one();
+        $registos = Eventosperfis::find()->where(['idevento' => $eventos->id])->all();
+        $lugaresRestantes = ($eventos->lotacao - count($registos));
 
-    /**
-     * Displays encomedas page.
-     *
-     * @return mixed
-     */
-    public function actionEncomendas()
-    {
-        return $this->render('encomendas');
-    }
-
-    /**
-     * Displays perfil page.
-     *
-     * @return mixed
-     */
-    public function actionPerfil()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
-        } else {
-            return $this->render('perfil');
-        }
+        return $this->render('evento', [
+            'model' => $eventos,
+            'lugaresRestantes' => $lugaresRestantes,
+        ]);
     }
 
     /**
@@ -201,8 +264,6 @@ class SiteController extends Controller
         ]);
     }
 
-
-
     /**
      * Displays favoritos page.
      *
@@ -210,7 +271,13 @@ class SiteController extends Controller
      */
     public function actionFavoritos()
     {
-        return $this->render('favoritos');
+        $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
+
+
+        return $this->render('favoritos', [
+            'model' => $produtosFavoritos,
+        ]);
+
     }
 
     /**

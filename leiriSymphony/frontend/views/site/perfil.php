@@ -23,7 +23,7 @@ $this->title = 'My Yii Application';
         </div>
         <div class="col-8">
             <div class="ls-form text-center">
-                <h1 class="m-5 ls-text-primary">Perfil</h1>
+                <h1 class="ls-text-primary">Perfil</h1>
 
                 <form action="" class="text-left">
                     <div class="form-group">
@@ -50,7 +50,7 @@ $this->title = 'My Yii Application';
                         <label for="">NIF</label>
                         <input type="number" class="form-control" name="nif" id="nif" disabled>
                     </div>
-                    <div class="form-group text-center mt-5">
+                    <div class="text-center">
                         <a href="#" id="enableForm" onclick="enableForm()" class="btn btn-primary pr-5 pl-5">Editar</a>
                         <input type="submit" value="Guardar" id="submit" class="btn btn-primary pr-5 pl-5 d-none">
                     </div>
