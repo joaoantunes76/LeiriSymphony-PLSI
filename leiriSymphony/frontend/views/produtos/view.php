@@ -55,7 +55,13 @@ $this->title = $model->nome;
                         ?>
                     </p>
                     <div class="card_area d-flex justify-content-between align-items-center">
-                        <a href="#" class="btn_3">Adicionar ao carrinho</a>
+                        <?php $form = ActiveForm::begin(); ?>
+
+                        <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
+
+                        <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn_3']) ?>
+
+                        <?php ActiveForm::end(); ?>
                         <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
                     </div>
                 </div>
