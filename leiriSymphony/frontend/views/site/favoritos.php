@@ -22,33 +22,34 @@ $this->title = 'My Yii Application';
             </div>
         </div>
         <div class="row align-items-center justify-content-between">
-            <div class="col-lg-12">
-                <div class="best_product_slider owl-carousel">
-                    <?php
-                    //TODO: está a mostrar produtos repetidos
-                    foreach ($model as $produtoFavorito) {
-                        $produto = $produtoFavorito->idproduto0;
-                        if ($produto->imagens != null) {
-                            $imagemNome = $produto->imagens[0]->nome;
-                        } else {
-                            $imagemNome = "";
-                        }
-                        ?>
-                            <div class="single_product_item">
-                                <a href="<?= Url::toRoute('view?produtoId='.$produto->id) ?>">
-                                    <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
-                                </a>
-                                <div class="single_product_text">
-                                    <h4><?= $produto->nome ?></h4>
-                                    <h3><?= $produto->preco ?>€</h3>
-                                    <a href="<?= Url::toRoute('produtos/add-favorito?idproduto='.$produto->id) ?>" class="add_cart">+ adicionar ao carrinho <a href="#2"><i class="ti-heart"></i></a></a>
-                                </div>
-                            </div>
-                        <?php
-                    }
-                    ?>
+            <?php
+            //TODO: está a mostrar produtos repetidos
+            $i = 0;
+            foreach ($model as $produtoFavorito) {
+                $produto = $produtoFavorito->idproduto0;
+                if ($produto->imagens != null) {
+                    $imagemNome = $produto->imagens[0]->nome;
+                } else {
+                    $imagemNome = "";
+                }
+                ?>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single_product_item">
+                        <a href="<?= Url::toRoute('view?produtoId=' . $produto->id) ?>">
+                            <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                        </a>
+                        <div class="single_product_text">
+                            <h4><?= $produto->nome ?></h4>
+                            <h3><?= $produto->preco ?>€</h3>
+                            <a href="<?= Url::toRoute('produtos/add-favorito?idproduto=' . $produto->id) ?>"
+                               class="add_cart">+ adicionar ao carrinho <a href="#2"><i class="ti-heart"></i></a></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <?php
+            }
+            ?>
         </div>
     </div>
 </section>
