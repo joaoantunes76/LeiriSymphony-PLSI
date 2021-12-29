@@ -30,7 +30,6 @@ class AppAsset extends AssetBundle
         'js/swiper.min.js',
         'js/masonry.pkgd.js',
         'js/owl.carousel.min.js',
-        'js/jquery.nice-select.min.js',
         'js/slick.min.js',
         'js/jquery.counterup.min.js',
         'js/waypoints.min.js',
