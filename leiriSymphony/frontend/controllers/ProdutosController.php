@@ -161,6 +161,7 @@ class ProdutosController extends Controller
         if ($exists){
             Yii::$app->db->createCommand()->delete('produtosfavoritos', ['idproduto' => $idproduto, 'idperfil' => $iduser])->execute();
             Yii::$app->session->setFlash('success', "Produto removido dos favoritos");
+            return $this->redirect(Yii::$app->request->referrer);
         }else{
             $favorito = new Produtosfavoritos();
             $favorito->idproduto = $idproduto;

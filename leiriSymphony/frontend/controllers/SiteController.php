@@ -109,7 +109,6 @@ class SiteController extends Controller
 
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
-
         } else {
             if($this->request->isPost){
                 $pagamentoOnline->load($this->request->post());
@@ -255,10 +254,8 @@ class SiteController extends Controller
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
             return $this->refresh();
         }
-
         return $this->render('contact', [
             'model' => $model,
         ]);
@@ -272,12 +269,35 @@ class SiteController extends Controller
     public function actionFavoritos()
     {
         $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
+        $iduser = Yii::$app->user->id;
 
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('error', "É necessário fazer login para aceder à página dos favoritos.");
+        } else {
+            if ($this->request->isPost){
+                $idproduto = $_POST['idproduto'];
 
-        return $this->render('favoritos', [
-            'model' => $produtosFavoritos,
-        ]);
+                $exists = Carrinho::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
 
+                $carrinho = new Carrinho();
+                $carrinho->idproduto = $idproduto;
+                $carrinho->idperfil = $iduser;
+                if ($exists){
+                    Yii::$app->session->setFlash('error', "Este produto já foi adicionado ao carrinho.");
+                } else {
+                    $carrinho->save();
+                    Yii::$app->session->setFlash('success', "Produto adicionado ao carrinho.");
+                }
+                return $this->render('favoritos', [
+                    'model' => $produtosFavoritos,
+                ]);
+            } else {
+                return $this->render('favoritos', [
+                    'model' => $produtosFavoritos,
+                ]);
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**

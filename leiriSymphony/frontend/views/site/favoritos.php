@@ -8,10 +8,10 @@ use yii\widgets\ActiveForm;
 /* @var $model \common\models\Produtosfavoritos */
 /* @var $produtoFavorito \common\models\Produtosfavoritos */
 
-$this->title = 'My Yii Application';
+$this->title = 'Itens Favoritos';
 ?>
 <div class="site-index">
-    <h1 class="ls-text-primary">Lista de Desejos</h1>
+    <h1 class="ls-text-primary">Itens Favoritos</h1>
 
     <div class="body-content mt-5">
         <div class="row mt-3">
@@ -19,14 +19,15 @@ $this->title = 'My Yii Application';
                 foreach ($model as $produtoFavorito){
             ?>
                 <div class="col text-right">
-                    <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="bi bi-heart-fill ls-text-primary ls-favorite-toggle"></i></a>
+                    <?php echo Html::a('<i class="bi bi-heart-fill ls-text-primary ls-favorite-toggle"></i>',['produtos/add-favorito', 'idproduto' => $produtoFavorito->idproduto], ['class' => 'btn btn-black', 'title' => 'Remover dos favoritos']); ?>
                     <div class="text-left">
                         <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoFavorito->idproduto]) ?>">
                             <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produtoFavorito->idproduto0->imagens[0]->nome, ['height' => "185px", 'class' => 'logo']); ?>
                             <p class="mt-2"><?= Html::encode($produtoFavorito->idproduto0->nome) ?></p>
                             <p><?= Html::encode($produtoFavorito->idproduto0->preco) ?> €</p>
                         </a>
-                        <?php $form = ActiveForm::begin(); ?>
+                        <?php $form = ActiveForm::begin() ?>
+                        <input type="hidden" id="hiddenidproduto" name="idproduto" value="<?= $produtoFavorito->idproduto ?>">
                         <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn btn-primary']) ?>
                         <?php $form = ActiveForm::end(); ?>
                     </div>
@@ -34,12 +35,6 @@ $this->title = 'My Yii Application';
             <?php
                 }
             ?>
-
-
-
-
         </div>
     </div>
-    </div>
-</div>
 </div>
