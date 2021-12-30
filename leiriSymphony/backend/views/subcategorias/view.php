@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Subcategorias */
+/* @var $model common\models\Subcategorias */
 
-$this->title = $model->subcategoriaId;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Subcategorias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="subcategorias-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
-        <?= Html::a('Update', ['update', 'subcategoriaId' => $model->subcategoriaId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'subcategoriaId' => $model->subcategoriaId], [
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'subcategoriaId',
-            'categoriaId',
+            'id',
+            'idcategoria',
             'nome',
         ],
     ]) ?>

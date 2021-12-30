@@ -6,18 +6,18 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Imagens */
 
-$this->title = $model->imagemId;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Imagens', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="imagens-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
-        <?= Html::a('Update', ['update', 'imagemId' => $model->imagemId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'imagemId' => $model->imagemId], [
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'imagemId',
-            'imagem',
-            'produtoId',
+            'id',
+            'nome',
+            'idproduto',
         ],
     ]) ?>
 

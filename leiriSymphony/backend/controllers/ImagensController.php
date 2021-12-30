@@ -2,11 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\Imagens;
-use common\models\ImagensSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
+use app\models\UploadForm;
+use common\models\Imagens;
 use yii\filters\VerbFilter;
+use common\models\ImagensSearch;
+use common\models\Produtos;
+use yii\web\NotFoundHttpException;
 
 /**
  * ImagensController implements the CRUD actions for Imagens model.
@@ -48,14 +51,14 @@ class ImagensController extends Controller
 
     /**
      * Displays a single Imagens model.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($imagemId)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($imagemId),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -64,65 +67,65 @@ class ImagensController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idproduto)
     {
         $model = new Imagens();
+        $uploadForm = new UploadForm();
+        $produtos = Produtos::find()->all();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'imagemId' => $model->imagemId]);
+            $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+            $now = date("mdyhis");
+            if ($uploadForm->upload($now)) {
+                $model->load($this->request->post());
+                $model->nome = $now . "." . $uploadForm->imageFile->extension;
+                $model->idproduto = $idproduto;
+                if ($model->save()) {
+                    if($model->idproduto == null) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                    else{
+                        return $this->redirect(['produtos/view?id='.$model->idproduto]);
+                    }
+                }
+                return $this->redirect(['index', 'error' => $model->errors]);
             }
+            return $this->redirect(['index', 'error' => $uploadForm->errors]);
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Imagens model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $imagemId Imagem ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($imagemId)
-    {
-        $model = $this->findModel($imagemId);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'imagemId' => $model->imagemId]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
+            'uploadForm' => $uploadForm,
+            'produtos' => $produtos,
         ]);
     }
 
     /**
      * Deletes an existing Imagens model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($imagemId)
+    public function actionDelete($id)
     {
-        $this->findModel($imagemId)->delete();
+        $model = $this->findModel($id);
+        $idproduto = $model->idproduto;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['produtos/view?id='.$idproduto]);
     }
 
     /**
      * Finds the Imagens model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $imagemId Imagem ID
+     * @param int $id ID
      * @return Imagens the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($imagemId)
+    protected function findModel($id)
     {
         if (($model = Imagens::findOne($id)) !== null) {
             return $model;

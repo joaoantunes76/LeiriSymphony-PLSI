@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\Perfis;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -53,11 +54,19 @@ class SignupForm extends Model
             $user->generateAuthKey();
             $user->save(false);
 
+            $perfil = new Perfis();
+            $perfil->nome = $user->username;
+            $perfil->iduser = $user->id;
+
+            if($perfil->validate()){
+                $perfil->save();
+            }
+
 
             $auth = Yii::$app->authManager;
             $cliente = $auth->getRole('Cliente');
             $auth->assign($cliente, $user->getId());
-            
+
             return $user;
         }
 

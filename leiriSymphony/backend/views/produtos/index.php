@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProdutosSearch */
+/* @var $searchModel common\models\ProdutosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Produtos';
@@ -12,32 +12,46 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="produtos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
         <?= Html::a('Create Produtos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+        $produtos = $dataProvider->getModels();
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'produtoId',
-            'subcategoriaId',
-            'marcaId',
-            'produtoNome',
-            'descricao:ntext',
-            //'digital',
-            //'preco',
-            //'ficheiro:ntext',
+            [
+                'attribute' => 'idsubcategoria0',
+                'label' => 'Subcategoria',
+                'value' => 'idsubcategoria0.nome',
+                'format' => ['text'],
+            ],
+            [
+                'attribute' => 'idmarca0',
+                'label' => 'Marca',
+                'value' => 'idmarca0.nome',
+                'format' => ['text'],
+            ],
+            'nome',
+            [
+                'attribute' => 'usado',
+                'label' => 'Usado',
+                'value' => function ($data){
+                    return $data->usado == 0 ? 'Não' : 'Sim';
+                },
+            ],
+            'preco',
+            'stock',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);  ?>
 
 
 </div>

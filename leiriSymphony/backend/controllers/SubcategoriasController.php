@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Categorias;
 use common\models\Subcategorias;
 use common\models\SubcategoriasSearch;
 use yii\web\Controller;
@@ -48,14 +49,14 @@ class SubcategoriasController extends Controller
 
     /**
      * Displays a single Subcategorias model.
-     * @param int $subcategoriaId Subcategoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($subcategoriaId)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($subcategoriaId),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -67,10 +68,11 @@ class SubcategoriasController extends Controller
     public function actionCreate()
     {
         $model = new Subcategorias();
+        $categorias = Categorias::find()->all();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'subcategoriaId' => $model->subcategoriaId]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -78,39 +80,42 @@ class SubcategoriasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categorias' => $categorias,
         ]);
     }
 
     /**
      * Updates an existing Subcategorias model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $subcategoriaId Subcategoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($subcategoriaId)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($subcategoriaId);
+        $model = $this->findModel($id);
+        $categorias = Categorias::find()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'subcategoriaId' => $model->subcategoriaId]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'categorias' => $categorias,
         ]);
     }
 
     /**
      * Deletes an existing Subcategorias model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $subcategoriaId Subcategoria ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($subcategoriaId)
+    public function actionDelete($id)
     {
-        $this->findModel($subcategoriaId)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -118,13 +123,13 @@ class SubcategoriasController extends Controller
     /**
      * Finds the Subcategorias model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $subcategoriaId Subcategoria ID
+     * @param int $id ID
      * @return Subcategorias the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($subcategoriaId)
+    protected function findModel($id)
     {
-        if (($model = Subcategorias::findOne($subcategoriaId)) !== null) {
+        if (($model = Subcategorias::findOne($id)) !== null) {
             return $model;
         }
 

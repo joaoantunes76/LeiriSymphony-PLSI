@@ -4,15 +4,26 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Subcategorias */
+/* @var $model common\models\Subcategorias */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $categorias common\models\Categorias */
 ?>
 
 <div class="subcategorias-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'categoriaId')->textInput() ?>
+    <label for="Subcategorias[idcategoria]">Categoria</label>
+    <select name="Subcategorias[idcategoria]" class="form-control">
+        <?php
+        foreach ($categorias as $categoria) {
+        ?>
+            <option value="<?= $categoria->id ?>" <?= $categoria->id == $model->idcategoria ? 'selected' : "" ?>><?= $categoria->nome ?></option>
+        <?php
+        }
+        ?>
+    </select>
+    <br>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 

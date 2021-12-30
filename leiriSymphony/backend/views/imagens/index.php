@@ -12,25 +12,38 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="imagens-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
         <?= Html::a('Create Imagens', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'imagemId',
-            'imagem',
-            'produtoId',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'id',
+            'nome',
+            [
+                'label' => 'Imagem',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return Html::img("@web/uploads/$data->nome", ['height' => '150px']);
+                },
+            ],
+            [
+                'label' => 'Produto',
+                'attribute' => 'idproduto0',
+                'value' => 'idproduto0.nome'
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{view} {delete}',
+            ],
         ],
     ]); ?>
 

@@ -1,40 +1,39 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\ProdutosSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $produtos common\models\Produtos */
+/* @var $marcas common\models\Marcas */
+/* @var $categorias common\models\Categorias */
+/* @var $subcategorias common\models\Subcategorias */
 
 $this->title = 'Produtos';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
-<div class="produtos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="produtos-index d-flex">
+    <div class="content">
+        <?= $this->render('components/_filtertop.php', [
+                'marcas' => $marcas,
+                'categorias' => $categorias,
+                'subcategorias' => $subcategorias,
+        ]) ?>
+        <br>
+        <h1>Resultados: </h1>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
-    ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'produtoId',
-            'subcategoriaId',
-            'marcaId',
-            'produtoNome',
-            'descricao:ntext',
-            //'digital',
-            //'preco',
-            //'ficheiro:ntext',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-
+        <div class="row mt-5 justify-content-start">
+            <?php
+            foreach ($produtos as $produto) {
+            ?>
+                <div class="col-md-3 text-center">
+                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
 </div>

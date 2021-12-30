@@ -4,19 +4,34 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Encomendas */
+/* @var $model common\models\Encomendas */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $perfis common\models\Perfis */
 ?>
 
 <div class="encomendas-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'perfilId')->textInput() ?>
+    <label for="Encomendas[idperfil]">Perfil</label>
+    <select name="Encomendas[idperfil]" class="form-control">
+        <?php
+        foreach ($perfis as $perfil) {
+            ?>
+            <option value="<?= $perfil->id ?>" <?= $perfil->id == $model->idperfil ? 'selected' : "" ?>><?= $perfil->nome ?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <br>
 
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'estado')->dropDownList([ 'Em Processamento' => 'Em Processamento', 'Expedido' => 'Expedido', 'Entregue' => 'Entregue', 'Pronto para Levantamento' => 'Pronto para Levantamento', 'Cancelada' => 'Cancelada', 'Erro' => 'Erro', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'estaPago')->textInput() ?>
+    <?= $form->field($model, 'pago')->textInput() ?>
+
+    <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'tipoexpedicao')->dropDownList([ 'Levantamento em loja' => 'Levantamento em loja', 'Envio' => 'Envio', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

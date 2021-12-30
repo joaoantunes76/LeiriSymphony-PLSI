@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\CategoriasSearch */
+/* @var $model common\models\CategoriasSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'categoriaId') ?>
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'nome') ?>
 

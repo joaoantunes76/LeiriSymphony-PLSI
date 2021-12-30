@@ -3,7 +3,10 @@
 namespace backend\controllers;
 
 use common\models\Encomendas;
+use common\models\EncomendasprodutosSearch;
 use common\models\EncomendasSearch;
+use common\models\Perfis;
+use common\models\ProdutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -48,69 +51,55 @@ class EncomendasController extends Controller
 
     /**
      * Displays a single Encomendas model.
-     * @param int $encomendaId Encomenda ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($encomendaId)
+    public function actionView($id)
     {
+        $searchModel = new EncomendasprodutosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['idencomenda' => $id]);
+
         return $this->render('view', [
-            'model' => $this->findModel($encomendaId),
-        ]);
-    }
-
-    /**
-     * Creates a new Encomendas model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Encomendas();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'encomendaId' => $model->encomendaId]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
      * Updates an existing Encomendas model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $encomendaId Encomenda ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($encomendaId)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($encomendaId);
+        $model = $this->findModel($id);
+        $perfis = Perfis::find()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'encomendaId' => $model->encomendaId]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'perfis' => $perfis
         ]);
     }
 
     /**
      * Deletes an existing Encomendas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $encomendaId Encomenda ID
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($encomendaId)
+    public function actionDelete($id)
     {
-        $this->findModel($encomendaId)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -118,13 +107,13 @@ class EncomendasController extends Controller
     /**
      * Finds the Encomendas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $encomendaId Encomenda ID
+     * @param int $id ID
      * @return Encomendas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($encomendaId)
+    protected function findModel($id)
     {
-        if (($model = Encomendas::findOne($encomendaId)) !== null) {
+        if (($model = Encomendas::findOne($id)) !== null) {
             return $model;
         }
 

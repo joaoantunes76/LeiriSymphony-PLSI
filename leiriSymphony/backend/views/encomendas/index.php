@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EncomendasSearch */
+/* @var $searchModel common\models\EncomendasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Encomendas';
@@ -12,11 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="encomendas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Encomendas', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -24,14 +20,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'encomendaId',
-            'perfilId',
+            [
+                'attribute' => 'idperfil0',
+                'label' => 'Cliente',
+                'value' => 'idperfil0.nome',
+                'format' => ['text'],
+            ],
             'estado',
-            'estaPago',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'pago',
+                'label' => 'Pago',
+                'format' => ['text'],
+                'value' => function ($data){
+                    return $data->pago ? "Sim" : "Não";
+                },
+            ],
+            [
+                'attribute' => 'preco',
+                'label' => 'Preço',
+                'value' => 'preco',
+                'format' => ['text'],
+            ],
+            [
+                'attribute' => 'tipoexpedicao',
+                'label' => 'Tipo de Expedição',
+                'value' => 'tipoexpedicao',
+                'format' => ['text'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{view} {update} {delete}',
+            ],
         ],
     ]); ?>
 

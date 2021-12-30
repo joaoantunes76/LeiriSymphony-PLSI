@@ -1,0 +1,42 @@
+/*
+    Components - Navbar
+*/
+
+@media screen and (max-width: 1000px) {
+    .navbar-brand {
+        display: none;
+    }
+}
+
+.ls {
+    &-navbar {
+        padding: 5px;
+        color: $primary;
+
+        &-search {
+            width: 100%;
+        }
+
+        &-brand {
+            padding-bottom: 0;
+        }
+
+        &-search {
+            background-color: $secondary;
+            border-color: $primary;
+            color: $primary;
+
+            &:focus {
+                background-color: $neutral-1;
+                border-color: $primary;
+                color: $primary;
+            }
+        }
+    }
+
+    &-navbar-icons {
+        color: $primary;
+        font-size: 34px;
+        margin-right: 25px;
+    }
+}
