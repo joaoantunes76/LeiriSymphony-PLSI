@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subcategorias-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
         <?= Html::a('Create Subcategorias', ['create'], ['class' => 'btn btn-success']) ?>
@@ -24,10 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'idcategoria',
+            [
+                'attribute' => 'idcategoria0',
+                'label' => 'Categoria',
+                'value' => 'idcategoria0.nome',
+                'format' => ['text'],
+            ],
             'nome',
 
             ['class' => 'yii\grid\ActionColumn'],

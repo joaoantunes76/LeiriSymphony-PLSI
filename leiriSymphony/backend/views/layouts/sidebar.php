@@ -10,7 +10,6 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?= $assetDir ?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">Administrador</a>
@@ -35,28 +34,34 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
+                    ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                    [
+                        'label' => 'Administração',
+                        'icon' => 'tachometer-alt',
+                        'items' => [
+                            ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
+                        ]
+                    ],
                     [
                         'label' => 'Gestão de loja',
                         'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
-                            ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categorias', 'url' => ['categorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'SubCategorias', 'url' => ['subcategorias/index'], 'iconStyle' => 'far'],
                             ['label' => 'Produtos', 'url' => ['produtos/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Imagens', 'url' => ['imagens/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Artistas', 'url' => ['artistas/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Álbuns', 'url' => ['albuns/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [
                         'label' => 'Apoio ao Cliente',
                         'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
-                            ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],

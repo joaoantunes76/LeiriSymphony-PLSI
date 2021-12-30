@@ -3,7 +3,10 @@
 namespace backend\controllers;
 
 use common\models\Encomendas;
+use common\models\EncomendasprodutosSearch;
 use common\models\EncomendasSearch;
+use common\models\Perfis;
+use common\models\ProdutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -54,30 +57,14 @@ class EncomendasController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new EncomendasprodutosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['idencomenda' => $id]);
+
         return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Encomendas model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Encomendas();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
         ]);
     }
 
@@ -91,6 +78,7 @@ class EncomendasController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $perfis = Perfis::find()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,6 +86,7 @@ class EncomendasController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'perfis' => $perfis
         ]);
     }
 

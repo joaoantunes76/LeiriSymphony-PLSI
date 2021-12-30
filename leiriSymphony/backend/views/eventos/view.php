@@ -13,14 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="eventos-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Visualização de Evento</h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Deseja mesmo apagar este Evento?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,12 +29,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'lotacao',
-            'descricao:ntext',
-            'data',
-            'horainicio',
-            'horafim',
+            [
+                'label' => 'ID',
+                'value' => $model->id,
+            ],
+            [
+                'label' => 'Lotação',
+                'value' => $model->lotacao,
+            ],
+            [
+                'label' => 'Descrição',
+                'value' => $model->descricao,
+            ],
+            [
+                'label' => 'Data',
+                'value' => $model->data,
+            ],
+            [
+                'label' => 'Hora de Início',
+                'value' => date('H:i', strtotime($model->horainicio)),
+            ],
+            [
+                'label' => 'Hora de Encerramento',
+                'value' => date('H:i', strtotime($model->horafim)),
+            ],
         ],
     ]) ?>
 

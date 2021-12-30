@@ -86,11 +86,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $evento = Eventos::find()->orderBy(['data' => SORT_ASC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
 
-        return $this->render('index', [
-            'produtos' => $produtos,
-        ]);
+        if($evento === null) {
+            return $this->render('index', [
+                'produtos' => $produtos,
+            ]);
+        }
+        else {
+            return $this->render('index', [
+                'produtos' => $produtos,
+                'evento' => $evento
+            ]);
+        }
     }
 
 

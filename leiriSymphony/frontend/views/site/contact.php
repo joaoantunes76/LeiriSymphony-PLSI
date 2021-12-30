@@ -9,16 +9,10 @@ use yii\bootstrap4\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title = 'Contact';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p>
-
-    <div class="row">
+<section class="section_padding text-center">
+    <div class="row justify-content-center text-left">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
@@ -42,4 +36,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-</div>
+</section>
+

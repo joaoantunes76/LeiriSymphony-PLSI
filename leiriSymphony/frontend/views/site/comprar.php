@@ -14,123 +14,126 @@ use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Comprar';
 ?>
-<div class="site-comprar">
-    <div class="ls-wizzard">
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <div id="wizzard-step-1" class="ls-wizzard-step active">
-                    <p>1</p>
-                </div>
-            </div>
-            <div class="col d-flex justify-content-center">
-                <div id="wizzard-step-2" class="ls-wizzard-step ">
-                    <p>2</p>
-                </div>
-            </div>
-            <div class="col d-flex justify-content-center">
-                <div id="wizzard-step-3" class="ls-wizzard-step">
-                    <p>3</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <?php $form = ActiveForm::begin(['options' => ['class' => 'ls-form mt-5']]); ?>
-        <div id="form-step-1" class="">
-            <div class="text-center mb-5">
-                <h3>Confirmar produtos da lista de compras</h3>
-            </div>
-            <div class="form-produtos">
-                <?php
-                    $i = 0;
-                    foreach ($model as $produtoCarrinho){
-                ?>
-                    <div class="form-group d-flex align-items-center">
-                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produtoCarrinho->idproduto0->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
-                        <label for="quantidade"><?= Html::encode($produtoCarrinho->idproduto0->nome)?>  <?= Html::encode($produtoCarrinho->idproduto0->preco)?>€</label>
-                        <input type="number" id="quantidade" class="form-control ml-2" min="1" name="<?= $i ?>[quantidade]" value="<?= $produtoCarrinho->quantidade ?>">
-                        <input type="hidden" name="<?= $i ?>[id]" value="<?= $produtoCarrinho->idproduto ?>">
+<section class="section_padding">
+    <div class="site-comprar">
+        <div class="ls-wizzard">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <div id="wizzard-step-1" class="ls-wizzard-step active">
+                        <p>1</p>
                     </div>
-                <?php
-                        $i++;
-                    }
-                ?>
-            </div>
-            <div class="form-group text-center">
-                <input type="submit" value="Cancelar" class="btn btn-secondary">
-                <a class="btn btn-primary" onclick="goStep2()">Proximo</a>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <div id="wizzard-step-2" class="ls-wizzard-step ">
+                        <p>2</p>
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <div id="wizzard-step-3" class="ls-wizzard-step">
+                        <p>3</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="form-step-2" class="d-none">
-            <div class="text-center mb-5">
-                <h3>Endereço para faturação e entrega</h3>
-            </div>
-            <div class="form-faturacao">
-                <div class="form-group">
-                    <label for="Nome">Nome</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->nome ?>" id="Nome">
+
+        <?php $form = ActiveForm::begin(['options' => ['class' => 'ls-form mt-5']]); ?>
+            <div id="form-step-1" class="">
+                <div class="text-center mb-5">
+                    <h3>Confirmar produtos da lista de compras</h3>
                 </div>
-                <div class="form-group">
-                    <label for="Morada">Morada</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->endereco ?>" id="Morada">
+                <div class="form-produtos">
+                    <?php
+                        $i = 0;
+                        foreach ($model as $produtoCarrinho){
+                    ?>
+                        <div class="form-group d-flex align-items-center">
+                            <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produtoCarrinho->idproduto0->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
+                            <label for="quantidade"><?= Html::encode($produtoCarrinho->idproduto0->nome)?>  <?= Html::encode($produtoCarrinho->idproduto0->preco)?>€</label>
+                            <input type="number" id="quantidade" class="form-control ml-2" min="1" name="<?= $i ?>[quantidade]" value="<?= $produtoCarrinho->quantidade ?>">
+                            <input type="hidden" name="<?= $i ?>[id]" value="<?= $produtoCarrinho->idproduto ?>">
+                        </div>
+                    <?php
+                            $i++;
+                        }
+                    ?>
                 </div>
-                <div class="form-group">
-                    <label for="Email">Email</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->iduser0->email ?>" id="Email">
-                </div>
-                <div class="form-group">
-                    <label for="CodigoPostal">Codigo Postal</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->codigopostal ?>" id="CodigoPostal">
-                </div>
-                <div class="form-group">
-                    <label for="NIF">NIF</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->nif ?>" id="NIF">
-                </div>
-                <div class="form-group">
-                    <label for="Telefone">Telefone</label>
-                    <input type="text" class="form-control" disabled value="<?= $perfil->telefone ?>" id="Telefone">
+                <div class="form-group text-center">
+                    <input type="submit" value="Cancelar" class="btn btn-secondary">
+                    <a class="btn btn-primary" onclick="goStep2()">Proximo</a>
                 </div>
             </div>
-            <div class="form-group text-center">
-                <a class="btn btn-secondary" onclick="goStep1()">Voltar</a>
-                <a class="btn btn-info" href="<?= Url::toRoute('site/perfil') ?>">Alterar perfil</a>
-                <a class="btn btn-primary" onclick="goStep3()">Proximo</a>
-            </div>
-        </div>
-        <div id="form-step-3" class="d-none">
-            <div class="text-center mb-5">
-                <h3>Pagamento</h3>
-            </div>
-            <div class="form-pagamento">
-                <div class="form-group">
-                    <label for="pagamento">Pagamento</label>
-                    <select name="pagamento" id="pagamento" class="form-control" onchange="checkPaymentMethod()">
-                        <option value="pagamentoloja">Em loja</option>
-                        <option value="online">Online</option>
-                    </select>
+            <div id="form-step-2" class="d-none">
+                <div class="text-center mb-5">
+                    <h3>Endereço para faturação e entrega</h3>
                 </div>
-                <div id="pagamentoOnline" class="d-none">
-                    <?= $form->field($pagamentoOnline, 'nome')->textInput() ?>
-                    <?= $form->field($pagamentoOnline, 'numero')->textInput() ?>
-                    <?= $form->field($pagamentoOnline, 'validade')->textInput() ?>
-                    <?= $form->field($pagamentoOnline, 'cvv')->textInput() ?>
+                <div class="form-faturacao">
+                    <div class="form-group">
+                        <label for="Nome">Nome</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->nome ?>" id="Nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="Morada">Morada</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->endereco ?>" id="Morada">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->iduser0->email ?>" id="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="CodigoPostal">Codigo Postal</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->codigopostal ?>" id="CodigoPostal">
+                    </div>
+                    <div class="form-group">
+                        <label for="NIF">NIF</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->nif ?>" id="NIF">
+                    </div>
+                    <div class="form-group">
+                        <label for="Telefone">Telefone</label>
+                        <input type="text" class="form-control" disabled value="<?= $perfil->telefone ?>" id="Telefone">
+                    </div>
                 </div>
-                <hr>
-                <div class="form-group">
-                    <label for="entrega">Entrega</label>
-                    <select name="entrega" id="" class="form-control">
-                        <option value="Levantamento em loja">Em loja</option>
-                        <option value="'Envio">Correio</option>
-                    </select>
+                <div class="form-group text-center">
+                    <a class="btn btn-secondary" onclick="goStep1()">Voltar</a>
+                    <a class="btn btn-info" href="<?= Url::toRoute('site/perfil') ?>">Alterar perfil</a>
+                    <a class="btn btn-primary" onclick="goStep3()">Proximo</a>
                 </div>
             </div>
-            <div class="form-group text-center">
-                <a class="btn btn-secondary" onclick="goStep2()">Voltar</a>
-                <?= Html::submitButton('Pagar', ['class' => 'btn btn-success']) ?>
+            <div id="form-step-3" class="d-none">
+                <div class="text-center mb-5">
+                    <h3>Pagamento</h3>
+                </div>
+                <div class="form-pagamento">
+                    <div class="form-group">
+                        <label for="pagamento">Pagamento</label>
+                        <select name="pagamento" id="pagamento" class="form-control" onchange="checkPaymentMethod()">
+                            <option value="pagamentoloja">Em loja</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                    <div id="pagamentoOnline" class="d-none">
+                        <?= $form->field($pagamentoOnline, 'nome')->textInput() ?>
+                        <?= $form->field($pagamentoOnline, 'numero')->textInput() ?>
+                        <?= $form->field($pagamentoOnline, 'validade')->textInput() ?>
+                        <?= $form->field($pagamentoOnline, 'cvv')->textInput() ?>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="entrega">Entrega</label>
+                        <select name="entrega" id="" class="form-control">
+                            <option value="Levantamento em loja">Em loja</option>
+                            <option value="'Envio">Correio</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <a class="btn btn-secondary" onclick="goStep2()">Voltar</a>
+                    <?= Html::submitButton('Pagar', ['class' => 'btn btn-success']) ?>
+                </div>
             </div>
-        </div>
-    <?php ActiveForm::end(); ?>
-</div>
+        <?php ActiveForm::end(); ?>
+    </div>
+</section>
 
 <script>
     var formStep1 = document.getElementById("form-step-1");
