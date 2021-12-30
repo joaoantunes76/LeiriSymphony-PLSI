@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
@@ -56,18 +57,13 @@ $this->title = $model->nome;
                         ?>
                     </p>
                     <div class="card_area d-flex justify-content-between align-items-center">
-                        <?php $form = ActiveForm::begin(); ?>
-
-                        <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
-
-                        <?= Html::submitButton('Adicionar ao carrinho', ['class' => 'btn_3']) ?>
-
-                        <?php ActiveForm::end(); ?>
+                        <a href="<?= Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $model->id) ?>"
+                           class="btn_3">+ adicionar ao carrinho</a>
                         <?php
                         if($existeFavorito){
-                            echo Html::a('<i class="ti-heart-broken"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Remover dos favoritos']);
+                            echo Html::a('<i class="ti-heart-broken"></i>',['favoritos/remover-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Remover dos favoritos']);
                         }else{
-                            echo Html::a('<i class="ti-heart"></i>',['produtos/add-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Adicionar aos favoritos']);
+                            echo Html::a('<i class="ti-heart"></i>',['favoritos/adicionar-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Adicionar aos favoritos']);
                         }
                         ?>
                     </div>

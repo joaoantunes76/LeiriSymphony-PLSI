@@ -39,8 +39,8 @@ $this->title = 'Itens Favoritos';
                         <div class="single_product_text">
                             <h4><?= $produto->nome ?></h4>
                             <h3><?= $produto->preco ?>€</h3>
-                            <a href="<?= Url::toRoute('produtos/add-favorito?idproduto=' . $produto->id) ?>"
-                               class="add_cart">+ adicionar ao carrinho <a href="#2"><i class="ti-heart"></i></a></a>
+                            <a href="<?= Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $produto->id) ?>"
+                               class="add_cart">+ adicionar ao carrinho <a href="<?= Url::toRoute('favoritos/remover-favorito?idproduto='.$produto->id) ?>"><i class="ti-heart-broken"></i></a></a>
                         </div>
                     </div>
                 </div>

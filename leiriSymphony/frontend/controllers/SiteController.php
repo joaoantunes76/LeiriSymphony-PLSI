@@ -147,6 +147,7 @@ class SiteController extends Controller
                     }
                 }
 
+
                 if($encomenda->validate() && $encomenda->save()){
                     foreach($_POST as $post){
                         if(isset($post["quantidade"]) && isset($post["id"])){
@@ -268,45 +269,6 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Displays favoritos page.
-     *
-     * @return mixed
-     */
-    public function actionFavoritos()
-    {
-        $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
-        $iduser = Yii::$app->user->id;
-
-        if (Yii::$app->user->isGuest) {
-            Yii::$app->session->setFlash('error', "É necessário fazer login para aceder à página dos favoritos.");
-        } else {
-            if ($this->request->isPost){
-                $idproduto = $_POST['idproduto'];
-
-                $exists = Carrinho::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
-
-                $carrinho = new Carrinho();
-                $carrinho->idproduto = $idproduto;
-                $carrinho->idperfil = $iduser;
-                if ($exists){
-                    Yii::$app->session->setFlash('error', "Este produto já foi adicionado ao carrinho.");
-                } else {
-                    $carrinho->save();
-                    Yii::$app->session->setFlash('success', "Produto adicionado ao carrinho.");
-                }
-                return $this->render('favoritos', [
-                    'model' => $produtosFavoritos,
-                ]);
-            } else {
-                return $this->render('favoritos', [
-                    'model' => $produtosFavoritos,
-                ]);
-            }
-        }
-        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
