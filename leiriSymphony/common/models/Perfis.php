@@ -17,12 +17,14 @@ use Yii;
  * @property string|null $telefone
  *
  * @property Avaliacao[] $avaliacaos
+ * @property Carrinho[] $carrinhos
  * @property Encomendas[] $encomendas
  * @property Eventosperfis[] $eventosperfis
  * @property Eventos[] $ideventos
  * @property Tipoinformacoes[] $idproblemas
  * @property Produtos[] $idprodutos
  * @property Produtos[] $idprodutos0
+ * @property Produtos[] $idprodutos1
  * @property User $iduser0
  * @property Pedidosdecontacto[] $pedidosdecontactos
  * @property Produtosfavoritos[] $produtosfavoritos
@@ -77,6 +79,16 @@ class Perfis extends \yii\db\ActiveRecord
     public function getAvaliacaos()
     {
         return $this->hasMany(Avaliacao::className(), ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Carrinhos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCarrinhos()
+    {
+        return $this->hasMany(Carrinho::className(), ['idperfil' => 'id']);
     }
 
     /**
@@ -135,6 +147,16 @@ class Perfis extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getIdprodutos0()
+    {
+        return $this->hasMany(Produtos::className(), ['id' => 'idproduto'])->viaTable('carrinho', ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Idprodutos1]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdprodutos1()
     {
         return $this->hasMany(Produtos::className(), ['id' => 'idproduto'])->viaTable('produtosfavoritos', ['idperfil' => 'id']);
     }

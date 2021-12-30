@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $produtos common\models\Produtos */
 
 $this->title = 'My Yii Application';
 ?>
@@ -38,65 +39,33 @@ $this->title = 'My Yii Application';
 
     <div class="body-content mt-5">
         <h4>Recentemente adicionados</h4>
-        <div class="row mt-3">
+        <div class="row mt-3 justify-content-start">
             <?php
 
-            foreach ($ultimosProdutos as $produto) {
-                if ($produto->imagens != null) {
-                    $imagemNome = $produto->imagens[0]->nome;
-                } else {
-                    $imagemNome = "";
-                }
+            foreach ($produtos as $produto) {
             ?>
-                <div class="col text-center">
-                    <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produto->id]) ?>">
-                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "154px", 'class' => 'Guitarra-classica']); ?>
-                        <p class="mt-2"><?= $produto->nome ?></p>
-                        <p><?= $produto->preco ?>€</p>
-                    </a>
+                <div class="col-md-3 text-center">
+                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
                 </div>
             <?php
             }
             ?>
         </div>
 
+        <br>
         <h4>Populares</h4>
-        <div class="row mt-3">
-            <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            </div>
-            <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            </div>
-            <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            </div>
-            <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            </div>
-            <div class="col text-center">
-                <a style="display:block;" class="col ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                    <?= Html::img('@web/Guitarra-classica.png', ['height' => "185px", 'class' => 'Guitarra-classica']); ?>
-                    <p class="mt-2">Nome do produto</p>
-                    <p>0.00€</p>
-                </a>
-            </div>
+        <div class="row mt-3 justify-content-center">
+            <?php
+            //this is equal to Recentemente adicionados
+            //TODO: make this to most bought products
+            foreach ($produtos as $produto) {
+                ?>
+                <div class="col-md-3 text-center">
+                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
+                </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 </div>

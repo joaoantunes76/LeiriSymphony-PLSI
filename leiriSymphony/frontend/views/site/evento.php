@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 
+/* @var $model common\models\Eventos */
+/* @var $lugaresRestantes common\models\Eventosperfis */
+
+$this->title = 'Evento';
 ?>
 <div class="evento">
     <div class="row">
@@ -10,9 +14,16 @@ use yii\helpers\Html;
     <div class="row d-flex justify-content-center mt-5">
         <div class="col-8">
             <h4>Descrição do evento</h4>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, vel doloribus nemo eligendi rem quibusdam esse maxime velit facilis nobis expedita non molestiae modi, tempore labore corporis debitis? Obcaecati, sint?</p>
+            <p><?= $model->descricao ?></p>
+            <p>Data: <?= $model->data ?></p>
+            <p>Hora de Inicio: <?= $model->horainicio ?></p>
+            <p>Hora de Fim: <?= $model->horafim ?></p>
+            <p>Lotação: <?= $model->lotacao ?></p>
+            <p>Lugares Restantes: <?= $lugaresRestantes ?></p>
         </div>
     </div>
+
+
 
     <div class="row d-flex justify-content-center">
         <button class="btn btn-primary pl-5 pr-5" data-toggle="modal" data-target="#reservarEvento">Reservar</button>

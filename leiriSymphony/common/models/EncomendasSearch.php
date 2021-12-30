@@ -23,6 +23,7 @@ class EncomendasSearch extends Encomendas
             [['id', 'idperfil', 'pago'], 'integer'],
             [['estado', 'tipoexpedicao', 'idperfil0'], 'safe'],
             [['preco'], 'number'],
+            [['data'], 'date'],
         ];
     }
 

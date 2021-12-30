@@ -10,6 +10,8 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+
 
 AppAsset::register($this);
 ?>
@@ -50,11 +52,6 @@ AppAsset::register($this);
             document.getElementById('carrinhocompras').style.width = '0';
             document.body.style = "";
         }
-
-        function goToComprar() {
-            var url = "<?= Url::toRoute("site/comprar") ?>";
-            window.location = url;
-        }
     </script>
 </head>
 
@@ -70,14 +67,14 @@ AppAsset::register($this);
                 </div>
                 <div class="col-md-4 col-sm-5 d-flex align-self-center">
                     <div class="ls-navbar-search">
-                        <form action="search" method="GET">
-                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                        <form action="<?= Url::toRoute("produtos/index") ?>" method="GET">
+                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="nome" placeholder="Search" aria-label="Search">
                         </form>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
                     <div class="ls-navbar-buttons">
-                        <a href="<?= Url::toRoute('site/perfil'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
+                        <a href="<?= Url::toRoute('perfis/index'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
                         <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
                         <a href="#carrinho" onclick="openCarrinhoCompras()"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
                     </div>
@@ -88,14 +85,14 @@ AppAsset::register($this);
 
     <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
         <div class="ls-sidemenu-content" onclick="sideMenuClick()">
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=guitarras">Guitarras</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=baterias">Baterias</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=teclas">Teclas</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=sopros">Sopros</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=classicos">Clássicos</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=tradicionais">Tradicionais</a>
-            <a href="<?= Url::toRoute('produtos/index') ?>?categoria=acessorios">Acessórios</a>
-            <a href="#musica">Música</a>
+            <?php
+                $categorias = \common\models\Categorias::find()->all();
+                foreach($categorias as $categoria){
+                ?>
+                    <a href="<?= Url::toRoute('produtos/index') ?>?Categorias=<?= $categoria->id?>"><?= $categoria->nome ?></a>
+                <?php
+                }
+            ?>
         </div>
         <div style="width: 100%; height:100%">
 
@@ -107,41 +104,33 @@ AppAsset::register($this);
             <div>
                 <br>
                 <h5>Carrinho de compras</h5>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="produto">
-                            <div class="quantidade pr-5 pl-5">
-                                <label for="quantidade">Quantidade</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                                <p class="mt-2">Nome do produto</p>
-                                <p>0.00€</p>
-                            </a>
+                <?php
+                    $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
+                    foreach ($produtosCarrinho as $produtoCarrinho){
+                        $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
+                ?>
+                        <hr>
+                        <div class="mt-4">
+                                <?= Html::a('Remover', Url::to(['produtos/delete-carrinho', 'idproduto' => $produtoCarrinho->idproduto]), [
+                                    'class' => 'btn btn-danger',
+                                ]) ?>
+                                <div class="produto mt-4">
+                                    <a href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoCarrinho->idproduto]) ?>">
+                                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
+                                        <p><?= Html::encode($produto->nome) ?> (<?= Html::encode($produto->preco) ?> €)</p>
+                                    </a>
+                                </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="produto">
-                            <div class="quantidade pr-5 pl-5">
-                                <label for="quantidade">Quantidade</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <a class="ls-produto" id="1" href="<?= Url::toRoute(['produtos/view', 'produtoId' => 1]) ?>">
-                                <?= Html::img('@web/Guitarra-classica.png', ['height' => "126px", 'class' => 'Guitarra-classica']); ?>
-                                <p class="mt-2">Nome do produto</p>
-                                <p>0.00€</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                ?>
             </div>
 
             <div class="row mb-5">
                 <div class="col">
-                    <btn onclick="goToComprar()" class="btn btn-primary">Comprar</btn>
+                    <?= Html::a('Comprar', Url::to(['site/comprar']), [
+                        'class' => 'btn btn-primary',
+                    ]) ?>
                 </div>
             </div>
 
