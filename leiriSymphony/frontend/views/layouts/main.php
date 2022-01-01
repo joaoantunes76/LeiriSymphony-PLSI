@@ -68,19 +68,29 @@ AppAsset::register($this);
                                         ?>
                                     </div>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown_3"
-                                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Conta
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="<?= Url::toRoute('perfis/index') ?>">Perfil</a>
-                                        <a class="dropdown-item" href="<?= Url::toRoute('perfis/encomendas') ?>">Encomendas</a>
-                                    </div>
-                                </li>
-
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= Url::toRoute('site/contact') ?>">Contact</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <?php
+                                        if(Yii::$app->user->isGuest){
+                                        ?>
+                                            <a class="nav-link" href="<?= Url::toRoute('site/login') ?>">Login</a>
+                                        <?php
+                                        }
+                                        else{
+                                        ?>
+                                            <a class="nav-link dropdown-toggle" id="navbarDropdown_3"
+                                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Conta
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                                <a class="dropdown-item" href="<?= Url::toRoute('perfis/index') ?>">Perfil</a>
+                                                <a class="dropdown-item" href="<?= Url::toRoute('perfis/encomendas') ?>">Encomendas</a>
+                                            </div>
+                                        <?php
+                                        }
+                                    ?>
                                 </li>
                             </ul>
                         </div>
