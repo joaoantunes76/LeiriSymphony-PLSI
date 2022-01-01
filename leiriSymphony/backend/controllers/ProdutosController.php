@@ -10,7 +10,9 @@ use common\models\Produtos;
 use yii\filters\VerbFilter;
 use common\models\Subcategorias;
 use common\models\ProdutosSearch;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
@@ -58,6 +60,13 @@ class ProdutosController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
