@@ -53,7 +53,6 @@
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['pedidosdecontacto/index'], 'iconStyle' => 'far'],
                             ['label' => 'Tipos de Contacto', 'url' => ['tipoinformacoes/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 PROVIDED', 'header' => true],
