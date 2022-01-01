@@ -26,7 +26,7 @@ $this->title = $model->nome;
                         foreach ($model->imagens as $imagem)
                         {
                         ?>
-                            <div data-thumb="<?= $imagem->nome ?>">
+                            <div data-thumb="<?=Yii::getAlias('@imageurl') . '/' . $imagem->nome ?>">
                                 <img src="<?=Yii::getAlias('@imageurl') . '/' . $imagem->nome ?>"  height="450px"/>
                             </div>
                         <?php
@@ -256,9 +256,6 @@ $this->title = $model->nome;
                         <div class="review_list">
                             <div class="review_item">
                                 <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-1.png" alt="" />
-                                    </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>
                                         <i class="fa fa-star"></i>
@@ -277,9 +274,6 @@ $this->title = $model->nome;
                             </div>
                             <div class="review_item">
                                 <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-2.png" alt="" />
-                                    </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>
                                         <i class="fa fa-star"></i>
@@ -298,9 +292,6 @@ $this->title = $model->nome;
                             </div>
                             <div class="review_item">
                                 <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-3.png" alt="" />
-                                    </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>
                                         <i class="fa fa-star"></i>
@@ -352,21 +343,6 @@ $this->title = $model->nome;
                             </ul>
                             <p>Outstanding</p>
                             <form class="row contact_form" action="contact_process.php" method="post" novalidate="novalidate">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="name" placeholder="Your Full name" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" name="email" placeholder="Email Address" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="number" placeholder="Phone Number" />
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <textarea class="form-control" name="message" rows="1" placeholder="Review"></textarea>
