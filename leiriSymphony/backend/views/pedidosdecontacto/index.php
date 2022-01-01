@@ -18,15 +18,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'idproblema',
-            'idperfil',
+            [
+                'attribute' => 'idproblema0',
+                'label' => 'Tipo de Contacto',
+                'value' => function ($data) {
+                    return $data->idproblema0->nome.' ('.$data->idproblema0->tipo.')';
+                }
+            ],
+            [
+                'attribute' => 'idperfil0',
+                'label' => 'Cliente',
+                'value' => function ($data) {
+                    return $data->idperfil0->nome;
+                }
+            ],
             'mensagem:ntext',
             'email:email',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{view} {delete}',
+            ],
         ],
     ]); ?>
 

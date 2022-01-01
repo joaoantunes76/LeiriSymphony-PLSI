@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="<?= \yii\helpers\Url::toRoute('site/index') ?>" class="brand-link">
         <img src="<?=  \Yii::getAlias('@web') ?>/logo.png" alt="AdminLTE Logo" class="brand-image ">
         <br>
     </a>
@@ -52,6 +52,7 @@
                         'icon' => 'tachometer-alt',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['pedidosdecontacto/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Tipos de Contacto', 'url' => ['tipoinformacoes/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],

@@ -13,7 +13,6 @@ use yii\filters\VerbFilter;
 use common\models\ImagensSearch;
 use common\models\Produtos;
 use yii\web\NotFoundHttpException;
-use yii;
 
 /**
  * ImagensController implements the CRUD actions for Imagens model.
