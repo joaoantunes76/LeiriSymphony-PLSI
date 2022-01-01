@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "pedidosdecontacto".
  *
+ * @property int $id
  * @property int $idproblema
  * @property int $idperfil
  * @property string $mensagem
@@ -35,7 +36,6 @@ class Pedidosdecontacto extends \yii\db\ActiveRecord
             [['idproblema', 'idperfil'], 'integer'],
             [['mensagem'], 'string'],
             [['email'], 'string', 'max' => 64],
-            [['idproblema', 'idperfil'], 'unique', 'targetAttribute' => ['idproblema', 'idperfil']],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
             [['idproblema'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoinformacoes::className(), 'targetAttribute' => ['idproblema' => 'id']],
         ];
@@ -47,6 +47,7 @@ class Pedidosdecontacto extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'idproblema' => 'Idproblema',
             'idperfil' => 'Idperfil',
             'mensagem' => 'Mensagem',

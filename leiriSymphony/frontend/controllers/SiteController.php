@@ -9,8 +9,10 @@ use common\models\Encomendas;
 use common\models\Encomendasprodutos;
 use common\models\Eventos;
 use common\models\Eventosperfis;
+use common\models\Pedidosdecontacto;
 use common\models\Perfis;
 use common\models\Produtosfavoritos;
+use common\models\Tipoinformacoes;
 use frontend\models\PagamentoOnline;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -118,7 +120,6 @@ class SiteController extends Controller
 
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
-
         } else {
             if($this->request->isPost){
                 $pagamentoOnline->load($this->request->post());
@@ -147,6 +148,7 @@ class SiteController extends Controller
                         $erroCartao = true;
                     }
                 }
+
 
                 if($encomenda->validate() && $encomenda->save()){
                     foreach($_POST as $post){
@@ -257,36 +259,24 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+        $pedidoDeContacto = new Pedidosdecontacto();
+        $tipoInformacoes = Tipoinformacoes::find()->all();
+
+        if ($pedidoDeContacto->load(Yii::$app->request->post())) {
+            $pedidoDeContacto->idperfil = Yii::$app->user->id;
+            if($pedidoDeContacto->save()){
+                Yii::$app->session->setFlash('success', 'A sua mensagem foi enviada com sucesso, em breve entraremos em contacto pelo email indicado.');
+            }
+            else{
+                Yii::$app->session->setFlash('error', 'Houve um erro a enviar a sua mensagem, por favor, tente contactar-nos por outro meio.');
             }
 
-            return $this->refresh();
+
         }
-
         return $this->render('contact', [
-            'model' => $model,
+            'model' => $pedidoDeContacto,
+            'tipoInformacoes' => $tipoInformacoes
         ]);
-    }
-
-    /**
-     * Displays favoritos page.
-     *
-     * @return mixed
-     */
-    public function actionFavoritos()
-    {
-        $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
-
-
-        return $this->render('favoritos', [
-            'model' => $produtosFavoritos,
-        ]);
-
     }
 
     /**

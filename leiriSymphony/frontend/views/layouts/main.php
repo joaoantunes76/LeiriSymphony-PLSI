@@ -86,8 +86,8 @@ AppAsset::register($this);
                         </div>
                         <div class="hearer_icon d-flex">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="<?= Url::toRoute('site/favoritos') ?>"><i class="ti-heart"></i></a>
-                            <a href="<?= Url::toRoute('site/comprar') ?>">
+                            <a href="<?= Url::toRoute('favoritos/index') ?>"><i class="ti-heart"></i></a>
+                            <a href="<?= Url::toRoute('carrinho/index') ?>">
                                 <i class="fas fa-cart-plus"></i>
                             </a>
                         </div>

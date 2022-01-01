@@ -19,10 +19,10 @@ $this->title = 'My Yii Application';
                     <div class="widgets_inner">
                         <ul class="list">
                             <li>
-                                <a href="#">Perfil</a>
+                                <a href="<?= Url::toRoute('perfis/index') ?>">Perfil</a>
                             </li>
                             <li>
-                                <a href="#">Encomendas</a>
+                                <a href="<?= Url::toRoute('perfis/encomendas') ?>">Encomendas</a>
                             </li>
                         </ul>
                     </div>

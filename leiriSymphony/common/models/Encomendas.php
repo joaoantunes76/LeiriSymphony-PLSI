@@ -39,7 +39,7 @@ class Encomendas extends \yii\db\ActiveRecord
             [['idperfil', 'pago'], 'integer'],
             [['estado', 'tipoexpedicao'], 'string'],
             [['preco'], 'number'],
-            [['data'], 'date'],
+            [['data'], 'string'],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
         ];
     }
