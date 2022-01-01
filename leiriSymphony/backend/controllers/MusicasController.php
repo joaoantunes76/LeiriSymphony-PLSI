@@ -6,11 +6,13 @@ use common\models\Musicas;
 use common\models\MusicasSearch;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * MusicasController implements the CRUD actions for Musicas model.
@@ -58,6 +60,13 @@ class MusicasController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 use app\models\UploadForm;
 use common\models\Imagens;
@@ -11,6 +12,7 @@ use yii\filters\VerbFilter;
 use common\models\ImagensSearch;
 use common\models\Produtos;
 use yii\web\NotFoundHttpException;
+use yii;
 
 /**
  * ImagensController implements the CRUD actions for Imagens model.
@@ -53,6 +55,13 @@ class ImagensController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
