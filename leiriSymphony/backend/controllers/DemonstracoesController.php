@@ -2,20 +2,19 @@
 
 namespace backend\controllers;
 
-use common\models\Musicas;
-use common\models\MusicasSearch;
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\UploadedFile;
 use app\models\UploadForm;
+use common\models\Demonstracoes;
+use common\models\DemonstracoesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * MusicasController implements the CRUD actions for Musicas model.
+ * DemonstracoesController implements the CRUD actions for Demonstracoes model.
  */
-class MusicasController extends Controller
+class DemonstracoesController extends Controller
 {
     /**
      * @inheritDoc
@@ -30,27 +29,27 @@ class MusicasController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index'],
-                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
+                        'roles' => ['Administrador','Gestor de loja'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['create'],
-                        'roles' => ['criarMusica'],
+                        'roles' => ['criarDemonstracao'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['view'],
-                        'roles' => ['verMusica'],
+                        'roles' => ['verDemonstracao'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['update'],
-                        'roles' => ['editarMusica'],
+                        'roles' => ['editarDemonstracao'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['delete'],
-                        'roles' => ['eliminarMusica'],
+                        'roles' => ['eliminarDemonstracao'],
                     ],
                     [
                         'allow' => true,
@@ -69,12 +68,12 @@ class MusicasController extends Controller
     }
 
     /**
-     * Lists all Musicas models.
+     * Lists all Demonstracoes models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MusicasSearch();
+        $searchModel = new DemonstracoesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -84,40 +83,40 @@ class MusicasController extends Controller
     }
 
     /**
-     * Displays a single Musicas model.
+     * Displays a single Demonstracoes model.
      * @param int $id ID
-     * @param int $idalbuns Idalbuns
+     * @param int $idproduto Idproduto
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id, $idalbuns)
+    public function actionView($id, $idproduto)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id, $idalbuns),
+            'model' => $this->findModel($id, $idproduto),
         ]);
     }
 
     /**
-     * Creates a new Musicas model.
+     * Creates a new Demonstracoes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Musicas();
+        $model = new Demonstracoes();
         $uploadForm = new UploadForm();
 
-        if(isset($_GET["albumId"])){
-            $albumId = $_GET["albumId"];
+        if (isset($_GET['produtoId'])){
+            $produtoId = $_GET['produtoId'];
             if ($this->request->isPost) {
                 $model->load($this->request->post());
-                $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
+                $uploadForm->demoFile = UploadedFile::getInstance($uploadForm, 'demoFile');
                 $now = date("mdyhis");
-                if ($uploadForm->uploadMusic($now)) {
-                    $model->ficheiro =  $now . "." . $uploadForm->musicFile->extension;
-                    $model->idalbuns = $albumId;
+                if ($uploadForm->uploadDemo($now)){
+                    $model->nome =  $now . "." . $uploadForm->demoFile->extension;
+                    $model->idproduto = $produtoId;
                     if ($model->save()) {
-                        return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+                        return $this->redirect(['view', 'id' => $model->id, 'idproduto' => $model->idproduto]);
                     }
                 }
             } else {
@@ -131,32 +130,31 @@ class MusicasController extends Controller
         else {
             return $this->redirect('index');
         }
-
     }
 
     /**
-     * Updates an existing Musicas model.
+     * Updates an existing Demonstracoes model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @param int $idalbuns Idalbuns
+     * @param int $idproduto Idproduto
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id, $idalbuns)
+    public function actionUpdate($id, $idproduto)
     {
-        $model = $this->findModel($id, $idalbuns);
+        $model = $this->findModel($id, $idproduto);
         $uploadForm = new UploadForm();
 
         if ($this->request->isPost) {
             $model->load($this->request->post());
-            $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
+            $uploadForm->demoFile = UploadedFile::getInstance($uploadForm, 'demoFile');
             $now = date("mdyhis");
             if ($uploadForm->uploadMusic($now)) {
-                unlink(\Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
-                $model->ficheiro = $now . "." . $uploadForm->musicFile->extension;
-                $model->idalbuns = $idalbuns;
+                unlink(\Yii::getAlias('@webroot').'\uploads\demos\\'.$model->nome);
+                $model->nome = $now . "." . $uploadForm->demoFile->extension;
+                $model->idproduto = $idproduto;
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]);
+                    return $this->redirect(['view', 'id' => $model->id, 'idproduto' => $model->idproduto]);
                 }
             }
         }
@@ -167,31 +165,31 @@ class MusicasController extends Controller
     }
 
     /**
-     * Deletes an existing Musicas model.
+     * Deletes an existing Demonstracoes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @param int $idalbuns Idalbuns
+     * @param int $idproduto Idproduto
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id, $idalbuns)
+    public function actionDelete($id, $idproduto)
     {
-        $this->findModel($id, $idalbuns)->delete();
+        $this->findModel($id, $idproduto)->delete();
 
-        return $this->redirect(['albuns/view?id='.$idalbuns]);
+        return $this->redirect(['produtos/view?id='.$idproduto]);
     }
 
     /**
-     * Finds the Musicas model based on its primary key value.
+     * Finds the Demonstracoes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @param int $idalbuns Idalbuns
-     * @return Musicas the loaded model
+     * @param int $idproduto Idproduto
+     * @return Demonstracoes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $idalbuns)
+    protected function findModel($id, $idproduto)
     {
-        if (($model = Musicas::findOne(['id' => $id, 'idalbuns' => $idalbuns])) !== null) {
+        if (($model = Demonstracoes::findOne(['id' => $id, 'idproduto' => $idproduto])) !== null) {
             return $model;
         }
 

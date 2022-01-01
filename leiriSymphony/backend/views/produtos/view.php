@@ -2,9 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Produtos */
+/* @var $searchModel common\models\DemonstracoesSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Produtos', 'url' => ['index']];
@@ -90,7 +94,39 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
+    <br>
+    <p>
+        <?= Html::a('Adicionar Demonstração', ['demonstracoes/create?produtoId='.$model->id], ['class' => 'btn btn-success']) ?>
+    </p>
 
 
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            'id',
+            'nome',
+            [
+                'label' => 'Demonstracao',
+                'format' => 'raw',
+                'value' => function($data) {
+                    if($data->nome != ""){
+                        return '<audio controls><source src="http://leirysymphony-be/uploads/demos/'.$data->nome.'" type="audio/ogg"></audio>';
+                    }
+                    else {
+                        return "";
+                    }
+                },
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => [],
+                'template' => '{view} {update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return Url::to(['demonstracoes/'.$action, 'id' => $model->id, 'idproduto' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
 
 </div>

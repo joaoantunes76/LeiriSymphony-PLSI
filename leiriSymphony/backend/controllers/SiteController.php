@@ -24,16 +24,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['login', 'index', 'logout'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'signup'],
+                        'actions' => ['login'],
                         'roles' => ['?'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['index'],
-                        'roles' => ['Administrador'],
+                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
                     ],
                     [
                         'allow' => true,
@@ -88,7 +89,6 @@ class SiteController extends Controller
                     return $this->redirect(['../../frontend/web/site/index']);
                 }
             }
-
             return $this->goBack();
         }
 

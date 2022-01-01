@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\MusicasSearch */
+/* @var $searchModel common\models\DemonstracoesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Músicas';
+$this->title = 'Demonstrações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="musicas-index">
+<div class="demonstracoes-index">
 
-    
+
 
     <p>
-        <?= Html::a('Create Musicas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Demonstracoes', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,9 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            'idproduto',
             'nome',
-            'ficheiro',
-            'idalbuns',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
