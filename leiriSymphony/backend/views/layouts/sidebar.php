@@ -1,21 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="<?= $assetDir ?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">LeiriSymphony</span>
+        <img src="<?=  \Yii::getAlias('@web') ?>/logo.png" alt="AdminLTE Logo" class="brand-image ">
+        <br>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">Administrador</a>
-            </div>
-        </div>
-
         <!-- SidebarSearch Form -->
         <!-- href be escaped -->
         <!-- <div class="form-inline">
@@ -60,7 +51,7 @@
                         'label' => 'Apoio ao Cliente',
                         'icon' => 'tachometer-alt',
                         'items' => [
-                            ['label' => 'Pedidos de Contacto', 'url' => ['#'], 'iconStyle' => 'far'],
+                            ['label' => 'Pedidos de Contacto', 'url' => ['pedidosdecontacto/index'], 'iconStyle' => 'far'],
                             ['label' => 'Encomendas', 'url' => ['encomendas/index'], 'iconStyle' => 'far'],
                         ]
                     ],
