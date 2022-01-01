@@ -25,6 +25,7 @@ class EncomendasController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['index', 'view','update','delete','logout'],
                 'rules' => [
                     [
                         'allow' => true,

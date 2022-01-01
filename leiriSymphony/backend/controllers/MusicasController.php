@@ -25,6 +25,7 @@ class MusicasController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
                 'rules' => [
                     [
                         'allow' => true,
