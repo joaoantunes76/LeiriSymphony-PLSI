@@ -1,6 +1,5 @@
 <?php
 
-use hosanna\audiojs\AudioJs;
 use yii\bootstrap4\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Html;

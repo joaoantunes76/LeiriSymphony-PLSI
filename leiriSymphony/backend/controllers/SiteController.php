@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\BaseUrl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\helpers\Url;
 
@@ -24,16 +25,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['login', 'index','logout'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'signup'],
+                        'actions' => ['login'],
                         'roles' => ['?'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['index'],
-                        'roles' => ['Administrador'],
+                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
                     ],
                     [
                         'allow' => true,
@@ -41,6 +43,13 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
         ];
     }
@@ -88,7 +97,6 @@ class SiteController extends Controller
                     return $this->redirect(['../../frontend/web/site/index']);
                 }
             }
-
             return $this->goBack();
         }
 

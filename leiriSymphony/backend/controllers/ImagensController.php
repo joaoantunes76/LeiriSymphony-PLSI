@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 use app\models\UploadForm;
 use common\models\Imagens;
@@ -21,17 +24,52 @@ class ImagensController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['criarImagem'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['verImagem'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['eliminarImagem'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -81,6 +119,7 @@ class ImagensController extends Controller
                 $model->nome = $now . "." . $uploadForm->imageFile->extension;
                 $model->idproduto = $idproduto;
                 if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Imagem adicionada com sucesso');
                     if($model->idproduto == null) {
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
@@ -88,9 +127,15 @@ class ImagensController extends Controller
                         return $this->redirect(['produtos/view?id='.$model->idproduto]);
                     }
                 }
-                return $this->redirect(['index', 'error' => $model->errors]);
             }
-            return $this->redirect(['index', 'error' => $uploadForm->errors]);
+            Yii::$app->session->setFlash('error', 'ocorreu um erro');
+            if($model->idproduto == null) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            else{
+                return $this->redirect(['produtos/view?id='.$model->idproduto]);
+            }
+
         } else {
             $model->loadDefaultValues();
         }
@@ -113,6 +158,7 @@ class ImagensController extends Controller
     {
         $model = $this->findModel($id);
         $idproduto = $model->idproduto;
+        unlink(\Yii::getAlias('@webroot').'/uploads/'.$model->nome);
         $model->delete();
 
         return $this->redirect(['produtos/view?id='.$idproduto]);

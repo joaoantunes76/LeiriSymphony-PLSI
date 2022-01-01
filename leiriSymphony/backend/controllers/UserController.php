@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use Yii;
 use app\models\User;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -22,11 +24,32 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'update', 'create', 'view'],
+                        'actions' => ['index'],
                         'roles' => ['Administrador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['criarUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['verUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['editarUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['eliminarUtilizador'],
                     ],
                     [
                         'allow' => true,
@@ -34,6 +57,13 @@ class UserController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),

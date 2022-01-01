@@ -111,7 +111,7 @@ class m211204_144735_init_rbac extends Migration
         $auth->add($verMarca);
 
         $editarMarca = $auth->createPermission('editarMarca');
-        $criarMarca->description = 'Editar uma marca';
+        $editarMarca->description = 'Editar uma marca';
         $auth->add($editarMarca);
 
         $eliminarMarca = $auth->createPermission('eliminarMarca');
@@ -121,19 +121,19 @@ class m211204_144735_init_rbac extends Migration
 
         //encomendas
         $criarEncomenda = $auth->createPermission('criarEncomenda');
-        $criarEncomenda->description = 'Criar uma Encomenda';
+        $criarEncomenda->description = 'Criar uma encomenda';
         $auth->add($criarEncomenda);
 
         $verEncomenda = $auth->createPermission('verEncomenda');
-        $verEncomenda->description = 'Ver uma Encomenda';
+        $verEncomenda->description = 'Ver uma encomenda';
         $auth->add($verEncomenda);
 
         $editarEncomenda = $auth->createPermission('editarEncomenda');
-        $editarEncomenda->description = 'Editar uma Encomenda';
+        $editarEncomenda->description = 'Editar uma encomenda';
         $auth->add($editarEncomenda);
 
         $eliminarEncomenda = $auth->createPermission('eliminarEncomenda');
-        $eliminarEncomenda->description = 'Eliminar uma Encomenda';
+        $eliminarEncomenda->description = 'Eliminar uma encomenda';
         $auth->add($eliminarEncomenda);
 
 
@@ -360,10 +360,15 @@ class m211204_144735_init_rbac extends Migration
         $auth->addChild($gestor, $eliminarMusica);
         $auth->addChild($gestor, $editarEncomenda);
         $auth->addChild($gestor, $verEncomenda);
+        $auth->addChild($gestor, $eliminarEncomenda);
         $auth->addChild($gestor, $criarImagem);
         $auth->addChild($gestor, $verImagem);
         $auth->addChild($gestor, $editarImagem);
         $auth->addChild($gestor, $eliminarImagem);
+        $auth->addChild($gestor, $criarDemonstracao);
+        $auth->addChild($gestor, $verDemonstracao);
+        $auth->addChild($gestor, $editarDemonstracao);
+        $auth->addChild($gestor, $eliminarDemonstracao);
 
 
         //apoio ao cliente
@@ -380,6 +385,7 @@ class m211204_144735_init_rbac extends Migration
         $auth->addChild($apoio, $verEvento);
         $auth->addChild($apoio, $editarEncomenda);
         $auth->addChild($apoio, $verEncomenda);
+        $auth->addChild($apoio, $eliminarEncomenda);
         $auth->addChild($apoio, $verImagem);
         $auth->addChild($apoio, $verTipoInformacao);
         $auth->addChild($apoio, $editarTipoInformacao);
@@ -407,6 +413,9 @@ class m211204_144735_init_rbac extends Migration
 
 
         $auth->assign($admin, 1);
+        $auth->assign($gestor, 2);
+        $auth->assign($apoio, 3);
+
     }
 
     public function down()
