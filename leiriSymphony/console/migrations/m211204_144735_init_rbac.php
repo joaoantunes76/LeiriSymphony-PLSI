@@ -413,6 +413,9 @@ class m211204_144735_init_rbac extends Migration
 
 
         $auth->assign($admin, 1);
+        $auth->assign($gestor, 2);
+        $auth->assign($apoio, 3);
+
     }
 
     public function down()

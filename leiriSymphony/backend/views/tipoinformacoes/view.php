@@ -4,16 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Subcategorias */
+/* @var $model common\models\Tipoinformacoes */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Subcategorias', 'url' => ['index']];
+$this->title = $model->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Tipoinformacoes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="subcategorias-view">
-
-    
+<div class="tipoinformacoes-view">
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -30,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'idcategoria',
             'nome',
+            'tipo',
         ],
     ]) ?>
 
