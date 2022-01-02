@@ -36,9 +36,12 @@ class Encomendas extends \yii\db\ActiveRecord
     {
         return [
             [['idperfil', 'estado', 'pago', 'preco', 'tipoexpedicao'], 'required'],
-            [['idperfil', 'pago'], 'integer'],
+            [['idperfil'], 'integer'],
+            [['pago'], 'integer', 'min' => 0, 'max' => 1],
             [['estado', 'tipoexpedicao'], 'string'],
-            [['preco'], 'number'],
+            [['estado'], 'in', 'range' => ['Em Processamento', 'Expedido', 'Entregue', 'Pronto para Levantamento', 'Cancelada', 'Erro']],
+            [['tipoexpedicao'], 'in', 'range' => ['Levantamento em loja', 'Envio']],
+            [['preco'], 'number', 'min' => 0],
             [['data'], 'string'],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
         ];

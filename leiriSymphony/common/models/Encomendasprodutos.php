@@ -35,6 +35,7 @@ class Encomendasprodutos extends \yii\db\ActiveRecord
             [['idencomenda', 'idproduto'], 'unique', 'targetAttribute' => ['idencomenda', 'idproduto']],
             [['idencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Encomendas::className(), 'targetAttribute' => ['idencomenda' => 'id']],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
+            ['quantidade', 'compare', 'compareValue' => $this->idproduto0->stock, 'operator' => '<=', 'type' => 'number'],
         ];
     }
 
