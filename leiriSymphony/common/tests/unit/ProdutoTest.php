@@ -9,7 +9,7 @@ class ProdutoTest extends \Codeception\Test\Unit
      * @var \common\tests\UnitTester
      */
     protected $tester;
-    
+
     protected function _before()
     {
     }
@@ -188,8 +188,8 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
+        $produto->idsubcategoria = 1;
+        $produto->idmarca = 1;
         $produto->nome = 'Guitarra Yamaha aaaaaOA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet ';
         $produto->usado = 0;

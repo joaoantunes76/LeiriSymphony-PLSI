@@ -74,7 +74,7 @@ $this->title = 'My Yii Application';
                 <a href="#" id="enableForm" onclick="enableForm()" class="btn btn-primary pr-5 pl-5">Editar</a>
             </div>
             <div class="form-group d-none" id="submit">
-                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success pr-5 pl-5']) ?>
+                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success pr-5 pl-5', 'id' => 'guardar']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
