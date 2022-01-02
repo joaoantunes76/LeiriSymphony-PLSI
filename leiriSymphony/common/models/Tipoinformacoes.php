@@ -31,6 +31,7 @@ class Tipoinformacoes extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'tipo'], 'required'],
+            [['tipo'], 'in', 'range' => ['Problema', 'Informação'], 'allowArray' => true],
             [['tipo'], 'string'],
             [['nome'], 'string', 'max' => 45],
         ];

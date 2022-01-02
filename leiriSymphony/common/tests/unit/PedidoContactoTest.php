@@ -2,6 +2,7 @@
 namespace common\tests;
 
 use common\models\Pedidosdecontacto;
+use common\models\Tipoinformacoes;
 
 class PedidoContactoTest extends \Codeception\Test\Unit
 {
@@ -18,7 +19,102 @@ class PedidoContactoTest extends \Codeception\Test\Unit
     {
     }
 
-    // tests
+    // tests - tipoinformacoes
+    public function testTipoinformacoesNomeMais45CharsNaoValida()
+    {
+        $chars = "";
+        for($i = 0; $i < 50; $i++){
+            $chars .= "p";
+        }
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = $chars;
+        $tipoinformacao->tipo = "Informação";
+        $this->assertFalse($tipoinformacao->validate());
+    }
+    public function testTipoinformacoesNomeNumericoNaoValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = 0;
+        $tipoinformacao->tipo = "Informação";
+        $this->assertFalse($tipoinformacao->validate());
+    }
+    public function testTipoinformacoesNomeNullNaoValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = Null;
+        $tipoinformacao->tipo = "Informação";
+        $this->assertFalse($tipoinformacao->validate());
+    }
+
+
+    public function testTipoinformacoesTipoNumericoNaoValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = "TesteTipoInformacao";
+        $tipoinformacao->tipo = 0;
+        $this->assertFalse($tipoinformacao->validate());
+    }
+    public function testTipoinformacoesTipoNullNaoValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = "TesteTipoInformacao";
+        $tipoinformacao->tipo = Null;
+        $this->assertFalse($tipoinformacao->validate());
+    }
+
+    public function testTipoinformacoesTipoDiferenteDoEnumNaoValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = "TesteTipoInformacao";
+        $tipoinformacao->tipo = "teste";
+        $this->assertFalse($tipoinformacao->validate());
+    }
+
+    public function testTipoinformacoesValida()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = "TesteTipoInformacao";
+        $tipoinformacao->tipo = "Informação";
+        $this->assertTrue($tipoinformacao->validate());
+    }
+
+    public function testTipoinformacoesValidaSalva()
+    {
+        $tipoinformacao = new Tipoinformacoes();
+        $tipoinformacao->nome = "TesteTipoInformacao";
+        $tipoinformacao->tipo = "Informação";
+        $this->assertTrue($tipoinformacao->save());
+    }
+
+    public function testTipoinformacoesSalvaEstaNaBD()
+    {
+        $this->tester->seeInDatabase(Tipoinformacoes::tableName(), ['nome' => 'TesteTipoInformacao', 'tipo' => 'Informação']);
+    }
+
+    public function testTipoinformacoesAtualiza()
+    {
+        $tipoinformacao = Tipoinformacoes::find()->where(['nome' => 'TesteTipoInformacao', 'tipo' => 'Informação'])->one();
+        $tipoinformacao->nome = "TesteTipoInformacao2";
+        $tipoinformacao->save();
+    }
+
+    public function testTipoinformacoesAtualizadoEstaNaBD()
+    {
+        $this->tester->seeInDatabase(Tipoinformacoes::tableName(), ['nome' => 'TesteTipoInformacao2', 'tipo' => 'Informação']);
+    }
+
+    public function testTipoinformacoesAtualizadoApaga()
+    {
+        $tipoinformacao = Tipoinformacoes::find()->where(['nome' => 'TesteTipoInformacao2', 'tipo' => 'Informação'])->one();
+        $this->assertIsNumeric($tipoinformacao->delete());
+    }
+
+    public function testTipoinformacoesApagadoNaoEstaNaBD()
+    {
+        $this->tester->dontSeeInDatabase(Tipoinformacoes::tableName(), ['nome' => 'TesteTipoInformacao2', 'tipo' => 'Informação']);
+    }
+
+    // tests - pedidodecontacto
     public function testPedidodecontactoIdproblemaNaoExistenteNaoValida()
     {
         $pedidocontacto = new Pedidosdecontacto();
@@ -145,7 +241,6 @@ class PedidoContactoTest extends \Codeception\Test\Unit
     }
 
     public function testPedidodecontactoSalvadoEstaNaBD(){
-
         $this->tester->seeInDatabase(Pedidosdecontacto::tableName(), ['idproblema' => 1, 'email' => 'emailteste@gmail.com', 'idperfil' => 4, 'mensagem' => "foo"]);
     }
 
