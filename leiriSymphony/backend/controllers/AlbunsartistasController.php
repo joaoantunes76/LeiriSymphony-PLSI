@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use Yii;
 use common\models\Albunsartistas;
 use common\models\AlbunsartistasSearch;
 use common\models\ArtistasSearch;
