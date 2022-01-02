@@ -11,24 +11,45 @@ use yii\helpers\Url;
 $this->title = 'Login';
 ?>
 
-<div class="text-center ls-mb-10">
-    <?= Html::img('@web/logo.png', ['height' => "80px", 'class' => 'logo']); ?>
-</div>
+<!--================login_part Area =================-->
+<section class="login_part padding_top">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_text text-center">
+                    <div class="login_part_text_iner">
+                        <h2>Novo na nossa loja?</h2>
+                        <p>A nossa loja tem novos produtos a serem adicionados, junte-se a nós criando uma nova conta</p>
+                        <a href="<?= Url::toRoute('site/signup'); ?>" class="btn_3">Criar uma conta</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_form">
+                    <div class="login_part_form_iner">
 
-<div class="login-register mt-5">
-    <div class="row">
-        <div class="col">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-            <div class="text-left mt-5 mb-5">
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                <span><a href="<?= Url::toRoute('site/signup'); ?>">Click here</a> to create an account</span>
+                        <h3>Bem vindo de volta! <br>
+                            Por favor, faça o login</h3>
+
+                        <?php $form = ActiveForm::begin(['class' => 'row contact_form']); ?>
+                            <div class="col-md-12 form-group p_star">
+                                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <?= $form->field($model, 'password')->passwordInput() ?>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="creat_account d-flex align-items-center">
+                                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                                </div>
+                                <?= Html::submitButton('Login', ['class' => 'btn_3', 'name' => 'login-button']) ?>
+                            </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-secondary pr-5 pl-5', 'name' => 'login-button']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
         </div>
     </div>
-</div>
+</section>
+<!--================login_part end =================-->
+
