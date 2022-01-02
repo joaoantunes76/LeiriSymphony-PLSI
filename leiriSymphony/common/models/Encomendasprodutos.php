@@ -31,7 +31,8 @@ class Encomendasprodutos extends \yii\db\ActiveRecord
     {
         return [
             [['idencomenda', 'idproduto', 'quantidade'], 'required'],
-            [['idencomenda', 'idproduto', 'quantidade'], 'integer'],
+            [['idencomenda', 'idproduto'], 'integer'],
+            [['quantidade'], 'integer', 'min' => 1],
             [['idencomenda', 'idproduto'], 'unique', 'targetAttribute' => ['idencomenda', 'idproduto']],
             [['idencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Encomendas::className(), 'targetAttribute' => ['idencomenda' => 'id']],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],

@@ -164,23 +164,32 @@ class EncomendaTest extends \Codeception\Test\Unit
 
     public function testEncomendaprodutoIdProdutoInexistenteNaoValida()
     {
-        /*
         $encomendaproduto = new Encomendasprodutos();
         $encomendaproduto->idencomenda = 5;
         $encomendaproduto->idproduto = 909090; //produto inexistente
         $encomendaproduto->quantidade = 2;
-        */
 
+        try {
+            $encomendaproduto->validate();
+        } catch (\Exception $exception){
+            $gotError = true;
+        }
+        $this->assertTrue($gotError);
     }
 
     public function testEncomendaprodutoIdProdutoNuloNaoValida()
     {
-        /*
         $encomendaproduto = new Encomendasprodutos();
         $encomendaproduto->idencomenda = 5;
         $encomendaproduto->idproduto = null; //produto nulo
         $encomendaproduto->quantidade = 2;
-        */
+
+        try {
+            $encomendaproduto->validate();
+        } catch (\Exception $exception){
+            $gotError = true;
+        }
+        $this->assertTrue($gotError);
     }
 
     public function testQuantidadeEncomendaMaiorQueStockProdutoNaoValida()
@@ -199,6 +208,16 @@ class EncomendaTest extends \Codeception\Test\Unit
         $encomendaproduto->idencomenda = 5;
         $encomendaproduto->idproduto = 7;
         $encomendaproduto->quantidade = null; //quantidade nula
+
+        $this->assertFalse($encomendaproduto->validate());
+    }
+
+    public function testQuantidadeEncomendaNegativaNaoValida()
+    {
+        $encomendaproduto = new Encomendasprodutos();
+        $encomendaproduto->idencomenda = 5;
+        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->quantidade = -9; //quantidade negativa
 
         $this->assertFalse($encomendaproduto->validate());
     }
