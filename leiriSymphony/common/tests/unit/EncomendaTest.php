@@ -137,7 +137,7 @@ class EncomendaTest extends \Codeception\Test\Unit
         $this->assertIsNumeric($encomenda->delete());
     }
 
-    public function testVerSeProdutoFoiApagado()
+    public function testVerSeEncomendaFoiApagada()
     {
         $this->tester->dontSeeInDatabase(Encomendas::tableName(), ['preco' => 300.9]);
     }
@@ -220,5 +220,44 @@ class EncomendaTest extends \Codeception\Test\Unit
         $encomendaproduto->quantidade = -9; //quantidade negativa
 
         $this->assertFalse($encomendaproduto->validate());
+    }
+
+    public function testEncomendaprodutoSave()
+    {
+        $encomendaproduto = new Encomendasprodutos();
+        $encomendaproduto->idencomenda = 5;
+        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->quantidade = 2;
+
+        $this->assertTrue($encomendaproduto->save());
+    }
+
+    public function testVerEncomendaprodutoAdicionada()
+    {
+        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7]);
+    }
+
+    public function testAtualizarEncomendaprodutoRegistada()
+    {
+        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => 5, 'idproduto' => 7])->one();
+        $encomendaproduto->quantidade = 6;
+
+        $this->assertTrue($encomendaproduto->save());
+    }
+
+    public function testVerEncomendaprodutoAnteriormenteAtualizada()
+    {
+        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7, 'quantidade' => 6]);
+    }
+
+    public function testApagarEncomendaproduto()
+    {
+        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => 5, 'idproduto' => 7])->one();
+        $this->assertIsNumeric($encomendaproduto->delete());
+    }
+
+    public function testVerSeEncomendaprodutoFoiApagada()
+    {
+        $this->tester->dontSeeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7]);
     }
 }
