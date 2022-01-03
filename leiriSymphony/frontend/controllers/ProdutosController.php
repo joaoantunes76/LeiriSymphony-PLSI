@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Avaliacao;
 use common\models\Categorias;
+use common\models\Demonstracoes;
 use common\models\Encomendas;
 use common\models\Marcas;
 use common\models\Perfis;
@@ -109,6 +110,7 @@ class ProdutosController extends Controller
     {
         $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
         $idperfil = $perfil->id;
+        $produtoPreviews = Demonstracoes::find()->where(['idproduto' => $produtoId])->all();
         $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->exists();
         $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
         $avalicaoUserExiste = Avaliacao::find()->where(['idperfil' => $idperfil, 'idproduto' => $produtoId])->exists();
@@ -122,7 +124,8 @@ class ProdutosController extends Controller
             'model' => $this->findModel($produtoId),
             'existeFavorito' => $existeFavorito,
             'avaliacoes' => $avaliacoes,
-            'podeAvaliar' => $podeAvaliar
+            'podeAvaliar' => $podeAvaliar,
+            'demonstracoes' => $produtoPreviews,
         ]);
     }
 

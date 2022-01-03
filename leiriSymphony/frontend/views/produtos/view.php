@@ -10,6 +10,7 @@ use yii\widgets\DetailView;
 /* @var $existeFavorito common\models\Produtosfavoritos */
 /* @var $avaliacoes common\models\Avaliacao */
 /* @var $podeAvaliar */
+/* @var $demonstracoes */
 
 
 $this->title = $model->nome;
@@ -58,8 +59,14 @@ $this->title = $model->nome;
                         <b>Demonstração:</b>
                         <br>
                         <?php
-                        //Todo: Adicionar desmonstrações
-                        echo 'Sem demonstrações disponiveis'
+                        if($demonstracoes != null) {
+                            foreach ($demonstracoes as $demonstracao) {
+                                echo '<audio controls><source src="' . Yii::getAlias('@demosurl') . '/' . $demonstracao->nome . '" type="audio/ogg"></audio>';
+                            }
+                        }
+                        else{
+                            echo 'Sem demonstrações';
+                        }
                         ?>
                     </p>
                     <div class="card_area d-flex justify-content-between align-items-center">
