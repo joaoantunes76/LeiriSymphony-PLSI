@@ -8,7 +8,43 @@ class FazerCompraCest
     }
 
     // tests
-    public function tryToTest(FunctionalTester $I)
+    public function tryComprarProduto(FunctionalTester $I)
     {
+        $I->amOnPage(\Yii::$app->homeUrl);
+        $I->see("Recentemente adicionados");
+        //Fazer Login
+        $I->seeLink('Login');
+        $I->click('Login');
+        $I->see("Bem vindo de volta!
+Por favor, faça o login");
+        $I->fillField('LoginForm[username]', 'admin');
+        $I->fillField('LoginForm[password]', 'admin123');
+        $I->click('Login', '.btn_3');
+        //Ir para pagina de perfil
+        $I->see("Recentemente adicionados");
+        $I->seeLink('Guitarras');
+        $I->click('Guitarras');
+        $I->see('Yamaha Guitarra Clássica');
+        $I->seeLink('', '/produtos/view?produtoId=1');
+        $I->amOnPage('/produtos/view?produtoId=1');
+        $I->see('Yamaha Guitarra Clássica');
+        $I->see('Stock: Disponivel');
+        $I->seeLink('+ adicionar ao carrinho');
+        $I->click('+ adicionar ao carrinho');
+        $I->seeLink('', '/carrinho/index');
+        $I->amOnPage('/carrinho/index');
+        $I->see('Carrinho de compras');
+        $I->see('Yamaha Guitarra Clássica');
+        $I->seeLink('Comprar');
+        $I->click('Comprar');
+        $I->seeLink('Proximo');
+        $I->click('Proximo');
+        $I->click('Pagar');
+        $I->see('Sucesso');
+        $I->seeLink("Encomendas");
+        $I->click("Encomendas");
+        $I->see('Data: '.date('Y-m-d'));
+        $I->see('Yamaha Guitarra Clássica');
+        $I->see('Detalhes');
     }
 }

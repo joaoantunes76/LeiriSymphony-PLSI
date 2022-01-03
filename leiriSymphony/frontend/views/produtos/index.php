@@ -114,7 +114,7 @@ $this->title = 'Produtos';
 
                             <div class="col-lg-4 col-sm-6">
                                 <div class="single_product_item">
-                                    <a href="<?= Url::toRoute('view?produtoId='.$produto->id) ?>">
+                                    <a id="id(<?= $produto->id ?>)" href="<?= Url::toRoute('view?produtoId='.$produto->id) ?>">
                                     <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
                                     </a>
                                     <div class="single_product_text">

@@ -17,7 +17,12 @@ class PerfisController extends Controller
         } else {
             if($this->request->isPost){
                 $perfil->load($this->request->post());
-                $perfil->save();
+                if($perfil->save()){
+                    Yii::$app->session->setFlash('success', "Perfil alterado com sucesso");
+                }
+                else{
+                    Yii::$app->session->setFlash('error', "Não foi possivel alterar o Perfil com sucesso");
+                }
             }
             return $this->render('index', [
                 'model' => $perfil,
