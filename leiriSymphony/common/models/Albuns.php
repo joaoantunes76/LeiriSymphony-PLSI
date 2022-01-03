@@ -37,6 +37,7 @@ class Albuns extends \yii\db\ActiveRecord
             [['nome', 'preco', 'datalancamento', 'idimagem'], 'required'],
             [['preco'], 'number', 'min' => 0],
             [['datalancamento'], 'safe'],
+            [['datalancamento'], 'date', 'format' => 'php:Y-m-d'],
             [['idimagem'], 'integer'],
             [['nome'], 'string', 'max' => 45],
             [['idimagem'], 'exist', 'skipOnError' => true, 'targetClass' => Imagens::className(), 'targetAttribute' => ['idimagem' => 'id']],

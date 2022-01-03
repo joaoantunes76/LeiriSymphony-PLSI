@@ -37,6 +37,7 @@ class Eventos extends \yii\db\ActiveRecord
             [['lotacao'], 'integer'],
             [['descricao'], 'string'],
             [['data', 'horainicio', 'horafim'], 'safe'],
+            [['data'], 'date', 'format' => 'php:Y-m-d'],
             ['data', 'validateDate'],
             ['horainicio', 'validateHoras']
         ];
