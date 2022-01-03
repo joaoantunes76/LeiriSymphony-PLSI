@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data) {
                     if($data->nome != ""){
-                        return '<audio controls><source src="http://leirysymphony-be/uploads/demos/'.$data->nome.'" type="audio/ogg"></audio>';
+                        return '<audio controls><source src="'.Yii::getAlias('@demosurl').'/'.$data->nome.'" type="audio/ogg"></audio>';
                     }
                     else {
                         return "";
