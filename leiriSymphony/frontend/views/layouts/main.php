@@ -107,9 +107,9 @@ AppAsset::register($this);
         </div>
         <div class="search_input" id="search_input_box">
             <div class="container ">
-                <form action="<?= Url::toRoute('produtos/index') ?>" method="get" class="d-flex justify-content-between search-inner">
+                <form id="searchform" action="<?= Url::toRoute('produtos/index') ?>" method="get" class="d-flex justify-content-between search-inner">
                     <input type="text" class="form-control" id="search_input" placeholder="Search Here" name="nome">
-                    <button type="submit" class="btn"></button>
+                    <button type="submit" id="submitsearchform" class="btn"></button>
                     <span class="ti-close" id="close_search" title="Close Search"></span>
                 </form>
             </div>

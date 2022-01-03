@@ -45,7 +45,7 @@ $this->title = 'My Yii Application';
         <div class="col-lg-6">
             <h1 class="ls-text-primary">Perfil</h1>
 
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-perfil']); ?>
             <div class="form-group text-left">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" value="<?= $model->nome ?>" name="Perfis[nome]" id="nome" disabled>
@@ -74,7 +74,7 @@ $this->title = 'My Yii Application';
                 <a href="#" id="enableForm" onclick="enableForm()" class="btn btn-primary pr-5 pl-5">Editar</a>
             </div>
             <div class="form-group d-none" id="submit">
-                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success pr-5 pl-5']) ?>
+                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success pr-5 pl-5', 'id' => 'guardar']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

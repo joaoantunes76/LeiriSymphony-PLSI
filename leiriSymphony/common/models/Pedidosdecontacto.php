@@ -35,6 +35,7 @@ class Pedidosdecontacto extends \yii\db\ActiveRecord
             [['idproblema', 'idperfil', 'mensagem', 'email'], 'required'],
             [['idproblema', 'idperfil'], 'integer'],
             [['mensagem'], 'string'],
+            [['email'], 'email'],
             [['email'], 'string', 'max' => 64],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
             [['idproblema'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoinformacoes::className(), 'targetAttribute' => ['idproblema' => 'id']],

@@ -46,9 +46,10 @@ class Produtos extends \yii\db\ActiveRecord
     {
         return [
             [['idsubcategoria', 'idmarca', 'nome', 'descricao', 'usado', 'preco', 'stock'], 'required'],
-            [['idsubcategoria', 'idmarca', 'usado', 'stock'], 'integer'],
+            [['idsubcategoria', 'idmarca', 'usado'], 'integer'],
+            [['stock'], 'integer', 'min' => 0],
             [['descricao'], 'string'],
-            [['preco'], 'number'],
+            [['preco'], 'number', 'min' => 0],
             [['nome'], 'string', 'max' => 45],
             [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marcas::className(), 'targetAttribute' => ['idmarca' => 'id']],
             [['idsubcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategorias::className(), 'targetAttribute' => ['idsubcategoria' => 'id']],

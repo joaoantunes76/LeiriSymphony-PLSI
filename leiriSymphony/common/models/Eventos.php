@@ -37,6 +37,9 @@ class Eventos extends \yii\db\ActiveRecord
             [['lotacao'], 'integer'],
             [['descricao'], 'string'],
             [['data', 'horainicio', 'horafim'], 'safe'],
+            [['data'], 'date', 'format' => 'php:Y-m-d'],
+            ['data', 'validateDate'],
+            ['horainicio', 'validateHoras']
         ];
     }
 
@@ -53,6 +56,24 @@ class Eventos extends \yii\db\ActiveRecord
             'horainicio' => 'Horainicio',
             'horafim' => 'Horafim',
         ];
+    }
+
+    /*
+     * Valida data de lançamento
+     */
+    public function validateDate(){
+        if(strtotime($this->data) < strtotime(date('Y-m-d'))){
+            $this->addError('datalancamento','Por favor adicione uma data válida');
+        }
+    }
+    /*
+     * Valida a hora de inicio e a hora de fim do evento
+     */
+    public function validateHoras(){
+        if(strtotime($this->horainicio) > strtotime($this->horafim)){
+            $this->addError('horainicio','Por favor insira uma hora de inicio válida');
+            $this->addError('horafim','Por favor insira uma hora de fim válida');
+        }
     }
 
     /**

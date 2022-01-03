@@ -8,6 +8,7 @@ use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col">
+        <form>
         <label for="selectMarcas">Marcas</label>
         <select name="Marca" class="form-control" id="selectMarcas">
             <option value="-1">Marca...</option>
@@ -25,8 +26,10 @@ use yii\helpers\Url;
             }
             ?>
         </select>
+        </form>
     </div>
     <div class="col">
+        <form>
         <label for="selectCategorias">Categorias</label>
         <select name="Categoria" class="form-control" id="selectCategorias">
             <option value="-1">Categorias...</option>
@@ -44,8 +47,10 @@ use yii\helpers\Url;
             }
             ?>
         </select>
+        </form>
     </div>
     <div class="col">
+        <form>
         <label for="selectSubcategorias">Subcategorias</label>
         <select name="Subcategoria" class="form-control" id="selectSubcategorias">
         <option value="-1">Subcategorias...</option>
@@ -64,10 +69,11 @@ use yii\helpers\Url;
             }
             ?>
         </select>
+        </form>
     </div>
     <div>
         <br>
-        <button onclick="filtrar()" class="btn btn-primary mt-2 pl-5 pr-5" >Filtrar</button>
+        <a href="#"><button onclick="filtrar()" class="btn btn-primary mt-2 pl-5 pr-5"  id="filtrarbtn">Filtrar</button></a>
     </div>
 </div>
 
