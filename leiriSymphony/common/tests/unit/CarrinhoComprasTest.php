@@ -29,7 +29,13 @@ class CarrinhoComprasTest extends \Codeception\Test\Unit
         $carrinho->idproduto = 10000; //id não existente
         $carrinho->idperfil = 4; //id do perfil (Cliente)
         $carrinho->quantidade = 1;
-        $this->assertFalse($carrinho->validate());
+
+        try {
+            $carrinho->validate();
+        } catch (\Exception $exception){
+            $gotError = true;
+        }
+        $this->assertTrue($gotError);
     }
 
     // tests
@@ -39,7 +45,13 @@ class CarrinhoComprasTest extends \Codeception\Test\Unit
         $carrinho->idproduto = "foo";
         $carrinho->idperfil = 4; //id do perfil (Cliente)
         $carrinho->quantidade = 1;
-        $this->assertFalse($carrinho->validate());
+
+        try {
+            $carrinho->validate();
+        } catch (\Exception $exception){
+            $gotError = true;
+        }
+        $this->assertTrue($gotError);
     }
 
     // tests
@@ -49,7 +61,13 @@ class CarrinhoComprasTest extends \Codeception\Test\Unit
         $carrinho->idproduto = null;
         $carrinho->idperfil = 4; //id do perfil (Cliente)
         $carrinho->quantidade = 1;
-        $this->assertFalse($carrinho->validate());
+
+        try {
+            $carrinho->validate();
+        } catch (\Exception $exception){
+            $gotError = true;
+        }
+        $this->assertTrue($gotError);
     }
 
 
@@ -57,7 +75,7 @@ class CarrinhoComprasTest extends \Codeception\Test\Unit
     public function testCarrinhoPerfilIdNaoNumericoNaoValida()
     {
         $carrinho = new Carrinho();
-        $carrinho->idproduto = null;
+        $carrinho->idproduto = 7;
         $carrinho->idperfil = "foo"; //id do perfil (Cliente)
         $carrinho->quantidade = 1;
         $this->assertFalse($carrinho->validate());
