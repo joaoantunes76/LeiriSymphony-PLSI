@@ -35,11 +35,12 @@ class Albuns extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'preco', 'datalancamento', 'idimagem'], 'required'],
-            [['preco'], 'number'],
+            [['preco'], 'number', 'min' => 0],
             [['datalancamento'], 'safe'],
             [['idimagem'], 'integer'],
             [['nome'], 'string', 'max' => 45],
             [['idimagem'], 'exist', 'skipOnError' => true, 'targetClass' => Imagens::className(), 'targetAttribute' => ['idimagem' => 'id']],
+            ['datalancamento', 'validateDate'],
         ];
     }
 
@@ -56,6 +57,16 @@ class Albuns extends \yii\db\ActiveRecord
             'idimagem' => 'Idimagem',
         ];
     }
+
+    /*
+     * Valida data de lançamento
+     */
+    public function validateDate(){
+        if(strtotime($this->datalancamento) > strtotime(date('Y-m-d'))){
+            $this->addError('datalancamento','Por favor adicione uma data válida');
+        }
+    }
+
 
     /**
      * Gets query for [[Albunsartistas]].
