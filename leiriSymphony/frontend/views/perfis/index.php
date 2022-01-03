@@ -45,7 +45,7 @@ $this->title = 'My Yii Application';
         <div class="col-lg-6">
             <h1 class="ls-text-primary">Perfil</h1>
 
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-perfil']); ?>
             <div class="form-group text-left">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" value="<?= $model->nome ?>" name="Perfis[nome]" id="nome" disabled>

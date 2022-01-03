@@ -28,9 +28,21 @@ Por favor, faça o login");
         //Editar perfil
         $I->seeLink("Editar");
         $I->click("Editar");
-        $I->fillField('Perfis[cidade]', 'Leiria2');
-        $I->click('Guardar', '#guardar');
+        $I->submitForm('#form-perfil', [
+            'Perfis[nome]' => 'Administrador',
+            'Perfis[endereco]' => 'Rua da Cidade',
+            'Perfis[cidade]' => 'Leiria',
+            'Perfis[codigopostal]' => '2410-000',
+            'Perfis[telefone]' => '910000000',
+            'Perfis[nif]' => '123456789',
+        ]);
+        $I->amOnPage('/perfis/index');
         $I->seeLink("Editar");
-        $I->seeInField("Perfis[cidade]", "Leiria2");
+        $I->seeInField("Perfis[nome]", "Administrador");
+        $I->seeInField("Perfis[endereco]", "Rua da Cidade");
+        $I->seeInField("Perfis[cidade]", "Leiria");
+        $I->seeInField("Perfis[codigopostal]", "2410-000");
+        $I->seeInField("Perfis[telefone]", "910000000");
+        $I->seeInField("Perfis[nif]", "123456789");
     }
 }
