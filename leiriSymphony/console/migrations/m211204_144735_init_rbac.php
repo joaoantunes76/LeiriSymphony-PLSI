@@ -388,7 +388,9 @@ class m211204_144735_init_rbac extends Migration
         $auth->addChild($apoio, $eliminarEncomenda);
         $auth->addChild($apoio, $verImagem);
         $auth->addChild($apoio, $verTipoInformacao);
+        $auth->addChild($apoio, $criarTipoInformacao);
         $auth->addChild($apoio, $editarTipoInformacao);
+        $auth->addChild($apoio, $eliminarTipoInformacao);
 
 
         //cliente

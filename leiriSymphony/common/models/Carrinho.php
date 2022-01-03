@@ -30,11 +30,12 @@ class Carrinho extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idperfil', 'idproduto'], 'required'],
+            [['idperfil', 'idproduto', 'quantidade'], 'required'],
             [['idperfil', 'idproduto', 'quantidade'], 'integer'],
             [['idperfil', 'idproduto'], 'unique', 'targetAttribute' => ['idperfil', 'idproduto']],
             [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfis::className(), 'targetAttribute' => ['idperfil' => 'id']],
             [['idproduto'], 'exist', 'skipOnError' => true, 'targetClass' => Produtos::className(), 'targetAttribute' => ['idproduto' => 'id']],
+            ['quantidade', 'compare', 'compareValue' => $this->idproduto0->stock, 'operator' => '<=', 'type' => 'number'],
         ];
     }
 

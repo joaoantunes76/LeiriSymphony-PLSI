@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
+use Yii;
 
 /**
  * EventosController implements the CRUD actions for Eventos model.
