@@ -121,9 +121,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],
-                'template' => '{view} {update} {delete}',
+                'template' => '{delete}',
                 'urlCreator' => function ($action, $model, $key, $index) {
-                    return Url::to(['demonstracoes/'.$action, 'id' => $model->id, 'idproduto' => $model->id]);
+                    return Url::to(['demonstracoes/'.$action, 'id' => $model->id, 'idproduto' => $model->idproduto]);
                 }
             ],
         ],
