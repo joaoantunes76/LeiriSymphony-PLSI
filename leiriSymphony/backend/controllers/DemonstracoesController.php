@@ -182,8 +182,12 @@ class DemonstracoesController extends Controller
      */
     public function actionDelete($id, $idproduto)
     {
-        $this->findModel($id, $idproduto)->delete();
-
+        $this->findModel($id, $idproduto);
+        $model = $this->findModel($id, $idproduto);
+        if(file_exists(\Yii::getAlias('@webroot').'/uploads/demos/'.$model->nome)) {
+            unlink(\Yii::getAlias('@webroot') . '/uploads/demos/' . $model->nome);
+        }
+        $model->delete();
         return $this->redirect(['produtos/view?id='.$idproduto]);
     }
 
