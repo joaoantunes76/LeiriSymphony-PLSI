@@ -63,8 +63,9 @@ $this->title = $model->nome;
                         ?>
                     </p>
                     <div class="card_area d-flex justify-content-between align-items-center">
-                        <a href="<?= Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $model->id) ?>"
-                           class="btn_3">+ adicionar ao carrinho</a>
+                        <a href=" <?= $model->stock > 0 ? Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $model->id) : "#esgotado" ?>"
+                           class="<?= $model->stock > 0 ? "btn_3" : "genric-btn disable circle" ?>" >+ adicionar ao carrinho</a>
+
                         <?php
                         if($existeFavorito){
                             echo Html::a('<i class="ti-heart-broken"></i>',['favoritos/remover-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Remover dos favoritos']);

@@ -36,6 +36,10 @@ class CarrinhoController extends Controller
                 Yii::$app->session->setFlash('success', "Carrinho atualizado com sucesso.");
                 return $this->redirect('index');
             }
+            else{
+                Yii::$app->session->setFlash('error', $carrinhoProduto->firstErrors);
+                return $this->redirect('index');
+            }
 
         }
         Yii::$app->session->setFlash('error', "Falha ao atualizar carrinho");
