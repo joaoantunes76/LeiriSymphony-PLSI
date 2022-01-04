@@ -1,6 +1,7 @@
 <?php
 /* @var $content string */
 
+use common\widgets\Alert;
 use yii\bootstrap4\Breadcrumbs;
 ?>
 <div class="content-wrapper">
@@ -27,6 +28,8 @@ use yii\bootstrap4\Breadcrumbs;
                             'class' => 'breadcrumb float-sm-right'
                         ]
                     ]);
+
+                    echo Alert::widget();
                     ?>
                 </div><!-- /.col -->
             </div><!-- /.row -->
