@@ -1,7 +1,9 @@
 <?php
 namespace backend\tests\functional;
 use backend\tests\FunctionalTester;
-use \Codeception\Util\Locator;
+use Codeception\Util\Locator;
+use common\models\Demonstracoes;
+
 class CrudProdutoCest
 {
     public function _before(FunctionalTester $I)
@@ -69,9 +71,9 @@ class CrudProdutoCest
         $I->submitForm('#add-imagem', [
             $I->attachFile('#uploadform-imagefile', 'piano_teste.jpg'),
         ]);
-        $I->seeLink('Adicionar');
-        $I->click('Adicionar');
         $I->see("Piano Digital RSP20CR");
+        $I->seeLink('Remover Imagem');
+        $I->click('Remover Imagem');
     }
 
     public function tryAdicionarDemonstracao(FunctionalTester $I)
@@ -101,10 +103,14 @@ class CrudProdutoCest
         $I->submitForm('#add-demo', [
             $I->attachFile('#uploadform-demofile', 'piano_teste.mp3'),
         ]);
-        $I->click('Adicionar');
-        $I->see("3");
         $I->seeLink('Ir para Produto');
         $I->click('Ir para Produto');
         $I->see("Piano Digital RSP20CR");
+        $id = Demonstracoes::find()->orderBy(['id' => SORT_DESC])->one()->id;
+
+        $I->see('', Locator::href('/index-test.php/demonstracoes/delete?id='.$id.'&idproduto=3'));
+        $I->click(['xpath'=>'//a[@href="/index-test.php/demonstracoes/delete?id='.$id.'&idproduto=3"]']);
+        $I->dontSee('', Locator::href('/index-test.php/demonstracoes/delete?id='.$id.'&idproduto=3'));
     }
+
 }
