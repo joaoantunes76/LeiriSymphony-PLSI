@@ -11,12 +11,12 @@ use yii\widgets\ActiveForm;
 
 <div class="demonstracoes-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'add-demo']); ?>
 
     <?= $form->field($uploadForm, 'demoFile')->fileInput(['required' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
