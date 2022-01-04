@@ -71,6 +71,9 @@ AppAsset::register($this);
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= Url::toRoute('site/contact') ?>">Contact</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= Url::toRoute('site/about') ?>">About</a>
+                                </li>
                                 <li class="nav-item dropdown">
                                     <?php
                                         if(Yii::$app->user->isGuest){
