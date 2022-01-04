@@ -2,6 +2,9 @@
 $this->title = 'Página Inicial';
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 /* @var $mensagensDisponiveis */
+/* @var $lucroMensal */
+/* @var $possivelLucroMensal */
+/* @var $numEncomendasDoMes */
 ?>
 <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
@@ -10,9 +13,9 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3><?= $numEncomendasDoMes ?></h3>
 
-                    <p>Novas encomendas</p>
+                    <p><?= $numEncomendasDoMes == 1 ? 'Nova encomenda' : 'Novas encomendas' ?></p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -24,9 +27,23 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53000€</h3>
+                    <h3><?= $lucroMensal ?>€</h3>
 
                     <p>Faturação mensal</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3><?= $possivelLucroMensal ?>€</h3>
+
+                    <p>Possivel Faturação mensal</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>

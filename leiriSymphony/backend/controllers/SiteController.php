@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Encomendas;
 use common\models\LoginForm;
 use common\models\Pedidosdecontacto;
 use Yii;
@@ -75,8 +76,24 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $mensagensUtilizadores = count(Pedidosdecontacto::find()->all());
+        $mes = date('m');
+        $encomendasDesteMes = Encomendas::find()->where('data LIKE "%-'.$mes.'-%"')->all();
+        $lucroMensal = 0;
+        $possivelLucroMensal = 0;
+        $numEncomendasDoMes = 0;
+        foreach($encomendasDesteMes as $encomenda){
+            $possivelLucroMensal += $encomenda->preco;
+            if($encomenda->pago == 1){
+                $lucroMensal += $encomenda->preco;
+            }
+            $numEncomendasDoMes++;
+        }
+
         return $this->render('index', [
-            'mensagensDisponiveis' => $mensagensUtilizadores
+            'mensagensDisponiveis' => $mensagensUtilizadores,
+            'lucroMensal' => $lucroMensal,
+            'possivelLucroMensal' => $possivelLucroMensal,
+            'numEncomendasDoMes' => $numEncomendasDoMes,
         ]);
     }
 
