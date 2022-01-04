@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="produtos-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'create-produtos']); ?>
 
     <label for="Produtos[idsubcategoria]">Categoria</label>
     <select name="Produtos[idsubcategoria]" class="form-control">
@@ -54,7 +54,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'stock')->textInput(['type' => 'number']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
