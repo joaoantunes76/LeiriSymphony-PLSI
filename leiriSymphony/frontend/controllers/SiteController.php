@@ -128,7 +128,12 @@ class SiteController extends Controller
                 $preco = 0;
                 foreach($_POST as $post){
                     if(isset($post["quantidade"]) && isset($post["id"])){
+
                         $produtoParaCarrinho = Produtos::findOne($post["id"]);
+                        if($produtoParaCarrinho->stock < $post["quantidade"]){
+                            Yii::$app->session->setFlash('error', "A loja não tem stock para realizar esta compraa");
+                            return $this->redirect(Yii::$app->request->referrer);
+                        }
                         $preco += ($produtoParaCarrinho->preco * $post["quantidade"]);
                     }
                 }
@@ -149,15 +154,20 @@ class SiteController extends Controller
                     }
                 }
 
-
                 if($encomenda->validate() && $encomenda->save()){
                     foreach($_POST as $post){
                         if(isset($post["quantidade"]) && isset($post["id"])){
                             $encomendaProduto = new Encomendasprodutos();
+                            $produto = Produtos::findOne($post["id"]);
                             $encomendaProduto->idencomenda = $encomenda->id;
-                            $encomendaProduto->idproduto = $post["id"];
+                            $encomendaProduto->idproduto = $produto->id;
                             $encomendaProduto->quantidade = $post["quantidade"];
-                            if(!$encomendaProduto->save()){
+                            if($encomendaProduto->validate()) {
+                                $encomendaProduto->save();
+                                $produto->stock = ($produto->stock - $post["quantidade"]);
+                                $produto->save();
+                            }
+                            else{
                                 $erroEncomendaProduto = true;
                             }
                         }

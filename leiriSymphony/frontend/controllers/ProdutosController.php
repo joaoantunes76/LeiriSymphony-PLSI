@@ -2,8 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\models\Avaliacao;
 use common\models\Categorias;
+use common\models\Demonstracoes;
+use common\models\Encomendas;
 use common\models\Marcas;
+use common\models\Perfis;
 use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
@@ -104,11 +108,24 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
-        $iduser = Yii::$app->user->id;
-        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $iduser])->exists();
+        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+        $idperfil = $perfil->id;
+        $produtoPreviews = Demonstracoes::find()->where(['idproduto' => $produtoId])->all();
+        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->exists();
+        $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
+        $avalicaoUserExiste = Avaliacao::find()->where(['idperfil' => $idperfil, 'idproduto' => $produtoId])->exists();
+        $utilizadorJaComprou = Encomendas::find()->innerJoin('encomendasprodutos')->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->andWhere(['estado' => 'Entregue'])->exists();
+        $podeAvaliar = false;
+        if($utilizadorJaComprou && !$avalicaoUserExiste){
+            $podeAvaliar = true;
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($produtoId),
             'existeFavorito' => $existeFavorito,
+            'avaliacoes' => $avaliacoes,
+            'podeAvaliar' => $podeAvaliar,
+            'demonstracoes' => $produtoPreviews,
         ]);
     }
 
@@ -149,6 +166,30 @@ class ProdutosController extends Controller
             Yii::$app->session->setFlash('error', "Erro, este produto não se encontra no carrinho");
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAddRating($idproduto){
+        if($this->request->isPost){
+            $avaliacao = new Avaliacao();
+            $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+            $produto = Produtos::find()->where(['id' => $idproduto])->one();
+            if($perfil!=null && $produto!=null && isset($_POST["stars"]) && isset($_POST["message"])) {
+                $avaliacao->idperfil = $perfil->id;
+                $avaliacao->idproduto = $produto->id;
+                $avaliacao->estrelas = $_POST["stars"];
+                $avaliacao->comentario = $_POST["message"];
+                if($avaliacao->save()) {
+                    Yii::$app->session->setFlash('success', "Classificação registada com sucesso!");
+                }
+                else{
+                    Yii::$app->session->setFlash('error', $avaliacao->errors);
+                }
+            }
+            else{
+                Yii::$app->session->setFlash('error', "A sua classificação foi invalidada");
+            }
+            return $this->redirect(Yii::$app->request->referrer);
+        }
     }
 
     /**

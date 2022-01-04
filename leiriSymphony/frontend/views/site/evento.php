@@ -43,7 +43,16 @@ $this->title = 'Evento';
                 <div class="modal-body p-5">
                     <div class="row">
                         <div class="col">
-                            <?= Html::img('@web/images/qr-code.png', ['alt' => "QR-Code", 'height' => '256px']); ?>
+                            <?php
+                            use Da\QrCode\QrCode;
+
+                            $qrCode = (new QrCode(\yii\helpers\Url::toRoute('site/eventos?id='.$model->id)))
+                                ->setSize(250)
+                                ->setMargin(5)
+                                ->useForegroundColor(51, 153, 255);
+
+                                echo '<img src="' . $qrCode->writeDataUri() . '">';
+                            ?>
                         </div>
                         <div class="col d-flex flex-column justify-content-center">
                             <h4>Instruções</h4>

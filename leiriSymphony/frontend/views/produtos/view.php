@@ -8,11 +8,18 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Produtos */
 /* @var $existeFavorito common\models\Produtosfavoritos */
+/* @var $avaliacoes common\models\Avaliacao */
+/* @var $podeAvaliar */
+/* @var $demonstracoes */
+
 
 $this->title = $model->nome;
 \yii\web\YiiAsset::register($this);
 
 ?>
+
+
+
 
 <section class="section_padding">
 <!--================Single Product Area =================-->
@@ -52,13 +59,20 @@ $this->title = $model->nome;
                         <b>Demonstração:</b>
                         <br>
                         <?php
-                        //Todo: Adicionar desmonstrações
-                        echo 'Sem demonstrações disponiveis'
+                        if($demonstracoes != null) {
+                            foreach ($demonstracoes as $demonstracao) {
+                                echo '<audio controls><source src="' . Yii::getAlias('@demosurl') . '/' . $demonstracao->nome . '" type="audio/ogg"></audio>';
+                            }
+                        }
+                        else{
+                            echo 'Sem demonstrações';
+                        }
                         ?>
                     </p>
                     <div class="card_area d-flex justify-content-between align-items-center">
-                        <a href="<?= Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $model->id) ?>"
-                           class="btn_3">+ adicionar ao carrinho</a>
+                        <a href=" <?= $model->stock > 0 ? Url::toRoute('produtos/adicionar-carrinho?idproduto=' . $model->id) : "#esgotado" ?>"
+                           class="<?= $model->stock > 0 ? "btn_3" : "genric-btn disable circle" ?>" >+ adicionar ao carrinho</a>
+
                         <?php
                         if($existeFavorito){
                             echo Html::a('<i class="ti-heart-broken"></i>',['favoritos/remover-favorito', 'idproduto' => $model->id], ['class' => 'like_us', 'title' => 'Remover dos favoritos']);
@@ -86,10 +100,6 @@ $this->title = $model->nome;
                    aria-selected="false">Descrição</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-                   aria-selected="false">Comments</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
                    aria-selected="false">Reviews</a>
             </li>
@@ -98,252 +108,68 @@ $this->title = $model->nome;
             <div class="tab-pane fade show active" id="descricao" role="tabpanel" aria-labelledby="descricao-tab">
                 <?= $model->descricao ?>
             </div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="comment_list">
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-1.png" alt="" />
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
-                                    </div>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
-                            <div class="review_item reply">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-2.png" alt="" />
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
-                                    </div>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="/img/product/single-product/review-3.png" alt="" />
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
-                                    </div>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="review_box">
-                            <h4>Post a comment</h4>
-                            <form class="row contact_form" action="contact_process.php" method="post" id="contactForm"
-                                  novalidate="novalidate">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                      <textarea class="form-control" name="message" id="message" rows="1"
-                                placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 text-right">
-                                    <button type="submit" value="submit" class="btn_3">
-                                        Submit Now
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row total_rate">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="box_total">
-                                    <h5>Overall</h5>
-                                    <h4>4.0</h4>
-                                    <h6>(03 Reviews)</h6>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="rating_list">
-                                    <h3>Based on 3 Reviews</h3>
-                                    <ul class="list">
-                                        <li>
-                                            <a href="#">5 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> 01</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> 01</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> 01</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">2 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> 01</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">1 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> 01</a>
-                                        </li>
-                                    </ul>
+                                    <h5>Geral</h5>
+                                    <h4>
+                                        <?php
+                                            $somaEstrelas = 0;
+                                            $i = 0;
+                                            foreach($avaliacoes as $avaliacao){
+                                                $i++;
+                                                $somaEstrelas += $avaliacao->estrelas;
+                                            }
+                                            if($i > 0) {
+                                                echo $somaEstrelas / $i;
+                                            }
+                                        ?>
+                                    </h4>
+                                    <h6>( <?= count($avaliacoes).' '.(count($avaliacoes) > 1 ? 'Classificações' : 'Classificação')?> )</h6>
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="review_list">
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                            <?php
+                            foreach($avaliacoes as $avaliacao){
+                            ?>
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4><?= $avaliacao->idperfil0->nome ?></h4>
+                                            <?php
+                                                for($i = 0; $i < $avaliacao->estrelas; $i++){
+                                            ?>
+                                                <i class="fa fa-star"></i>
+                                            <?php
+                                                }
+                                            ?>
+                                        </div>
                                     </div>
+                                    <p>
+                                        <?= $avaliacao->comentario ?>
+                                    </p>
                                 </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo
-                                </p>
-                            </div>
+                            <?php
+                            }
+                            ?>
+
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="review_box">
+                            <?php
+                                if($podeAvaliar){
+                            ?>
                             <h4>Add a Review</h4>
                             <p>Your Rating:</p>
-                            <ul class="list">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-star"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-star"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-star"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-star"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-star"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                            <p>Outstanding</p>
-                            <form class="row contact_form" action="contact_process.php" method="post" novalidate="novalidate">
+                            <?php $form = ActiveForm::begin(['class' => 'row contact_form', 'action' => ['produtos/add-rating?idproduto='.$model->id]]); ?>
                                 <div class="col-md-12">
+                                    <?= $this->render('components/_starrating.php'); ?>
                                     <div class="form-group">
                                         <textarea class="form-control" name="message" rows="1" placeholder="Review"></textarea>
                                     </div>
@@ -353,7 +179,10 @@ $this->title = $model->nome;
                                         Submit Now
                                     </button>
                                 </div>
-                            </form>
+                            <?php ActiveForm::end(); ?>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
