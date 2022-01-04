@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($uploadForm, 'demoFile')->fileInput(['required' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

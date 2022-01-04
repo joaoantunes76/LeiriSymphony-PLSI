@@ -4,10 +4,12 @@ namespace backend\controllers;
 
 use app\models\UploadForm;
 use common\models\Albuns;
+use common\models\Albunsartistas;
 use common\models\AlbunsSearch;
 use common\models\Imagens;
 use common\models\Musicas;
 use common\models\MusicasSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -72,7 +74,6 @@ class AlbunsController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -168,7 +169,9 @@ class AlbunsController extends Controller
                 $image = new Imagens();
                 $image->nome = $now . "." . $uploadForm->imageFile->extension;
                 if($image->save()) {
-                    unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
+                    if (file_exists(\Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome)){
+                        unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
+                    }
                     $model->idimagem = $image->id;
                     if ($model->save()) {
                         return $this->redirect(['view', 'id' => $model->id]);
@@ -195,9 +198,16 @@ class AlbunsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
-        $model->delete();
 
+        if (Musicas::find()->where(['idalbuns' => $model->id])->exists() || Albunsartistas::find()->where(['idalbum' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Por favor remova os artistas e/ou músicas relacionadas antes de eliminar o Album');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }else{
+            $model->delete();
+            if (file_exists(\Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome)){
+                unlink(   \Yii::getAlias('@webroot').'\uploads\\'.$model->idimagem0->nome);
+            }
+        }
         return $this->redirect(['index']);
     }
 
