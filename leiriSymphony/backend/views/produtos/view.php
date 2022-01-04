@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data) {
                     if($data->nome != ""){
-                        return '<audio controls><source src="http://leirysymphony-be/uploads/demos/'.$data->nome.'" type="audio/ogg"></audio>';
+                        return '<audio controls><source src="'.Yii::getAlias('@demosurl').'/'.$data->nome.'" type="audio/ogg"></audio>';
                     }
                     else {
                         return "";
@@ -121,9 +121,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],
-                'template' => '{view} {update} {delete}',
+                'template' => '{delete}',
                 'urlCreator' => function ($action, $model, $key, $index) {
-                    return Url::to(['demonstracoes/'.$action, 'id' => $model->id, 'idproduto' => $model->id]);
+                    return Url::to(['demonstracoes/'.$action, 'id' => $model->id, 'idproduto' => $model->idproduto]);
                 }
             ],
         ],

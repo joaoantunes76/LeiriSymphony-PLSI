@@ -158,7 +158,9 @@ class ImagensController extends Controller
     {
         $model = $this->findModel($id);
         $idproduto = $model->idproduto;
-        unlink(\Yii::getAlias('@webroot').'/uploads/'.$model->nome);
+        if(file_exists(\Yii::getAlias('@webroot').'/uploads/'.$model->nome)) {
+            unlink(\Yii::getAlias('@webroot') . '/uploads/' . $model->nome);
+        }
         $model->delete();
 
         return $this->redirect(['produtos/view?id='.$idproduto]);
