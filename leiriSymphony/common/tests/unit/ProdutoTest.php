@@ -19,13 +19,14 @@ class ProdutoTest extends \Codeception\Test\Unit
     }
 
     // tests
+
     public function testProdutoMarcaInexistenteNaoValida()
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
+        $produto->idsubcategoria = 2;
         $produto->idmarca = 100000; //id de marca inexistente
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -38,9 +39,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
+        $produto->idsubcategoria = 2;
         $produto->idmarca = null; //id de marca nulo
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -54,8 +55,8 @@ class ProdutoTest extends \Codeception\Test\Unit
         $produto = new Produtos();
 
         $produto->idsubcategoria = 900; //id de subcategoria inexistente
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -69,8 +70,8 @@ class ProdutoTest extends \Codeception\Test\Unit
         $produto = new Produtos();
 
         $produto->idsubcategoria = null; //id de subcategoria nulo
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -83,8 +84,8 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
         $produto->nome = 111111111; //o nome tem de ser String
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
@@ -98,9 +99,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 9090909; //descrição tem de ser String
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -113,9 +114,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 'aaaaa'; //o campo usado tem de ser do tipo tinyint
         $produto->preco = 150.2;
@@ -128,9 +129,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 'aaaaaa'; //O preço tem de ser um número
@@ -143,9 +144,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = -12; //O preço tem de ser um número acima de 0
@@ -158,9 +159,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -173,9 +174,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 6;
-        $produto->idmarca = 3;
-        $produto->nome = 'Guitarra Yamaha OA765';
+        $produto->idsubcategoria = 2;
+        $produto->idmarca = 1;
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -188,9 +189,9 @@ class ProdutoTest extends \Codeception\Test\Unit
     {
         $produto = new Produtos();
 
-        $produto->idsubcategoria = 1;
+        $produto->idsubcategoria = 2;
         $produto->idmarca = 1;
-        $produto->nome = 'Guitarra Yamaha aaaaaOA765';
+        $produto->nome = 'Guitarra Acústica Yamaha OA765';
         $produto->descricao = 'Lorem Ipsum dolor, sit amet ';
         $produto->usado = 0;
         $produto->preco = 150.2;
@@ -201,30 +202,30 @@ class ProdutoTest extends \Codeception\Test\Unit
 
     public function testVerProdutoAdicionado()
     {
-        $this->tester->seeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Yamaha aaaaaOA765']);
+        $this->tester->seeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Acústica Yamaha OA765']);
     }
 
     public function testAtualizarProdutoRegistado()
     {
-        $produto = Produtos::find()->where(['nome' => 'Guitarra Yamaha aaaaaOA765'])->one();
-        $produto->nome = 'Guitarra Yamaha ZZZZZ';
+        $produto = Produtos::find()->where(['nome' => 'Guitarra Acústica Yamaha OA765'])->one();
+        $produto->nome = 'Guitarra Acústica Yamaha ZZZZZ';
 
         $this->assertTrue($produto->save());
     }
 
     public function testVerProdutoAnteriormenteAtualizado()
     {
-        $this->tester->seeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Yamaha ZZZZZ']);
+        $this->tester->seeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Acústica Yamaha ZZZZZ']);
     }
 
     public function testApagarProduto()
     {
-        $produto = Produtos::find()->where(['nome' => 'Guitarra Yamaha ZZZZZ'])->one();
+        $produto = Produtos::find()->where(['nome' => 'Guitarra Acústica Yamaha ZZZZZ'])->one();
         $this->assertIsNumeric($produto->delete());
     }
 
     public function testVerSeProdutoFoiApagado()
     {
-        $this->tester->dontSeeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Yamaha ZZZZZ']);
+        $this->tester->dontSeeInDatabase(Produtos::tableName(), ['nome' => 'Guitarra Acústica Yamaha ZZZZZ']);
     }
 }
