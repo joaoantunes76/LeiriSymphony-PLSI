@@ -31,7 +31,7 @@ class AlbumTest extends \Codeception\Test\Unit
         $album->nome = 5; //nome tem de ser string
         $album->preco = 15.98;
         $album->datalancamento = '2021-07-12';
-        $album->idimagem = 34;
+        $album->idimagem = 4;
 
         $this->assertFalse($album->validate());
     }
@@ -42,7 +42,7 @@ class AlbumTest extends \Codeception\Test\Unit
         $album->nome = 'O monstro precisa de amigos';
         $album->preco = 'aaaa'; //o preço tem de ser um número
         $album->datalancamento = '2021-07-12';
-        $album->idimagem = 34;
+        $album->idimagem = 4;
 
         $this->assertFalse($album->validate());
     }
@@ -53,7 +53,7 @@ class AlbumTest extends \Codeception\Test\Unit
         $album->nome = 'O monstro precisa de amigos';
         $album->preco = -16; //o preço tem de ser um número acima ou igual a 0
         $album->datalancamento = '2021-07-12';
-        $album->idimagem = 34;
+        $album->idimagem = 4;
 
         $this->assertFalse($album->validate());
     }
@@ -64,7 +64,7 @@ class AlbumTest extends \Codeception\Test\Unit
         $album->nome = 'O monstro precisa de amigos';
         $album->preco = 15.98;
         $album->datalancamento = '12/7/2021'; //a data tem de estar no formato certo
-        $album->idimagem = 34;
+        $album->idimagem = 4;
 
         $this->assertFalse($album->validate());
     }
@@ -97,7 +97,7 @@ class AlbumTest extends \Codeception\Test\Unit
         $album->nome = 'O monstro precisa de amigos';
         $album->preco = 15.98;
         $album->datalancamento = '2021-07-12';
-        $album->idimagem = 34;
+        $album->idimagem = 4;
 
         $this->assertTrue($album->save());
     }
@@ -257,10 +257,12 @@ class AlbumTest extends \Codeception\Test\Unit
         $artista = new Artistas();
         $artista->nome = 'João Pedro Pais';
         $artista->save();
-        $artistaId = $artista->id;
+        $artistaAtualizado = $artista->id;
 
-        $albumartista = Albunsartistas::find()->where(['idalbum' => 1, 'idartista' => $artistaId])->one();
-        $albumartista->idartista = $artistaId;
+        $artistaAnterior = Artistas::find()->where(['nome' => 'Rui Veloso'])->one()->id;
+
+        $albumartista = Albunsartistas::find()->where(['idalbum' => 1, 'idartista' => $artistaAnterior])->one();
+        $albumartista->idartista = $artistaAtualizado;
         $salvou = $albumartista->save();
 
         $this->assertTrue($salvou);
@@ -279,10 +281,15 @@ class AlbumTest extends \Codeception\Test\Unit
         $this->assertIsNumeric($albumartista->delete());
     }
 
-    public function testVerificarSeRelacaoAlbunartistaFoiApagada()
+    public function testVerificarSeRelacaoAlbumartistaFoiApagada()
     {
         $artistaId = Artistas::find()->where(['nome' => 'João Pedro Pais'])->one()->id;
         $this->tester->dontSeeInDatabase(Albunsartistas::tableName(), ['idalbum' => 1, 'idartista' => $artistaId]);
+
+        $artistaAnterior = Artistas::find()->where(['nome' => 'Rui Veloso'])->one();
+        $artistaAnterior->delete();
+        $artistaAtualizado = Artistas::find()->where(['nome' => 'João Pedro Pais'])->one();
+        $artistaAtualizado->delete();
     }
 
     /*
