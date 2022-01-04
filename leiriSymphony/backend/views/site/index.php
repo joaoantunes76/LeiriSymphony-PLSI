@@ -1,10 +1,15 @@
 <?php
+
+use yii\grid\GridView;
+
 $this->title = 'Página Inicial';
 $this->params['breadcrumbs'] = [['label' => $this->title]];
 /* @var $mensagensDisponiveis */
 /* @var $lucroMensal */
 /* @var $possivelLucroMensal */
 /* @var $numEncomendasDoMes */
+/* @var $searchModel common\models\ProdutosSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 ?>
 <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
@@ -67,4 +72,36 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
 
     </div>
     <!-- /.row (main row) -->
+    <div>
+        <h3 class="ml-2">Produtos fora de stock:</h3>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                [
+                    'attribute' => 'idsubcategoria0',
+                    'label' => 'Subcategoria',
+                    'value' => 'idsubcategoria0.nome',
+                    'format' => ['text'],
+                ],
+                [
+                    'attribute' => 'idmarca0',
+                    'label' => 'Marca',
+                    'value' => 'idmarca0.nome',
+                    'format' => ['text'],
+                ],
+                'nome',
+                [
+                    'attribute' => 'usado',
+                    'label' => 'Usado',
+                    'value' => function ($data){
+                        return $data->usado == 0 ? 'Não' : 'Sim';
+                    },
+                ],
+                'preco',
+
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]);  ?>
+    </div>
 </div>

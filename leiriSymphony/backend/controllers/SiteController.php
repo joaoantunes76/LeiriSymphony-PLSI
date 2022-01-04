@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\Encomendas;
 use common\models\LoginForm;
 use common\models\Pedidosdecontacto;
+use common\models\Produtos;
+use common\models\ProdutosSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -89,11 +91,19 @@ class SiteController extends Controller
             $numEncomendasDoMes++;
         }
 
+
+        $searchModel = new ProdutosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['stock' => 0]);
+
+
         return $this->render('index', [
             'mensagensDisponiveis' => $mensagensUtilizadores,
             'lucroMensal' => $lucroMensal,
             'possivelLucroMensal' => $possivelLucroMensal,
             'numEncomendasDoMes' => $numEncomendasDoMes,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
