@@ -157,38 +157,38 @@ class AlbumTest extends \Codeception\Test\Unit
     public function testArtistaSave()
     {
         $artista = new Artistas();
-        $artista->nome = 'Rui Veloso';
+        $artista->nome = 'Toy';
 
         $this->assertTrue($artista->save());
     }
 
     public function testVerArtistaAdicionado()
     {
-        $this->tester->seeInDatabase(Artistas::tableName(), ['nome' => 'Rui Veloso']);
+        $this->tester->seeInDatabase(Artistas::tableName(), ['nome' => 'Toy']);
     }
 
     public function testAlterarArtistaRegistado()
     {
-        $artista = Artistas::find()->where(['nome' => 'Rui Veloso'])->one();
-        $artista->nome = 'João Pedro Pais';
+        $artista = Artistas::find()->where(['nome' => 'Toy'])->one();
+        $artista->nome = 'Paulo Gonzo';
 
         $this->assertTrue($artista->save());
     }
 
     public function testVerificarArtistaAlterado()
     {
-        $this->tester->seeInDatabase(Artistas::tableName(), ['nome' => 'João Pedro Pais']);
+        $this->tester->seeInDatabase(Artistas::tableName(), ['nome' => 'Paulo Gonzo']);
     }
 
     public function testEliminarArtista()
     {
-        $artista = Artistas::find()->where(['nome' => 'João Pedro Pais'])->one();
+        $artista = Artistas::find()->where(['nome' => 'Paulo Gonzo'])->one();
         $this->assertIsNumeric($artista->delete());
     }
 
     public function testVerificarSeArtistaFoiApagado()
     {
-        $this->tester->dontSeeInDatabase(Artistas::tableName(), ['nome' => 'João Pedro Pais']);
+        $this->tester->dontSeeInDatabase(Artistas::tableName(), ['nome' => 'Paulo Gonzo']);
     }
 
     /*
