@@ -1,0 +1,14 @@
+suite_namespace: frontend\tests\acceptance
+actor: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+              url: 'http://leirisymphony.com/'
+              browser: chrome # 'chrome' or 'firefox'
+              wait: 200
+              capabilities:
+                unexpectedAlertBehaviour: 'accept'
+                webStorageEnabled: true
+                javascriptEnabled: true
+        - Yii2:
+            part: init
