@@ -23,7 +23,7 @@ $this->title = 'Evento';
 </section>
 
 <section class="section">
-    <div class="d-flex justify-content-center mt-5">
+    <div class="d-flex justify-content-center mt-5 p-5">
         <div class="text-left">
             <h4>Descrição do evento</h4>
             <p><?= $model->descricao ?></p>
@@ -32,7 +32,9 @@ $this->title = 'Evento';
             <p>Hora de Fim: <?= $model->horafim ?></p>
             <p>Lotação: <?= $model->lotacao ?></p>
             <p>Lugares Restantes: <?= $lugaresRestantes ?></p>
-            <button class="btn btn-primary pl-5 pr-5 mt-5" data-toggle="modal" data-target="#reservarEvento">Reservar</button>
+            <div class="row justify-content-center">
+                <button class="btn btn-primary pl-5 pr-5 mt-5" data-toggle="modal" data-target="#reservarEvento">Reservar</button>
+            </div>
         </div>
     </div>
 </section>
