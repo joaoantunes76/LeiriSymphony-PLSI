@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\User */
+/* @var $perfis common\models\Perfis */
+/* @var $signup frontend\models\SignupForm */
 
 $this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
@@ -14,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'perfis' => $perfis,
+        'signup' => $signup
     ]) ?>
 
 </div>
