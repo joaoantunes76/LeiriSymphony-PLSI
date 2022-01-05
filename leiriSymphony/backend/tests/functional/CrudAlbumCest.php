@@ -30,7 +30,7 @@ class CrudAlbumCest
         //Criar um novo Album
         $I->seeLink('Criar Albuns');
         $I->click('Criar Albuns');
-        $I->see("Criar Albuns");
+        $I->see("Criar Album");
         $I->submitForm('#create-albuns', [
             'Albuns[nome]' => 'Musicas do João',
             'Albuns[preco]' => 11.5,
@@ -98,7 +98,7 @@ class CrudAlbumCest
         //Adicionar Musica
         $I->seeLink('Adicionar Musica');
         $I->click('Adicionar Musica');
-        $I->see("Criar Músicas");
+        $I->see("Criar Música");
         $I->submitForm('#create-musicas', [
             'Musicas[nome]' => 'musica teste',
             $I->attachFile('#uploadform-musicfile','piano_teste.mp3'),
