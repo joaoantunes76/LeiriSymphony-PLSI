@@ -27,7 +27,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'estado')->dropDownList([ 'Em Processamento' => 'Em Processamento', 'Expedido' => 'Expedido', 'Entregue' => 'Entregue', 'Pronto para Levantamento' => 'Pronto para Levantamento', 'Cancelada' => 'Cancelada', 'Erro' => 'Erro', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'pago')->textInput() ?>
+    <label>Pago</label>
+    <select name="Encomendas[pago]" class="form-control">
+        <option value="1">Sim</option>
+        <option value="0">Não</option>
+    </select>
+    <br>
 
     <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
 

@@ -1,6 +1,5 @@
 <?php
 
-use hosanna\audiojs\AudioJs;
 use yii\bootstrap4\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -95,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function($data) {
                         if($data->ficheiro != ""){
-                            return '<audio controls><source src="http://leirysymphony-be/uploads/musics/'.$data->ficheiro.'" type="audio/ogg"></audio>';
+                            return '<audio controls><source src="'.Yii::getAlias('@musicurl').'/'.$data->ficheiro.'" type="audio/ogg"></audio>';
                         }
                         else {
                             return "";

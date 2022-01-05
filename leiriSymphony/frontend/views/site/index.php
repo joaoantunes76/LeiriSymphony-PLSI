@@ -8,64 +8,121 @@ use yii\helpers\Html;
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <a href="<?= Url::toRoute('site/eventos') ?>"><?= Html::img('@web/images/Sample-Event.png', ['class' => 'ls-logo d-block w-100', 'alt' => "First slide"]); ?></a>
-            </div>
-            <div class="carousel-item">
-                <?= Html::img('@web/images/Sample-Event.png', ['class' => 'ls-logo d-block w-100', 'alt' => "Second slide"]); ?>
-            </div>
-            <div class="carousel-item">
-                <?= Html::img('@web/images/Sample-Event.png', ['class' => 'ls-logo d-block w-100', 'alt' => "Third slide"]); ?>
+<?php
+if(isset($evento)){
+?>
+<!-- banner part start-->
+<section class="banner_part">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="banner_slider owl-carousel">
+                    <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>Novo Evento</h1>
+                                        <h2><?= $evento->data ?></h2>
+                                        <p class="mt-5">
+                                            <?php
+                                                $out = strlen($evento->descricao) > 30 ? substr($evento->descricao,0,30)."..." : $evento->descricao;
+                                                echo $out;
+                                            ?>
+                                        </p>
+                                        <a href="<?= Url::toRoute('site/eventos') ?>" class="btn_2">Ver Detalhes</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="/img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-counter d-none"></div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
+</section>
+<!-- banner part start-->
+<?php
+}
+?>
 
-    <div class="body-content mt-5">
-        <h4>Recentemente adicionados</h4>
-        <div class="row mt-3 justify-content-start">
-            <?php
-
-            foreach ($produtos as $produto) {
-            ?>
-                <div class="col-md-3 text-center">
-                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
+<!-- product_list part start-->
+<section class="product_list best_seller section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>Recentemente adicionados <span>shop</span></h2>
                 </div>
-            <?php
-            }
-            ?>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="best_product_slider owl-carousel">
+                    <?php
+                    //this is equal to Recentemente adicionados
+                    //TODO: make this to most bought products
+                    foreach ($produtos as $produto) {
+                        if ($produto->imagens != null) {
+                            $imagemNome = $produto->imagens[0]->nome;
+                        } else {
+                            $imagemNome = "";
+                        }
+                        ?>
+                        <a href="<?= Url::toRoute("produtos/view?produtoId=".$produto->id) ?>">
+                            <div class="single_product_item">
+                                <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                                <div class="single_product_text">
+                                    <h4><?= $produto->nome ?></h4>
+                                    <h3><?= $produto->preco ?>€</h3>
+                                </div>
+                            </div>
+                        </a>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
 
         <br>
-        <h4>Populares</h4>
-        <div class="row mt-3 justify-content-center">
-            <?php
-            //this is equal to Recentemente adicionados
-            //TODO: make this to most bought products
-            foreach ($produtos as $produto) {
-                ?>
-                <div class="col-md-3 text-center">
-                    <?= $this->renderFile(Yii::getAlias('@app') . '/views/layouts/components/_product-item.php', ['produto' => $produto]); ?>
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>Populares <span>shop</span></h2>
                 </div>
-                <?php
-            }
-            ?>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="best_product_slider owl-carousel">
+                    <?php
+                    //this is equal to Recentemente adicionados
+                    //TODO: make this to most bought products
+                    foreach ($produtos as $produto) {
+                        if ($produto->imagens != null) {
+                            $imagemNome = $produto->imagens[0]->nome;
+                        } else {
+                            $imagemNome = "";
+                        }
+                        ?>
+                        <div class="single_product_item">
+                            <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                            <div class="single_product_text">
+                                <h4><?= $produto->nome ?></h4>
+                                <h3><?= $produto->preco ?>€</h3>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>

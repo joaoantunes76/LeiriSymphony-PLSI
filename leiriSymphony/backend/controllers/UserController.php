@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use app\controllers\PerfisController;
+use Yii;
 use app\models\User;
 use common\models\Perfis;
 use yii\filters\AccessControl;
@@ -12,7 +12,8 @@ use frontend\models\SignupForm;
 use yii\rbac\Role;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use yii\web\ForbiddenHttpException;
+use app\controllers\PerfisController;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -26,11 +27,32 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'update', 'create', 'view'],
+                        'actions' => ['index'],
                         'roles' => ['Administrador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['criarUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['verUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['editarUtilizador'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['eliminarUtilizador'],
                     ],
                     [
                         'allow' => true,
@@ -38,6 +60,13 @@ class UserController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),

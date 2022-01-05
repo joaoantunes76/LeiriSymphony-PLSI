@@ -2,13 +2,17 @@
 
 namespace backend\controllers;
 
+use common\models\DemonstracoesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\Marcas;
 use common\models\Produtos;
 use yii\filters\VerbFilter;
 use common\models\Subcategorias;
 use common\models\ProdutosSearch;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
@@ -20,17 +24,57 @@ class ProdutosController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['criarProduto'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['verProduto'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['editarProduto'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['eliminarProduto'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -56,8 +100,14 @@ class ProdutosController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new DemonstracoesSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['idproduto' => $id]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

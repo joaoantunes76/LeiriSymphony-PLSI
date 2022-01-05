@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
     <p>
-        <?= Html::a('Update', ['update', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista], [
+        <?= Html::a('Atualizar', ['update', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'idalbum' => $model->idalbum, 'idartista' => $model->idartista], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',

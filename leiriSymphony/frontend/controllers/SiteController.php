@@ -9,8 +9,10 @@ use common\models\Encomendas;
 use common\models\Encomendasprodutos;
 use common\models\Eventos;
 use common\models\Eventosperfis;
+use common\models\Pedidosdecontacto;
 use common\models\Perfis;
 use common\models\Produtosfavoritos;
+use common\models\Tipoinformacoes;
 use frontend\models\PagamentoOnline;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -86,11 +88,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $evento = Eventos::find()->orderBy(['data' => SORT_ASC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
 
-        return $this->render('index', [
-            'produtos' => $produtos,
-        ]);
+        if($evento === null) {
+            return $this->render('index', [
+                'produtos' => $produtos,
+            ]);
+        }
+        else {
+            return $this->render('index', [
+                'produtos' => $produtos,
+                'evento' => $evento
+            ]);
+        }
     }
 
 
@@ -109,7 +120,6 @@ class SiteController extends Controller
 
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
-
         } else {
             if($this->request->isPost){
                 $pagamentoOnline->load($this->request->post());
@@ -118,7 +128,12 @@ class SiteController extends Controller
                 $preco = 0;
                 foreach($_POST as $post){
                     if(isset($post["quantidade"]) && isset($post["id"])){
+
                         $produtoParaCarrinho = Produtos::findOne($post["id"]);
+                        if($produtoParaCarrinho->stock < $post["quantidade"]){
+                            Yii::$app->session->setFlash('error', "A loja não tem stock para realizar esta compraa");
+                            return $this->redirect(Yii::$app->request->referrer);
+                        }
                         $preco += ($produtoParaCarrinho->preco * $post["quantidade"]);
                     }
                 }
@@ -143,10 +158,16 @@ class SiteController extends Controller
                     foreach($_POST as $post){
                         if(isset($post["quantidade"]) && isset($post["id"])){
                             $encomendaProduto = new Encomendasprodutos();
+                            $produto = Produtos::findOne($post["id"]);
                             $encomendaProduto->idencomenda = $encomenda->id;
-                            $encomendaProduto->idproduto = $post["id"];
+                            $encomendaProduto->idproduto = $produto->id;
                             $encomendaProduto->quantidade = $post["quantidade"];
-                            if(!$encomendaProduto->save()){
+                            if($encomendaProduto->validate()) {
+                                $encomendaProduto->save();
+                                $produto->stock = ($produto->stock - $post["quantidade"]);
+                                $produto->save();
+                            }
+                            else{
                                 $erroEncomendaProduto = true;
                             }
                         }
@@ -248,36 +269,24 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+        $pedidoDeContacto = new Pedidosdecontacto();
+        $tipoInformacoes = Tipoinformacoes::find()->all();
+
+        if ($pedidoDeContacto->load(Yii::$app->request->post())) {
+            $pedidoDeContacto->idperfil = Yii::$app->user->id;
+            if($pedidoDeContacto->save()){
+                Yii::$app->session->setFlash('success', 'A sua mensagem foi enviada com sucesso, em breve entraremos em contacto pelo email indicado.');
+            }
+            else{
+                Yii::$app->session->setFlash('error', 'Houve um erro a enviar a sua mensagem, por favor, tente contactar-nos por outro meio.');
             }
 
-            return $this->refresh();
+
         }
-
         return $this->render('contact', [
-            'model' => $model,
+            'model' => $pedidoDeContacto,
+            'tipoInformacoes' => $tipoInformacoes
         ]);
-    }
-
-    /**
-     * Displays favoritos page.
-     *
-     * @return mixed
-     */
-    public function actionFavoritos()
-    {
-        $produtosFavoritos = Produtosfavoritos::find()->where(['idperfil' => Yii::$app->user->id])->all();
-
-
-        return $this->render('favoritos', [
-            'model' => $produtosFavoritos,
-        ]);
-
     }
 
     /**

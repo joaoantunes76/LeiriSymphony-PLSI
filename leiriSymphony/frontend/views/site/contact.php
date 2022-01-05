@@ -2,44 +2,59 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
+/* @var $model \common\models\Pedidosdecontacto */
+/* @var $tipoInformacoes \common\models\Tipoinformacoes */
 
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title = 'Contact';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    
 
-    <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p>
-
-    <div class="row">
+<section class="section_padding text-center">
+    <h2>Pedido de Contacto</h2>
+    <p>Insira o seu problema/duvida e nós entraremos em contacto consigo, por email</p>
+    <br>
+    <div class="row justify-content-center text-left">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'subject') ?>
-
-                <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
-                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
-
+            <?php $form = ActiveForm::begin(); ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <label for="Pedidosdecontacto[idproblema]">Tipo</label>
+                    <select name="Pedidosdecontacto[idproblema]" id="Pedidosdecontacto[idproblema]" class="form-control mb-3">
+                        <?php
+                        foreach($tipoInformacoes as $tipoInformacao){
+                            ?>
+                            <option value="<?= $tipoInformacao->id ?>"><?= $tipoInformacao->nome?> (<?= $tipoInformacao->tipo ?>)</option>
+                            <?php
+                        }
+                        ?>
+                    </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="Pedidosdecontacto[email]">Email</label>
+                    <input name="Pedidosdecontacto[email]" id="Pedidosdecontacto[email]" class="single-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="Pedidosdecontacto[mensagem]">Mensagem</label>
+                    <textarea name="Pedidosdecontacto[mensagem]" id="Pedidosdecontacto[mensagem]" class="single-textarea"></textarea>
+                </div>
+
+
+
+                <div class="form-group text-center">
+                    <?= Html::submitButton('Submit', ['class' => 'btn_3', 'name' => 'contact-button']) ?>
+                </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
 
-</div>
+</section>
+
+<script>
+
+</script>
+

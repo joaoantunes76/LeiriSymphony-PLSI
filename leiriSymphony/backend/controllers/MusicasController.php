@@ -5,11 +5,14 @@ namespace backend\controllers;
 use common\models\Musicas;
 use common\models\MusicasSearch;
 use Yii;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * MusicasController implements the CRUD actions for Musicas model.
@@ -21,17 +24,57 @@ class MusicasController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'view','update','delete','logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['Administrador','Gestor de loja','Apoio ao cliente'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['criarMusica'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['verMusica'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['editarMusica'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['eliminarMusica'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function($rule, $action) {
+                    if (Yii::$app->user->isGuest){
+                        Yii::$app->user->loginRequired();
+                    } else {
+                        throw new ForbiddenHttpException('Você não tem acesso a esta funcionalidade.');
+                    }
+                }
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -98,9 +141,6 @@ class MusicasController extends Controller
             return $this->redirect('index');
         }
 
-
-
-
     }
 
     /**
@@ -121,7 +161,7 @@ class MusicasController extends Controller
             $uploadForm->musicFile = UploadedFile::getInstance($uploadForm, 'musicFile');
             $now = date("mdyhis");
             if ($uploadForm->uploadMusic($now)) {
-                unlink(   \Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
+                unlink(\Yii::getAlias('@webroot').'\uploads\musics\\'.$model->ficheiro);
                 $model->ficheiro = $now . "." . $uploadForm->musicFile->extension;
                 $model->idalbuns = $idalbuns;
                 if ($model->save()) {
@@ -129,7 +169,6 @@ class MusicasController extends Controller
                 }
             }
         }
-
         return $this->render('update', [
             'model' => $model,
             'uploadForm' => $uploadForm

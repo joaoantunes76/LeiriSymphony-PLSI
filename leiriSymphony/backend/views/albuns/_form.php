@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'preco')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 0.10]) ?>
 
     <?= $form->field($model, 'datalancamento')->widget(DatePicker::classname(),[
 

@@ -2,8 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\models\Avaliacao;
 use common\models\Categorias;
+use common\models\Demonstracoes;
+use common\models\Encomendas;
 use common\models\Marcas;
+use common\models\Perfis;
 use common\models\Produtos;
 use common\models\ProdutosSearch;
 use common\models\Subcategorias;
@@ -104,71 +108,88 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
-        $iduser = Yii::$app->user->id;
-        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $iduser])->exists();
-        if ($this->request->isPost) {
-            $produtoId = $_POST["Produtos"]["id"];
-            if (Yii::$app->user->isGuest){
-                Yii::$app->session->setFlash('error', "É necessário fazer login para adicionar produtos ao carrinho.");
-            } else {
-                $exists = Carrinho::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $iduser])->exists();
+        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+        $idperfil = $perfil->id;
+        $produtoPreviews = Demonstracoes::find()->where(['idproduto' => $produtoId])->all();
+        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->exists();
+        $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
+        $avalicaoUserExiste = Avaliacao::find()->where(['idperfil' => $idperfil, 'idproduto' => $produtoId])->exists();
+        $utilizadorJaComprou = Encomendas::find()->innerJoin('encomendasprodutos')->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->andWhere(['estado' => 'Entregue'])->exists();
+        $podeAvaliar = false;
+        if($utilizadorJaComprou && !$avalicaoUserExiste){
+            $podeAvaliar = true;
+        }
 
-                $carrinho = new Carrinho();
-                $carrinho->idproduto = $produtoId;
-                $carrinho->idperfil = $iduser;
-                if ($exists){
-                    Yii::$app->session->setFlash('error', "Este produto já foi adicionado ao carrinho.");
-                } else {
-                    $carrinho->save();
-                    Yii::$app->session->setFlash('success', "Produto adicionado ao carrinho.");
+        return $this->render('view', [
+            'model' => $this->findModel($produtoId),
+            'existeFavorito' => $existeFavorito,
+            'avaliacoes' => $avaliacoes,
+            'podeAvaliar' => $podeAvaliar,
+            'demonstracoes' => $produtoPreviews,
+        ]);
+    }
+
+    public function actionAdicionarCarrinho($idproduto){
+        $produtoExist = Produtos::find()->where(['id' => $idproduto])->exists();
+        $carrinhoExist = Carrinho::find()->where(['idperfil' => Yii::$app->user->id])->andWhere(['idproduto' => $idproduto])->exists();
+        if($produtoExist && !$carrinhoExist){
+            $carrinho = new Carrinho();
+            $carrinho->idproduto = $idproduto;
+            $carrinho->idperfil = Yii::$app->user->id;
+            $carrinho->quantidade = 1;
+            if($carrinho->validate() && $carrinho->save()){
+                Yii::$app->session->setFlash('success', "Produto adicionado ao carrinho");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        else {
+            if($produtoExist && $carrinhoExist){
+                $carrinho = Carrinho::find()->where(['idperfil' => Yii::$app->user->id])->andWhere(['idproduto' => $idproduto])->one();
+                $carrinho->quantidade += 1;
+                if($carrinho->validate() && $carrinho->save()){
+                    Yii::$app->session->setFlash('success', "Quantidade do produto incrementada no carrinho (+1)");
+                    return $this->redirect(Yii::$app->request->referrer);
                 }
             }
-            return $this->render('view', [
-                'model' => $this->findModel($produtoId),
-                'existeFavorito' => $existeFavorito,
-            ]);
-
-        } else {
-            return $this->render('view', [
-                'model' => $this->findModel($produtoId),
-                'existeFavorito' => $existeFavorito,
-            ]);
         }
+        Yii::$app->session->setFlash('error', "Este produto não existe");
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionDeleteCarrinho($idproduto)
     {
-        $iduser = Yii::$app->user->id;
-        if ($this->request->isGet) {
-            $exists = Carrinho::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
-            if ($exists){
-                Yii::$app->db->createCommand()->delete('carrinho', ['idproduto' => $idproduto, 'idperfil' => $iduser])->execute();
-                Yii::$app->session->setFlash('success', "Produto removido do carrinho com sucesso.");
-            }else{
-                Yii::$app->session->setFlash('error', "Erro, este produto não se encontra no carrinho");
+        $exists = Carrinho::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => Yii::$app->user->id])->exists();
+        if ($exists){
+            Carrinho::find()->where(['idperfil' => Yii::$app->user->id])->andWhere(['idproduto' => $idproduto])->one()->delete();
+            Yii::$app->session->setFlash('success', "Produto removido do carrinho com sucesso.");
+        }else{
+            Yii::$app->session->setFlash('error', "Erro, este produto não se encontra no carrinho");
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAddRating($idproduto){
+        if($this->request->isPost){
+            $avaliacao = new Avaliacao();
+            $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+            $produto = Produtos::find()->where(['id' => $idproduto])->one();
+            if($perfil!=null && $produto!=null && isset($_POST["stars"]) && isset($_POST["message"])) {
+                $avaliacao->idperfil = $perfil->id;
+                $avaliacao->idproduto = $produto->id;
+                $avaliacao->estrelas = $_POST["stars"];
+                $avaliacao->comentario = $_POST["message"];
+                if($avaliacao->save()) {
+                    Yii::$app->session->setFlash('success', "Classificação registada com sucesso!");
+                }
+                else{
+                    Yii::$app->session->setFlash('error', $avaliacao->errors);
+                }
+            }
+            else{
+                Yii::$app->session->setFlash('error', "A sua classificação foi invalidada");
             }
             return $this->redirect(Yii::$app->request->referrer);
         }
-        else{
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-    }
-
-    public function actionAddFavorito($idproduto){
-        $iduser = Yii::$app->user->id;
-        $exists = Produtosfavoritos::find()->where(['idproduto' => $idproduto])->andWhere(['idperfil' => $iduser])->exists();
-
-        if ($exists){
-            Yii::$app->db->createCommand()->delete('produtosfavoritos', ['idproduto' => $idproduto, 'idperfil' => $iduser])->execute();
-            Yii::$app->session->setFlash('success', "Produto removido dos favoritos");
-        }else{
-            $favorito = new Produtosfavoritos();
-            $favorito->idproduto = $idproduto;
-            $favorito->idperfil = $iduser;
-            $favorito->save();
-            Yii::$app->session->setFlash('success', "Produto adicionado aos favoritos");
-        }
-        return $this->redirect('view?produtoId='.$idproduto);
     }
 
     /**

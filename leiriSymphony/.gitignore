@@ -41,3 +41,9 @@ phpunit.phar
 /backend/web/index.php
 /backend/web/index-test.php
 /backend/web/robots.txt
+/backend/web/uploads/*.jpg
+/backend/web/uploads/*.png
+/backend/web/uploads/musics/*.mp3
+/backend/web/uploads/musics/*.ogg
+/backend/web/uploads/demos/*.mp3
+/backend/web/uploads/demos/*.ogg

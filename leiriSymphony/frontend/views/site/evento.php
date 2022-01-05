@@ -7,12 +7,24 @@ use yii\helpers\Html;
 
 $this->title = 'Evento';
 ?>
-<div class="evento">
-    <div class="row">
-        <?= Html::img('@web/images/Sample-Event.png', ['class' => 'ls-logo d-block w-100', 'alt' => "First slide"]); ?>
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Novo Evento!</h2>
+                        <h4><?= $model->data ?></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row d-flex justify-content-center mt-5">
-        <div class="col-8">
+</section>
+
+<section class="section">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="text-left">
             <h4>Descrição do evento</h4>
             <p><?= $model->descricao ?></p>
             <p>Data: <?= $model->data ?></p>
@@ -20,14 +32,10 @@ $this->title = 'Evento';
             <p>Hora de Fim: <?= $model->horafim ?></p>
             <p>Lotação: <?= $model->lotacao ?></p>
             <p>Lugares Restantes: <?= $lugaresRestantes ?></p>
+            <button class="btn btn-primary pl-5 pr-5 mt-5" data-toggle="modal" data-target="#reservarEvento">Reservar</button>
         </div>
     </div>
-
-
-
-    <div class="row d-flex justify-content-center">
-        <button class="btn btn-primary pl-5 pr-5" data-toggle="modal" data-target="#reservarEvento">Reservar</button>
-    </div>
+</section>
 
     <div class="modal fade" id="reservarEvento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -35,7 +43,16 @@ $this->title = 'Evento';
                 <div class="modal-body p-5">
                     <div class="row">
                         <div class="col">
-                            <?= Html::img('@web/images/qr-code.png', ['alt' => "QR-Code", 'height' => '256px']); ?>
+                            <?php
+                            use Da\QrCode\QrCode;
+
+                            $qrCode = (new QrCode(\yii\helpers\Url::toRoute('site/eventos?id='.$model->id)))
+                                ->setSize(250)
+                                ->setMargin(5)
+                                ->useForegroundColor(51, 153, 255);
+
+                                echo '<img src="' . $qrCode->writeDataUri() . '">';
+                            ?>
                         </div>
                         <div class="col d-flex flex-column justify-content-center">
                             <h4>Instruções</h4>
@@ -49,4 +66,3 @@ $this->title = 'Evento';
             </div>
         </div>
     </div>
-</div>

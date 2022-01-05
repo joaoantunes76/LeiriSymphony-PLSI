@@ -24,124 +24,102 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <?php $this->head() ?>
-    <script>
-        function openSlideMenu() {
-            document.getElementById('menu').style.width = '100%';
-            closeCarrinhoCompras();
-            document.body.style.overflow = "hidden";
-        }
 
-        function closeSlideMenu() {
-            document.getElementById('menu').style.width = '0';
-            document.body.style = "";
-        }
-
-        function sideMenuClick() {
-            event.stopPropagation();
-        }
-
-        function openCarrinhoCompras() {
-            document.getElementById('carrinhocompras').style.width = '100%';
-            closeSlideMenu();
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeCarrinhoCompras() {
-            document.getElementById('carrinhocompras').style.width = '0';
-            document.body.style = "";
-        }
-    </script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>aranoz</title>
+    <link rel="icon" href="img/favicon.png">
 </head>
 
 <body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
-
-    <header>
-        <nav class="ls-navbar ls-bg-secondary">
-            <div class="row m-0 d-flex">
-                <div class="col-md-4 col-sm-2">
-                    <a class="ml-5" href="#menu" onclick="openSlideMenu()"><i class="ls-navbar-icons bi bi-list"></i></a>
-                    <a class="navbar-brand" href="<?= Url::toRoute('site/index'); ?>"><?= Html::img('@web/logo.png', ['height' => "28px", 'class' => 'ls-logo']); ?></a>
-                </div>
-                <div class="col-md-4 col-sm-5 d-flex align-self-center">
-                    <div class="ls-navbar-search">
-                        <form action="<?= Url::toRoute("produtos/index") ?>" method="GET">
-                            <input class="form-control ls-navbar-search mr-sm-2" type="search" name="nome" placeholder="Search" aria-label="Search">
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-5 d-flex flex-row-reverse">
-                    <div class="ls-navbar-buttons">
-                        <a href="<?= Url::toRoute('perfis/index'); ?>"><i class="ls-navbar-icons bi bi-person-circle"></i></a>
-                        <a href="<?= Url::toRoute('site/favoritos'); ?>"><i class="ls-navbar-icons bi bi-heart-fill"></i></a>
-                        <a href="#carrinho" onclick="openCarrinhoCompras()"><i class="ls-navbar-icons bi bi-cart-fill"></i></a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <div id="menu" class="ls-sidemenu" onclick="closeSlideMenu()">
-        <div class="ls-sidemenu-content" onclick="sideMenuClick()">
-            <?php
-                $categorias = \common\models\Categorias::find()->all();
-                foreach($categorias as $categoria){
-                ?>
-                    <a href="<?= Url::toRoute('produtos/index') ?>?Categorias=<?= $categoria->id?>"><?= $categoria->nome ?></a>
-                <?php
-                }
-            ?>
-        </div>
-        <div style="width: 100%; height:100%">
-
-        </div>
-    </div>
-
-    <div id="carrinhocompras" class="ls-sidemenu-right" onclick="closeCarrinhoCompras()">
-        <div class="ls-sidemenu-right-content d-flex flex-column text-center justify-content-between" onclick="sideMenuClick()">
-            <div>
-                <br>
-                <h5>Carrinho de compras</h5>
-                <?php
-                    $produtosCarrinho = \common\models\Carrinho::find()->where(['idperfil'=> Yii::$app->user->id])->all();
-                    foreach ($produtosCarrinho as $produtoCarrinho){
-                        $produto = \common\models\Produtos::find()->where(['id' => $produtoCarrinho->idproduto])->one();
-                ?>
-                        <hr>
-                        <div class="mt-4">
-                                <?= Html::a('Remover', Url::to(['produtos/delete-carrinho', 'idproduto' => $produtoCarrinho->idproduto]), [
-                                    'class' => 'btn btn-danger',
-                                ]) ?>
-                                <div class="produto mt-4">
-                                    <a href="<?= Url::toRoute(['produtos/view', 'produtoId' => $produtoCarrinho->idproduto]) ?>">
-                                        <?= Html::img(Yii::getAlias('@imageurl') . '/' . $produto->imagens[0]->nome, ['height' => "126px", 'class' => 'logo']); ?>
-                                        <p><?= Html::encode($produto->nome) ?> (<?= Html::encode($produto->preco) ?> €)</p>
-                                    </a>
-                                </div>
-                        </div>
-                <?php
-                    }
-                ?>
-            </div>
-
-            <div class="row mb-5">
-                <div class="col">
-                    <?= Html::a('Comprar', Url::to(['site/comprar']), [
-                        'class' => 'btn btn-primary',
-                    ]) ?>
-                </div>
-            </div>
-
-        </div>
-        <div style="width: 100%; height:100%">
-
-        </div>
-    </div>
-
-    <main role="main" class="flex-shrink-0">
+    <header class="main_menu home_menu">
         <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="<?= Url::toRoute("site/index") ?>"> <img src="<?=  \Yii::getAlias('@web') ?>/logo.png" alt="logo" width="180px"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= Url::toRoute("site/index") ?>">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown_1"
+                                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Produtos
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                        <?php
+                                            $categorias = \common\models\Categorias::find()->all();
+                                            foreach($categorias as $categoria){
+                                        ?>
+                                                <a class="dropdown-item" href="<?= Url::toRoute('produtos/index') ?>?Categoria=<?= $categoria->id?>"><?= $categoria->nome ?></a>
+                                        <?php
+                                            }
+                                        ?>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= Url::toRoute('site/contact') ?>">Contact</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <?php
+                                        if(Yii::$app->user->isGuest){
+                                        ?>
+                                            <a class="nav-link" href="<?= Url::toRoute('site/login') ?>">Login</a>
+                                        <?php
+                                        }
+                                        else{
+                                        ?>
+                                            <a class="nav-link dropdown-toggle" id="navbarDropdown_3"
+                                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Conta
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                                <a class="dropdown-item" href="<?= Url::toRoute('perfis/index') ?>">Perfil</a>
+                                                <a class="dropdown-item" href="<?= Url::toRoute('perfis/encomendas') ?>">Encomendas</a>
+                                            </div>
+                                        <?php
+                                        }
+                                    ?>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hearer_icon d-flex">
+                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <a href="<?= Url::toRoute('favoritos/index') ?>"><i class="ti-heart"></i></a>
+                            <a href="<?= Url::toRoute('carrinho/index') ?>">
+                                <i class="fas fa-cart-plus"></i>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="search_input" id="search_input_box">
+            <div class="container ">
+                <form id="searchform" action="<?= Url::toRoute('produtos/index') ?>" method="get" class="d-flex justify-content-between search-inner">
+                    <input type="text" class="form-control" id="search_input" placeholder="Search Here" name="nome">
+                    <button type="submit" id="submitsearchform" class="btn"></button>
+                    <span class="ti-close" id="close_search" title="Close Search"></span>
+                </form>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end-->
+
+
+    <main role="main" class="site-main">
+        <div>
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
@@ -150,12 +128,101 @@ AppAsset::register($this);
         </div>
     </main>
 
-    <footer class="footer mt-auto py-3 text-muted">
+    <!--::footer_part start::-->
+    <footer class="footer_part">
         <div class="container">
-            <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-            <p class="float-right"><?= Yii::powered() ?></p>
+            <div class="row justify-content-around">
+                <div class="col-sm-6 col-lg-2">
+                    <div class="single_footer_part">
+                        <h4>Top Products</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="">Managed Website</a></li>
+                            <li><a href="">Manage Reputation</a></li>
+                            <li><a href="">Power Tools</a></li>
+                            <li><a href="">Marketing Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-2">
+                    <div class="single_footer_part">
+                        <h4>Quick Links</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="">Jobs</a></li>
+                            <li><a href="">Brand Assets</a></li>
+                            <li><a href="">Investor Relations</a></li>
+                            <li><a href="">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-2">
+                    <div class="single_footer_part">
+                        <h4>Features</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="">Jobs</a></li>
+                            <li><a href="">Brand Assets</a></li>
+                            <li><a href="">Investor Relations</a></li>
+                            <li><a href="">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-2">
+                    <div class="single_footer_part">
+                        <h4>Resources</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="">Guides</a></li>
+                            <li><a href="">Research</a></li>
+                            <li><a href="">Experts</a></li>
+                            <li><a href="">Agencies</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="single_footer_part">
+                        <h4>Newsletter</h4>
+                        <p>Heaven fruitful doesn't over lesser in days. Appear creeping
+                        </p>
+                        <div id="mc_embed_signup">
+                            <form target="_blank"
+                                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                  method="get" class="subscribe_form relative mail_part">
+                                <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
+                                       class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = ' Email Address '">
+                                <button type="submit" name="submit" id="newsletter-submit"
+                                        class="email_icon newsletter-submit button-contactForm">subscribe</button>
+                                <div class="mt-10 info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="copyright_part">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="copyright_text">
+                            <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="footer_icon social_icon">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
+                                <li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+    <!--::footer_part end::-->
 
     <?php $this->endBody() ?>
 </body>
