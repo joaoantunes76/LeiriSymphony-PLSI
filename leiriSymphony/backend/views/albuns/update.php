@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Albuns */
 /* @var $uploadForm app\models\UploadForm */
 
-$this->title = 'Update Albuns: ' . $model->id;
+$this->title = 'Editar Album: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Albuns', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

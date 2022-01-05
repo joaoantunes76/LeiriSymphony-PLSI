@@ -21,7 +21,10 @@ class EncomendaTest extends \Codeception\Test\Unit
     {
     }
 
-    //
+    //tests
+    /*
+     * Encomendas
+     */
     public function testEncomendaPerfilInexistenteNaoValida()
     {
         $encomenda = new Encomendas();
@@ -142,27 +145,30 @@ class EncomendaTest extends \Codeception\Test\Unit
         $this->tester->dontSeeInDatabase(Encomendas::tableName(), ['preco' => 300.9]);
     }
 
-    public function testEncomendaprodutoIdEncomendaInexistenteNaoValida()
+    /*
+     * Relação Encomendas - Produtos
+     */
+    public function testRelacaoEncomendaprodutoIdEncomendaInexistenteNaoValida()
     {
         $encomendaproduto = new Encomendasprodutos();
         $encomendaproduto->idencomenda = 12212; //encomenda inexistente
-        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->idproduto = 2;
         $encomendaproduto->quantidade = 2;
 
         $this->assertFalse($encomendaproduto->validate());
     }
 
-    public function testEncomendaprodutoIdEncomendaNuloNaoValida()
+    public function testRelacaoEncomendaprodutoIdEncomendaNuloNaoValida()
     {
         $encomendaproduto = new Encomendasprodutos();
         $encomendaproduto->idencomenda = null; //encomenda nula
-        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->idproduto = 2;
         $encomendaproduto->quantidade = 2;
 
         $this->assertFalse($encomendaproduto->validate());
     }
 
-    public function testEncomendaprodutoIdProdutoInexistenteNaoValida()
+    public function testRelacaoEncomendaprodutoIdProdutoInexistenteNaoValida()
     {
         $encomendaproduto = new Encomendasprodutos();
         $encomendaproduto->idencomenda = 5;
@@ -177,10 +183,21 @@ class EncomendaTest extends \Codeception\Test\Unit
         $this->assertTrue($gotError);
     }
 
-    public function testEncomendaprodutoIdProdutoNuloNaoValida()
+    public function testRelacaoEncomendaprodutoIdProdutoNuloNaoValida()
     {
+        //encomenda de teste
+        $encomenda = new Encomendas();
+        $encomenda->idperfil = 4;
+        $encomenda->estado = 'Em Processamento';
+        $encomenda->pago = 0;
+        $encomenda->preco = 256;
+        $encomenda->tipoexpedicao = 'Levantamento em loja';
+        $encomenda->data = date('Y-m-d');
+        $encomenda->save();
+        $encomendaId = $encomenda->id;
+
         $encomendaproduto = new Encomendasprodutos();
-        $encomendaproduto->idencomenda = 5;
+        $encomendaproduto->idencomenda = $encomendaId;
         $encomendaproduto->idproduto = null; //produto nulo
         $encomendaproduto->quantidade = 2;
 
@@ -194,19 +211,23 @@ class EncomendaTest extends \Codeception\Test\Unit
 
     public function testQuantidadeEncomendaMaiorQueStockProdutoNaoValida()
     {
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
         $encomendaproduto = new Encomendasprodutos();
-        $encomendaproduto->idencomenda = 5;
-        $encomendaproduto->idproduto = 7;
-        $encomendaproduto->quantidade = 25; //quantidade não pode ser superior ao stock do produto(20)
+        $encomendaproduto->idencomenda = $encomendaId;
+        $encomendaproduto->idproduto = 1;
+        $encomendaproduto->quantidade = 50; //quantidade não pode ser superior ao stock do produto(25)
 
         $this->assertFalse($encomendaproduto->validate());
     }
 
     public function testQuantidadeEncomendaNulaNaoValida()
     {
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
         $encomendaproduto = new Encomendasprodutos();
-        $encomendaproduto->idencomenda = 5;
-        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->idencomenda = $encomendaId;
+        $encomendaproduto->idproduto = 1;
         $encomendaproduto->quantidade = null; //quantidade nula
 
         $this->assertFalse($encomendaproduto->validate());
@@ -214,50 +235,65 @@ class EncomendaTest extends \Codeception\Test\Unit
 
     public function testQuantidadeEncomendaNegativaNaoValida()
     {
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
         $encomendaproduto = new Encomendasprodutos();
-        $encomendaproduto->idencomenda = 5;
-        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->idencomenda = $encomendaId;
+        $encomendaproduto->idproduto = 1;
         $encomendaproduto->quantidade = -9; //quantidade negativa
 
         $this->assertFalse($encomendaproduto->validate());
     }
 
-    public function testEncomendaprodutoSave()
+    public function testRelacaoEncomendaprodutoSave()
     {
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
         $encomendaproduto = new Encomendasprodutos();
-        $encomendaproduto->idencomenda = 5;
-        $encomendaproduto->idproduto = 7;
+        $encomendaproduto->idencomenda = $encomendaId;
+        $encomendaproduto->idproduto = 1;
         $encomendaproduto->quantidade = 2;
 
         $this->assertTrue($encomendaproduto->save());
     }
 
-    public function testVerEncomendaprodutoAdicionada()
+    public function testVerRelacaoEncomendaprodutoAdicionada()
     {
-        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7]);
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
+        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => $encomendaId, 'idproduto' => 1]);
     }
 
-    public function testAtualizarEncomendaprodutoRegistada()
+    public function testAtualizarRelacaoEncomendaprodutoRegistada()
     {
-        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => 5, 'idproduto' => 7])->one();
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
+        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => $encomendaId, 'idproduto' => 1])->one();
         $encomendaproduto->quantidade = 6;
 
         $this->assertTrue($encomendaproduto->save());
     }
 
-    public function testVerEncomendaprodutoAnteriormenteAtualizada()
+    public function testVerRelacaoEncomendaprodutoAnteriormenteAtualizada()
     {
-        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7, 'quantidade' => 6]);
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+        $this->tester->seeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => $encomendaId, 'idproduto' => 1, 'quantidade' => 6]);
     }
 
-    public function testApagarEncomendaproduto()
+    public function testApagarRelacaoEncomendaproduto()
     {
-        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => 5, 'idproduto' => 7])->one();
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+
+        $encomendaproduto = Encomendasprodutos::find()->where(['idencomenda' => $encomendaId, 'idproduto' => 1])->one();
         $this->assertIsNumeric($encomendaproduto->delete());
     }
 
-    public function testVerSeEncomendaprodutoFoiApagada()
+    public function testVerificarSeRelacaoEncomendaprodutoFoiApagada()
     {
-        $this->tester->dontSeeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => 5, 'idproduto' => 7]);
+        $encomendaId = Encomendas::find()->where(['preco' => 256])->one()->id;
+        $this->tester->dontSeeInDatabase(Encomendasprodutos::tableName(), ['idencomenda' => $encomendaId, 'idproduto' => 1]);
+
+        $encomendateste = Encomendas::find()->where(['id' => $encomendaId])->one();
+        $encomendateste->delete();
     }
 }

@@ -29,8 +29,8 @@ use yii\widgets\ActiveForm;
 
     <label>Pago</label>
     <select name="Encomendas[pago]" class="form-control">
-        <option value="1">Sim</option>
-        <option value="0">Não</option>
+        <option value="1" <?= $model->pago == 1 ? "selected" : "" ?>>Sim</option>
+        <option value="0" <?= $model->pago == 0 ? "selected" : "" ?>>Não</option>
     </select>
     <br>
 
@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'tipoexpedicao')->dropDownList([ 'Levantamento em loja' => 'Levantamento em loja', 'Envio' => 'Envio', ], ['prompt' => '']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

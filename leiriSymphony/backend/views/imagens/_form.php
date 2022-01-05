@@ -12,12 +12,12 @@ use yii\widgets\ActiveForm;
 
 <div class="imagens-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'add-imagem']); ?>
 
     <?= $form->field($uploadForm, 'imageFile')->fileInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

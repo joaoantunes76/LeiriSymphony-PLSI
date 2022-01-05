@@ -110,7 +110,7 @@ $this->title = 'Comprar';
                     <label for="entrega">Entrega</label>
                     <select name="entrega" id="" class="form-control">
                         <option value="Levantamento em loja">Em loja</option>
-                        <option value="'Envio">Correio</option>
+                        <option value="Envio">Correio</option>
                     </select>
                 </div>
                 <br>
