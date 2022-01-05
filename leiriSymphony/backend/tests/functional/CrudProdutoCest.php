@@ -30,7 +30,7 @@ class CrudProdutoCest
         //Criar um novo Produto
         $I->seeLink('Criar Produtos');
         $I->click('Criar Produtos');
-        $I->see("Criar Produtos");
+        $I->see("Criar Produto");
         $I->submitForm('#create-produtos', [
             'Produtos[idsubcategoria]' => 'Baixos',
             'Produtos[idmarca]' => 'Yamaha',
@@ -100,7 +100,7 @@ class CrudProdutoCest
         //Adicionar uma Demonstração ao Produto criado
         $I->seeLink('Adicionar Demonstração');
         $I->click('Adicionar Demonstração');
-        $I->see("Criar Demonstrações");
+        $I->see("Criar Demonstração");
         $I->submitForm('#add-demo', [
             $I->attachFile('#uploadform-demofile', 'piano_teste.mp3'),
         ]);
