@@ -54,12 +54,26 @@ class User extends \yii\db\ActiveRecord
             'username' => 'Username',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
+            'password_reset_token' => 'Password Re  set Token',
             'email' => 'Email',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
         ];
+    }
+
+    public function getUserRole()
+    {
+        $roles = \Yii::$app->authManager->getRolesByUser($this->id);
+
+        $role = '';
+
+        foreach($roles as $key => $value)
+        {
+            $role = $key;
+        }
+
+        return $role;
     }
 }

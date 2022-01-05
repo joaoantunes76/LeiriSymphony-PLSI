@@ -4,13 +4,16 @@ namespace backend\controllers;
 
 use Yii;
 use app\models\User;
+use common\models\Perfis;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\UserSearch;
+use frontend\models\SignupForm;
+use yii\rbac\Role;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
-
+use app\controllers\PerfisController;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -99,6 +102,7 @@ class UserController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'perfil' => Perfis::findOne($id),
         ]);
     }
 
@@ -109,18 +113,45 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $perfil = new Perfis();
+        $signup = new SignupForm();
+     
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $signup->load($this->request->post());
+            if($signup->validate()){
+                $signup->signup();
+                $user = User::find()->where(['email' => $signup->email])->one();
+
+                $manager = Yii::$app->authManager;
+
+                $item = $manager->getRole($user->getUserRole());
+                $item = $item ? : $manager->getPermission($user->getUserRole());
+                $manager->revoke($item,$user->id);
+
+                $authorRole = $manager->getRole(addslashes($_POST["Roles"]));
+                $manager->assign($authorRole, $user->id);
+
+                $perfil = Perfis::find()->where(['nome' => $signup->username])->orderBy(['id' => SORT_DESC])->one();
+                $perfil->load($this->request->post());
+                if($perfil->save()) {
+                    Yii::$app->session->setFlash('success', 'Utilizador adicionado com sucesso');
+                    $this->redirect('index');
+                }
             }
-        } else {
-            $model->loadDefaultValues();
+            else{
+                if($perfil->getErrors() != null) {
+                    Yii::$app->session->setFlash('error', $signup->firstErrors);
+                }
+                if($perfil->getErrors() != null) {
+                    Yii::$app->session->setFlash('error', $perfil->firstErrors);
+                }
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'perfis' => $perfil,
+            'signup' => $signup
         ]);
     }
 
@@ -130,17 +161,37 @@ class UserController extends Controller
      * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $perfis = Perfis::findOne($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost){
+            $model->load($this->request->post());
+
+            $manager = Yii::$app->authManager;
+            $item = $manager->getRole($model->getUserRole());
+            $item = $item ? : $manager->getPermission($model->getUserRole());
+            $manager->revoke($item,$model->id);
+
+            $authorRole = $manager->getRole(addslashes($_POST["Roles"]));
+            $manager->assign($authorRole, $model->id);
+
+            $perfis->load($this->request->post());
+            $perfis->iduser = $model->id;
+            if($model->save() && $perfis->save()) {
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'success']);
+            }
+            else{
+                return $this->redirect(['view', 'id' => $model->id, 'status' => 'failed']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'perfis' => $perfis
         ]);
     }
 
@@ -153,6 +204,7 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        Perfis::find()->where(['iduser' => $id])->one()->delete();
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

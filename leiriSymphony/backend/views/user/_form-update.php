@@ -4,8 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
+/* @var $model app\models\User */
 /* @var $perfis common\models\Perfis */
-/* @var $signup frontend\models\SignupForm */
+/* @var $perfis common\models\Perfis */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -18,19 +19,17 @@ use yii\widgets\ActiveForm;
         <?php
         $roles = Yii::$app->authManager->getRoles();
         foreach($roles as $role){
-            ?>
-            <option value="<?= $role->name ?>"><?= $role->name ?></option>
-            <?php
+        ?>
+            <option value="<?= $role->name ?>" <?= $model->getUserRole()==$role->name ? "selected":"" ?>><?= $role->name ?></option>
+        <?php
         }
         ?>
     </select>
     <br>
 
-    <?= $form->field($signup, 'username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($signup, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($signup, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($perfis, 'nome')->textInput(['maxlength' => true]) ?>
 
