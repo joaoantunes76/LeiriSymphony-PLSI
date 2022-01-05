@@ -88,7 +88,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $evento = Eventos::find()->orderBy(['data' => SORT_ASC])->one();
+        $evento = Eventos::find()->where(['>', 'data', date('Y-m-d')])->orderBy(['data' => SORT_ASC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
 
         if($evento === null) {
@@ -118,6 +118,8 @@ class SiteController extends Controller
         $erroCartao = false;
         $erroEncomendaProduto = false;
 
+
+
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', "É necessário fazer login para realizar compras.");
         } else {
@@ -126,6 +128,17 @@ class SiteController extends Controller
                 $encomenda = new Encomendas();
                 $encomenda->idperfil = $perfil->id;
                 $preco = 0;
+
+                if($_POST["entrega"] == "Envio"){
+                    $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+
+                    if($perfil->endereco == null || $perfil->cidade == null || $perfil->telefone == null || $perfil->codigopostal == null){
+                        Yii::$app->session->setFlash('error', "O seu perfil não tem uma morada ou numero de telefone, atualize o seu perfil para que esta compra possa ser entregue por correio");
+                        return $this->redirect(Yii::$app->request->referrer);
+                    }
+
+                }
+
                 foreach($_POST as $post){
                     if(isset($post["quantidade"]) && isset($post["id"])){
 
