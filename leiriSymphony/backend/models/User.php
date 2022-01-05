@@ -62,4 +62,18 @@ class User extends \yii\db\ActiveRecord
             'verification_token' => 'Verification Token',
         ];
     }
+
+    public function getUserRole()
+    {
+        $roles = \Yii::$app->authManager->getRolesByUser($this->id);
+
+        $role = '';
+
+        foreach($roles as $key => $value)
+        {
+            $role = $key;
+        }
+
+        return $role;
+    }
 }
