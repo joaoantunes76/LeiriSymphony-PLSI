@@ -95,7 +95,7 @@ class PedidoContactoTest extends \Codeception\Test\Unit
     {
         $tipoinformacao = Tipoinformacoes::find()->where(['nome' => 'TesteTipoInformacao', 'tipo' => 'Informação'])->one();
         $tipoinformacao->nome = "TesteTipoInformacao2";
-        $tipoinformacao->save();
+        $this->assertTrue($tipoinformacao->save());
     }
 
     public function testTipoinformacoesAtualizadoEstaNaBD()
