@@ -146,11 +146,15 @@ class ProdutosController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         else {
-            if($produtoExist){
+            if($produtoExist && $carrinhoExist){
                 $carrinho = Carrinho::find()->where(['idperfil' => Yii::$app->user->id])->andWhere(['idproduto' => $idproduto])->one();
                 $carrinho->quantidade += 1;
                 if($carrinho->validate() && $carrinho->save()){
                     Yii::$app->session->setFlash('success', "Quantidade do produto incrementada no carrinho (+1)");
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+                else{
+                    Yii::$app->session->setFlash('error', $carrinho->firstErrors);
                     return $this->redirect(Yii::$app->request->referrer);
                 }
             }
