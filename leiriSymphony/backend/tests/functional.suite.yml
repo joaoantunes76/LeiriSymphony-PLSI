@@ -8,3 +8,6 @@ modules:
             dsn: 'mysql:host=127.0.0.1;dbname=leirisymphony_test'
             user: 'root'
             password: ''
+            dump: tests/_data/leirisymphony_test.sql
+            cleanup: true # reload dump between tests
+            populate: true # load dump before all tests
