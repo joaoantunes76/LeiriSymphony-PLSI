@@ -182,6 +182,10 @@ class SiteController extends Controller
                                 $encomendaProduto->save();
                                 $produto->stock = ($produto->stock - $post["quantidade"]);
                                 $produto->save();
+                                $carrinhoUser = Carrinho::find()->where(['idperfil' => Perfis::find()->where(['iduser' => Yii::$app->user->id])->one()->id])->all();
+                                foreach ($carrinhoUser as $carrinho){
+                                    $carrinho->delete();
+                                }
                             }
                             else{
                                 $erroEncomendaProduto = true;
