@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->idperfil0->nome;
                 }
             ],
+            'data',
             'estado',
             [
                 'attribute'=>'pago',

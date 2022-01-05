@@ -78,7 +78,8 @@ $this->title = 'My Yii Application';
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <p>Estado Atual da encomenda: <span class="ls-text-primary">Entregue</span></p>
+                                            <p>Estado atual da encomenda: </p>
+                                            <p class="text-primary"><?= $encomenda->estado ?></p>
                                         </div>
                                         <div class="col">
                                             <div class="d-flex justify-content-end">

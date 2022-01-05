@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'tipoexpedicao',
                 'format' => ['text'],
             ],
+            'data',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => [],

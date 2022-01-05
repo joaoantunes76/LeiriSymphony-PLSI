@@ -90,16 +90,19 @@ class SiteController extends Controller
     {
         $evento = Eventos::find()->where(['>', 'data', date('Y-m-d')])->orderBy(['data' => SORT_ASC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
+        $produtosPopulares = Produtos::find()->innerJoin(Encomendasprodutos::tableName(), 'idproduto = id' )->groupBy('idproduto')->addOrderBy(['COUNT(idproduto)' => SORT_DESC])->limit(4)->all();
 
         if($evento === null) {
             return $this->render('index', [
                 'produtos' => $produtos,
+                'produtosPopulares' => $produtosPopulares,
             ]);
         }
         else {
             return $this->render('index', [
                 'produtos' => $produtos,
-                'evento' => $evento
+                'evento' => $evento,
+                'produtosPopulares' => $produtosPopulares,
             ]);
         }
     }
@@ -179,6 +182,10 @@ class SiteController extends Controller
                                 $encomendaProduto->save();
                                 $produto->stock = ($produto->stock - $post["quantidade"]);
                                 $produto->save();
+                                $carrinhoUser = Carrinho::find()->where(['idperfil' => Perfis::find()->where(['iduser' => Yii::$app->user->id])->one()->id])->all();
+                                foreach ($carrinhoUser as $carrinho){
+                                    $carrinho->delete();
+                                }
                             }
                             else{
                                 $erroEncomendaProduto = true;
@@ -320,6 +327,7 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+        $signup = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
@@ -330,6 +338,7 @@ class SiteController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'signup' => $signup
         ]);
     }
 
