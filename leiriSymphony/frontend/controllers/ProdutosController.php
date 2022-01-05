@@ -158,9 +158,6 @@ class ProdutosController extends Controller
                     return $this->redirect(Yii::$app->request->referrer);
                 }
             }
-            else{
-                return "?";
-            }
         }
         Yii::$app->session->setFlash('error', "Este produto não existe");
         return $this->redirect(Yii::$app->request->referrer);
