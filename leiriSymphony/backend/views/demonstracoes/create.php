@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Demonstracoes */
 /* @var $uploadForm app\models\UploadForm */
 
-$this->title = 'Criar Demonstrações';
+$this->title = 'Criar Demonstração de Produto';
 $this->params['breadcrumbs'][] = ['label' => 'Demonstracoes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

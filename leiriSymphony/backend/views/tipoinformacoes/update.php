@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Tipoinformacoes */
 
-$this->title = 'Update Tipoinformacoes: ' . $model->id;
+$this->title = 'Editar Tipo de contacto: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Tipoinformacoes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

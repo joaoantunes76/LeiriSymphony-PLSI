@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Musicas */
 /* @var $uploadForm app\models\UploadForm */
 
-$this->title = 'Editar Música: ' . $model->id;
+$this->title = 'Editar Música: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Musicas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id, 'idalbuns' => $model->idalbuns]];
 $this->params['breadcrumbs'][] = 'Update';

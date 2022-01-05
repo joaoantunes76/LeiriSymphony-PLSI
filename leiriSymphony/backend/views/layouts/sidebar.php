@@ -32,10 +32,10 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    ['label' => 'Home', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                    ['label' => 'Home', 'icon' => 'nav-icon fas fa-home', 'url' => ['site/index'], 'iconStyle' => 'far'],
                     [
                         'label' => 'Administração',
-                        'icon' => 'tachometer-alt',
+                        'icon' => 'nav-icon fas fa-user',
                         'items' => [
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
                             ['label' => 'Eventos', 'url' => ['eventos/index'], 'iconStyle' => 'far'],
@@ -43,7 +43,7 @@
                     ],
                     [
                         'label' => 'Gestão de loja',
-                        'icon' => 'tachometer-alt',
+                        'icon' => 'nav-icon fas fa-copy',
                         'items' => [
                             ['label' => 'Marcas', 'url' => ['marcas/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categorias', 'url' => ['categorias/index'], 'iconStyle' => 'far'],
@@ -56,7 +56,7 @@
                     ],
                     [
                         'label' => 'Apoio ao Cliente',
-                        'icon' => 'tachometer-alt',
+                        'icon' => 'nav-icon fas fa-question-circle',
                         'items' => [
                             ['label' => 'Pedidos de Contacto', 'url' => ['pedidosdecontacto/index'], 'iconStyle' => 'far'],
                             ['label' => 'Tipos de Contacto', 'url' => ['tipoinformacoes/index'], 'iconStyle' => 'far'],

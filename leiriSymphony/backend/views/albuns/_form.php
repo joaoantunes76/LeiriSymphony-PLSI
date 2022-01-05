@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($uploadForm, 'imageFile')->fileInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
