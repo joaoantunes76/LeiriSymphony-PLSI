@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Categorias;
+use common\models\Produtos;
 use common\models\Subcategorias;
 use common\models\SubcategoriasSearch;
 use yii\filters\AccessControl;
@@ -158,8 +159,14 @@ class SubcategoriasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if (Produtos::find()->where(['idsubcategoria' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Não pode eliminar uma Subcategoria que esteja associada a um Produto');
+            return $this->redirect(['index']);
+        }else{
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Marcas;
 use common\models\MarcasSearch;
+use common\models\Produtos;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -153,8 +154,14 @@ class MarcasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if (Produtos::find()->where(['idmarca' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Não pode eliminar uma Marca que faça parte de um Produto');
+            return $this->redirect(['index']);
+        }else{
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

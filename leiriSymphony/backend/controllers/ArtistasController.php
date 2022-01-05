@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Albunsartistas;
 use common\models\Artistas;
 use common\models\ArtistasSearch;
 use yii\filters\AccessControl;
@@ -152,8 +153,14 @@ class ArtistasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if (Albunsartistas::find()->where(['idartista' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Não pode eliminar um Artista que está associado a um Album');
+            return $this->redirect(['index']);
+        }else{
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

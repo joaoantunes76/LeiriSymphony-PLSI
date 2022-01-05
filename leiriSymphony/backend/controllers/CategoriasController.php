@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use common\models\Categorias;
 use common\models\CategoriasSearch;
+use common\models\Subcategorias;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -152,8 +154,14 @@ class CategoriasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if (Subcategorias::find()->where(['idcategoria' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Não pode eliminar uma Categoria que está associada a uma Subcategoria');
+            return $this->redirect(['index']);
+        }else{
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

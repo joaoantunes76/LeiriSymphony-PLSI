@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Carrinho;
 use common\models\Demonstracoes;
 use common\models\DemonstracoesSearch;
+use common\models\Encomendasprodutos;
 use common\models\Imagens;
+use common\models\Produtosfavoritos;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\Marcas;
@@ -173,8 +176,20 @@ class ProdutosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (Imagens::find()->where(['idproduto' => $model->id])->exists() || Demonstracoes::find()->where(['idproduto' => $model->id])->exists()){
-            Yii::$app->session->setFlash('error', 'Por favor remova as imagens e/ou demonstrações antes de eliminar o Produto');
+        $carrinhos = Carrinho::find()->where(['idproduto' => $model->id])->all();
+        foreach ($carrinhos as $carrinho)
+        {
+            $carrinho->delete();
+        }
+
+        $favoritos = Produtosfavoritos::find()->where(['idproduto' => $model->id])->all();
+        foreach ($favoritos as $favorito)
+        {
+            $favorito->delete();
+        }
+
+        if (Imagens::find()->where(['idproduto' => $model->id])->exists() || Demonstracoes::find()->where(['idproduto' => $model->id])->exists() || Encomendasprodutos::find()->where(['idproduto'])){
+            Yii::$app->session->setFlash('error', 'Por favor certifique-se de que as associações (imagens/demonstrações/encomendas) são removidas antes de eliminar o Produto');
             return $this->redirect(['view', 'id' => $model->id]);
         }else{
             $model->delete();
