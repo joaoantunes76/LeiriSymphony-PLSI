@@ -131,7 +131,7 @@ AppAsset::register($this);
             <div class="row justify-content-around">
                 <div class="col-sm-12 col-lg-12">
                     <div class="single_footer_part">
-                        <h4>Top Products</h4>
+                        <h4>Informações:</h4>
                         <ul class="list-unstyled row">
                             <li class="ml-3"><a href="<?= Url::toRoute('site/contact') ?>">Contact</a></li>
                             <li class="ml-4"><a href="<?= Url::toRoute('site/about') ?>">About</a></li>

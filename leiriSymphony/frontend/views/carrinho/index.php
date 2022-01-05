@@ -54,9 +54,15 @@ $this->title = 'Carrinho de Compras';
                     ?>
                 </div>
             </div>
-            <div class="form-group text-center">
-                <?= Html::submitButton('Atualizar Quantidade', ['class' => 'genric-btn info radius']) ?>
-                <a href="<?= Url::toRoute('site/comprar') ?>" class="genric-btn success radius" onclick="goStep2()">Comprar</a>
-            </div>
+            <?php
+                if ($model != null){
+            ?>
+                <div class="form-group text-center">
+                    <?= Html::submitButton('Atualizar Quantidade', ['class' => 'genric-btn info radius']) ?>
+                    <a href="<?= Url::toRoute('site/comprar') ?>" class="genric-btn success radius" onclick="goStep2()">Comprar</a>
+                </div>
+            <?php
+                }
+            ?>
         <?php $form = ActiveForm::end(); ?>
 </section>
