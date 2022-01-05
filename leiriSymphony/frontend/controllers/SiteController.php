@@ -90,16 +90,19 @@ class SiteController extends Controller
     {
         $evento = Eventos::find()->where(['>', 'data', date('Y-m-d')])->orderBy(['data' => SORT_ASC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
+        $produtosPopulares = Produtos::find()->innerJoin(Encomendasprodutos::tableName(), 'idproduto = id' )->groupBy('idproduto')->addOrderBy(['COUNT(idproduto)' => SORT_DESC])->limit(4)->all();
 
         if($evento === null) {
             return $this->render('index', [
                 'produtos' => $produtos,
+                'produtosPopulares' => $produtosPopulares,
             ]);
         }
         else {
             return $this->render('index', [
                 'produtos' => $produtos,
-                'evento' => $evento
+                'evento' => $evento,
+                'produtosPopulares' => $produtosPopulares,
             ]);
         }
     }

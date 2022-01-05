@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $produtos common\models\Produtos */
+/* @var $produtosPopulares common\models\Produtos */
 
 $this->title = 'My Yii Application';
 ?>
@@ -104,7 +105,7 @@ if(isset($evento)){
                     <?php
                     //this is equal to Recentemente adicionados
                     //TODO: make this to most bought products
-                    foreach ($produtos as $produto) {
+                    foreach ($produtosPopulares as $produto) {
                         if ($produto->imagens != null) {
                             $imagemNome = $produto->imagens[0]->nome;
                         } else {
