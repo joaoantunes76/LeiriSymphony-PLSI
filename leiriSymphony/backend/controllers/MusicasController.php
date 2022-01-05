@@ -71,7 +71,6 @@ class MusicasController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -185,6 +184,7 @@ class MusicasController extends Controller
      */
     public function actionDelete($id, $idalbuns)
     {
+
         $this->findModel($id, $idalbuns)->delete();
 
         return $this->redirect(['albuns/view?id='.$idalbuns]);

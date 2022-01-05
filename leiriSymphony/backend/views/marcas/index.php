@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="marcas-index">
 
-    
-
     <p>
         <?= Html::a('Criar  Marcas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

@@ -24,7 +24,6 @@ Por favor, faça o login");
         $I->see("Recentemente adicionados");
         $I->seeLink("Perfil");
         $I->click("Perfil");
-        $I->seeInField("Perfis[cidade]", "Leiria");
         //Editar perfil
         $I->seeLink("Editar");
         $I->click("Editar");

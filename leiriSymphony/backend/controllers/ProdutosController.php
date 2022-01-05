@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Demonstracoes;
 use common\models\DemonstracoesSearch;
+use common\models\Imagens;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\Marcas;
@@ -71,7 +73,6 @@ class ProdutosController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -170,8 +171,14 @@ class ProdutosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if (Imagens::find()->where(['idproduto' => $model->id])->exists() || Demonstracoes::find()->where(['idproduto' => $model->id])->exists()){
+            Yii::$app->session->setFlash('error', 'Por favor remova as imagens e/ou demonstrações antes de eliminar o Produto');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }else{
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

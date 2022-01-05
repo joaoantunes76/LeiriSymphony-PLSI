@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <td><?= $artista->nome ?></td>
                             <td>
-                                <?= Html::a('Remover', ['albunsartistas/delete?idalbum='.$model->id.'&idartista='.$artista->id], ['class' => 'btn btn-danger', 'data-method' => 'post']) ?>
+                                <?= Html::a('Remover', ['albunsartistas/delete?idalbum='.$model->id.'&idartista='.$artista->id], ['class' => 'btn btn-danger', 'data-method' => 'post', 'id' => $artista->id]) ?>
                         </tr>
                     <?php
                     }

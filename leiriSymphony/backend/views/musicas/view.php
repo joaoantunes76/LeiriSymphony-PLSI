@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
 
-        <?= Html::a('Ir para Album', ['albuns/view', 'id' => $model->idalbuns], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Ir para Album', ['albuns/view', 'id' => $model->idalbuns], ['class' => 'btn btn-info', 'id' => $model->idalbuns]) ?>
     </p>
 
     <?= DetailView::widget([

@@ -45,12 +45,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Hora de Início',
                 'attribute' => 'horainicio',
-                'format' => ['time', 'H:m'],
+                'format' => ['time', 'php:H:i'],
             ],
             [
                 'label' => 'Hora de Encerramento',
                 'attribute' => 'horafim',
-                'format' => ['time', 'H:m'],
+                'format' => ['time', 'php:H:i'],
             ],
 
             ['class' => 'yii\grid\ActionColumn', 'contentOptions' => ['width' => '80px']],

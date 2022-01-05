@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Subcategorias */
 /* @var $categorias common\models\Categorias */
 
-$this->title = 'Update Subcategorias: ' . $model->id;
+$this->title = 'Editar Subcategoria: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Subcategorias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
