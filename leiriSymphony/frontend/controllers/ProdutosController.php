@@ -108,16 +108,20 @@ class ProdutosController extends Controller
      */
     public function actionView($produtoId)
     {
-        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
-        $idperfil = $perfil->id;
-        $produtoPreviews = Demonstracoes::find()->where(['idproduto' => $produtoId])->all();
-        $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->exists();
-        $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
-        $avalicaoUserExiste = Avaliacao::find()->where(['idperfil' => $idperfil, 'idproduto' => $produtoId])->exists();
-        $utilizadorJaComprou = Encomendas::find()->innerJoin('encomendasprodutos')->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->andWhere(['estado' => 'Entregue'])->exists();
         $podeAvaliar = false;
-        if($utilizadorJaComprou && !$avalicaoUserExiste){
-            $podeAvaliar = true;
+        $existeFavorito = false;
+        $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
+        $produtoPreviews = Demonstracoes::find()->where(['idproduto' => $produtoId])->all();
+        if(!Yii::$app->user->isGuest) {
+            $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+            $idperfil = $perfil->id;
+            $existeFavorito = Produtosfavoritos::find()->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->exists();
+            $avaliacoes = Avaliacao::find()->where(['idproduto' => $produtoId])->all();
+            $avalicaoUserExiste = Avaliacao::find()->where(['idperfil' => $idperfil, 'idproduto' => $produtoId])->exists();
+            $utilizadorJaComprou = Encomendas::find()->innerJoin('encomendasprodutos')->where(['idproduto' => $produtoId])->andWhere(['idperfil' => $idperfil])->andWhere(['estado' => 'Entregue'])->exists();
+            if($utilizadorJaComprou && !$avalicaoUserExiste){
+                $podeAvaliar = true;
+            }
         }
 
         return $this->render('view', [
