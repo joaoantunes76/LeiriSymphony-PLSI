@@ -18,9 +18,10 @@ class PagamentoOnline extends Model
     public function rules()
     {
         return [
+            [['nome', 'numero', 'validade', 'cvv'], 'required'],
             ['nome', 'string'],
             ['numero', 'integer', 'max' => 9999999999999999],
-            ['validade', 'date', 'format' => 'php:m-y'],
+            ['validade', 'date',  'format' => 'MM/yyyy'],
             ['cvv', 'integer', 'max' => 999],
         ];
     }
