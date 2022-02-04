@@ -14,7 +14,18 @@ use yii\web\Controller;
 class AlbunsController extends Controller
 {
     public function actionIndex(){
-        $albuns = Albuns::find()->all();
+        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+        if($perfil != null) {
+            $inventarios = Inventario::find()->where(['perfis_id' => $perfil->id])->all();
+            $inventarioAlbunsId = [];
+            foreach ($inventarios as $inventario){
+                array_push($inventarioAlbunsId, $inventario->albuns_id);
+            }
+            $albuns = Albuns::find()->where(['not in','id',$inventarioAlbunsId])->all();
+        }
+        else{
+            $albuns = Albuns::find()->all();
+        }
         return $this->render('index', [
             'model' => $albuns
         ]);
@@ -76,6 +87,21 @@ class AlbunsController extends Controller
             }
             else {
                 Yii::$app->session->setFlash('error', "Este album já existe no carrinho");
+            }
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->redirect(['site/login']);
+    }
+
+    public function actionDeleteCarrinho($albumId){
+        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+        if($perfil != null) {
+            if(Carrinhoalbuns::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $albumId])->exists()) {
+                Carrinhoalbuns::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $albumId])->one()->delete();
+                Yii::$app->session->setFlash('success', "Album removido do carrinho");
+            }
+            else {
+                Yii::$app->session->setFlash('error', "Este album não existe no carrinho");
             }
             return $this->redirect(Yii::$app->request->referrer);
         }

@@ -41,7 +41,7 @@ $this->title = 'Carrinho de Compras';
                                 <div class="single_product_text">
                                     <h4><?= $album->nome ?></h4>
                                     <h3><?= $album->preco ?>€</h3>
-                                    <a href="<?= Url::toRoute('produtos/delete-carrinho?idproduto=' . $album->id) ?>"
+                                    <a href="<?= Url::toRoute('albuns/delete-carrinho?albumId=' . $album->id) ?>"
                                        class="add_cart">- remover do carrinho</a>
                                 </div>
                             </div>

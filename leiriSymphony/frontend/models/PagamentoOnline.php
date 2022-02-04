@@ -20,7 +20,8 @@ class PagamentoOnline extends Model
         return [
             [['nome', 'numero', 'validade', 'cvv'], 'required'],
             ['nome', 'string'],
-            ['numero', 'integer', 'max' => 9999999999999999],
+            ['numero', 'string', 'max' => '16'],
+            ['numero', 'match', 'pattern' => '/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/m'],
             ['validade', 'date',  'format' => 'MM/yyyy'],
             ['cvv', 'integer', 'max' => 999],
         ];
