@@ -102,7 +102,18 @@ $this->title = $model->nome;
                             ?>
                             <tr>
                                 <td><?= $musica->nome ?></td>
+                                <?php
+                                    if($userHasInInventory){
+                                ?>
                                 <td><audio controls><source src="<?=Yii::getAlias('@musicurl').'/'.$musica->ficheiro?>" type="audio/ogg"></audio></td>
+                                <?php
+                                    }
+                                    else{
+                                    ?>
+                                        <td><audio controls><source src="#" type="audio/ogg"></audio></td>
+                                    <?php
+                                    }
+                                ?>
                             </tr>
                             <?php
                         }
