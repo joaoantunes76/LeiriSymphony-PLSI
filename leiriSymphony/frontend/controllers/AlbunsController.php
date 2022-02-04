@@ -10,6 +10,7 @@ use common\models\Perfis;
 use frontend\models\PagamentoOnline;
 use Yii;
 use yii\web\Controller;
+use ZipArchive;
 
 class AlbunsController extends Controller
 {
@@ -87,6 +88,37 @@ class AlbunsController extends Controller
             }
             else {
                 Yii::$app->session->setFlash('error', "Este album já existe no carrinho");
+            }
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->redirect(['site/login']);
+    }
+
+    public function actionTransferirAlbum($idalbum){
+        $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
+        if($perfil != null) {
+            if(Inventario::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $idalbum])->exists()) {
+                $album = Albuns::find()->where(['id' => $idalbum])->one();
+                $zip = new \ZipArchive();
+                $tmp_file = tempnam('.','');
+                if($zip->open($tmp_file, ZipArchive::CREATE) !== true){
+                    Yii::$app->session->setFlash('error', "Ocorreu um erro a preparar o album para a transferencia");
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+
+                foreach ($album->musicas as $musica){
+                    $download_file = file_get_contents(Yii::getAlias('@musicurl').'/'.$musica->ficheiro);
+                    //$zip->addFromString(basename($album->nome),$download_file);
+                    $zip->addFile(Yii::getAlias('@musicpath').'/'.$musica->ficheiro, $musica->ficheiro);
+                }
+                $zip->close();
+                header('Content-disposition: attachment; filename=Resumes.zip');
+                header('Content-type: application/zip');
+                readfile($tmp_file);
+                unlink($tmp_file);
+            }
+            else {
+                Yii::$app->session->setFlash('error', "O utilizador não tem este album");
             }
             return $this->redirect(Yii::$app->request->referrer);
         }
