@@ -54,6 +54,9 @@ $this->title = $model->nome;
                         <li>
                             <a href="#"> <span>Stock: </span> <?= $model->stock > 0 ? "Disponivel" : "Esgotado" ?> </a>
                         </li>
+                        <li>
+                            <a href="#"><span>Estado: </span> <span class="text-info"><?= $model->usado == 1 ? "Usado" : "Novo" ?></span></a>
+                        </li>
                     </ul>
                     <p>
                         <b>Demonstração:</b>
