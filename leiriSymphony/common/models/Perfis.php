@@ -16,16 +16,19 @@ use Yii;
  * @property string|null $codigopostal
  * @property string|null $telefone
  *
+ * @property Albuns[] $albuns
+ * @property Albuns[] $albuns0
  * @property Avaliacao[] $avaliacaos
+ * @property Carrinhoalbuns[] $carrinhoalbuns
  * @property Carrinho[] $carrinhos
  * @property Encomendas[] $encomendas
  * @property Eventosperfis[] $eventosperfis
  * @property Eventos[] $ideventos
- * @property Tipoinformacoes[] $idproblemas
  * @property Produtos[] $idprodutos
  * @property Produtos[] $idprodutos0
  * @property Produtos[] $idprodutos1
  * @property User $iduser0
+ * @property Inventario[] $inventarios
  * @property Pedidosdecontacto[] $pedidosdecontactos
  * @property Produtosfavoritos[] $produtosfavoritos
  */
@@ -49,7 +52,6 @@ class Perfis extends \yii\db\ActiveRecord
             [['iduser'], 'integer'],
             [['nome', 'endereco', 'cidade', 'codigopostal'], 'string', 'max' => 45],
             [['nif', 'telefone'], 'string', 'max' => 9],
-            [['telefone'], 'unique'],
             [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['iduser' => 'id']],
         ];
     }
@@ -72,6 +74,26 @@ class Perfis extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Albuns]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAlbuns()
+    {
+        return $this->hasMany(Albuns::className(), ['id' => 'albuns_id'])->viaTable('carrinhoalbuns', ['perfis_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Albuns0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAlbuns0()
+    {
+        return $this->hasMany(Albuns::className(), ['id' => 'albuns_id'])->viaTable('inventario', ['perfis_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[Avaliacaos]].
      *
      * @return \yii\db\ActiveQuery
@@ -79,6 +101,16 @@ class Perfis extends \yii\db\ActiveRecord
     public function getAvaliacaos()
     {
         return $this->hasMany(Avaliacao::className(), ['idperfil' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Carrinhoalbuns]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCarrinhoalbuns()
+    {
+        return $this->hasMany(Carrinhoalbuns::className(), ['perfis_id' => 'id']);
     }
 
     /**
@@ -122,16 +154,6 @@ class Perfis extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Idproblemas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdproblemas()
-    {
-        return $this->hasMany(Tipoinformacoes::className(), ['id' => 'idproblema'])->viaTable('pedidosdecontacto', ['idperfil' => 'id']);
-    }
-
-    /**
      * Gets query for [[Idprodutos]].
      *
      * @return \yii\db\ActiveQuery
@@ -169,6 +191,16 @@ class Perfis extends \yii\db\ActiveRecord
     public function getIduser0()
     {
         return $this->hasOne(User::className(), ['id' => 'iduser']);
+    }
+
+    /**
+     * Gets query for [[Inventarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInventarios()
+    {
+        return $this->hasMany(Inventario::className(), ['perfis_id' => 'id']);
     }
 
     /**

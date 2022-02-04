@@ -68,6 +68,18 @@ AppAsset::register($this);
                                         ?>
                                     </div>
                                 </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown_1"
+                                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Albuns
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                        <a class="dropdown-item" href="<?= Url::toRoute('albuns/index') ?>">Loja</a>
+                                        <a class="dropdown-item" href="<?= Url::toRoute('albuns/inventario') ?>">Inventario</a>
+                                        <a class="dropdown-item" href="<?= Url::toRoute('albuns/carrinho') ?>">Carrinho</a>
+                                    </div>
+                                </li>
                                 <li class="nav-item dropdown">
                                     <?php
                                         if(Yii::$app->user->isGuest){
