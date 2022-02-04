@@ -22,10 +22,51 @@ class AlbunsController extends Controller
             foreach ($inventarios as $inventario){
                 array_push($inventarioAlbunsId, $inventario->albuns_id);
             }
-            $albuns = Albuns::find()->where(['not in','id',$inventarioAlbunsId])->all();
+
+            if (isset($_GET["albumNome"]) || isset($_GET["artistaNome"])) {
+                $whereCondition = null;
+                if(isset($_GET["albumNome"])) {
+                    $albumNome = $_GET["albumNome"];
+                    $whereCondition = ['like', 'LOWER(albuns.nome)', '%'. strtolower($albumNome) . '%', false];
+                }
+                if(isset($_GET["artistaNome"])){
+                    $artistaNome = $_GET["artistaNome"];
+                    if($whereCondition != null){
+                        $whereCondition = ['like', 'LOWER(artistas.nome)', '%'. strtolower($artistaNome) . '%', false];
+                    }
+                    else {
+                        $whereCondition = ['like', 'LOWER(artistas.nome)', '%'. strtolower($artistaNome) . '%', false];
+                    }
+                }
+                $whereCondition += ['not in', 'albuns.id', $inventarioAlbunsId];
+                $albuns = Albuns::find()->joinWith('idartistas')->where($whereCondition)->all();
+            }
+            else {
+                $albuns = Albuns::find()->where(['not in', 'id', $inventarioAlbunsId])->all();
+            }
+
         }
         else{
-            $albuns = Albuns::find()->all();
+            if (isset($_GET["albumNome"]) || isset($_GET["artistaNome"])) {
+                $whereCondition = null;
+                if(isset($_GET["albumNome"])) {
+                    $albumNome = $_GET["albumNome"];
+                    $whereCondition = ['like', 'LOWER(albuns.nome)', '%'. strtolower($albumNome) . '%', false];
+                }
+                if(isset($_GET["artistaNome"])){
+                    $artistaNome = $_GET["artistaNome"];
+                    if($whereCondition != null){
+                        $whereCondition = ['like', 'LOWER(artistas.nome)', '%'. strtolower($artistaNome) . '%', false];
+                    }
+                    else {
+                        $whereCondition = ['like', 'LOWER(artistas.nome)', '%'. strtolower($artistaNome) . '%', false];
+                    }
+                }
+                $albuns = Albuns::find()->joinWith('idartistas')->where($whereCondition)->all();
+            }
+            else {
+                $albuns = Albuns::find()->all();
+            }
         }
         return $this->render('index', [
             'model' => $albuns
@@ -75,7 +116,7 @@ class AlbunsController extends Controller
     public function actionAdicionarCarrinho($idalbum){
         $perfil = Perfis::find()->where(['iduser' => Yii::$app->user->id])->one();
         if($perfil != null) {
-            if(!Carrinhoalbuns::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $idalbum])->exists()) {
+            if(!Carrinhoalbuns::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $idalbum])->exists() && !Inventario::find()->where(['perfis_id' => $perfil->id, 'albuns_id' => $idalbum])->exists()) {
                 $carrinhoalbum = new Carrinhoalbuns();
                 $carrinhoalbum->albuns_id = $idalbum;
                 $carrinhoalbum->perfis_id = $perfil->id;
@@ -87,7 +128,7 @@ class AlbunsController extends Controller
                 }
             }
             else {
-                Yii::$app->session->setFlash('error', "Este album já existe no carrinho");
+                Yii::$app->session->setFlash('error', "Este album já existe no Inventario ou no Carrinho");
             }
             return $this->redirect(Yii::$app->request->referrer);
         }
@@ -107,8 +148,6 @@ class AlbunsController extends Controller
                 }
 
                 foreach ($album->musicas as $musica){
-                    $download_file = file_get_contents(Yii::getAlias('@musicurl').'/'.$musica->ficheiro);
-                    //$zip->addFromString(basename($album->nome),$download_file);
                     $zip->addFile(Yii::getAlias('@musicpath').'/'.$musica->ficheiro, $musica->ficheiro);
                 }
                 $zip->close();

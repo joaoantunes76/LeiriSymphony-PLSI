@@ -13,10 +13,12 @@ $this->title = 'Albuns';
 
 <section class="section_padding">
     <div class="container">
+
         <div class="row justify-content-center mt-5">
             <div class="col-lg-12">
                 <div class="section_tittle">
                     <h2>Albuns (Loja)</h2>
+                    <?= $this->render('components/_filtertop.php') ?>
                 </div>
             </div>
         </div>
