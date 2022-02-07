@@ -88,7 +88,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $evento = Eventos::find()->where(['>', 'data', date('Y-m-d')])->orderBy(['data' => SORT_ASC])->one();
+        $evento = Eventos::find()->where(['>', 'data', date('Y-m-d')])->orderBy(['data' => SORT_DESC])->one();
         $produtos = Produtos::find()->addOrderBy(['id' => SORT_DESC])->limit(4)->all();
         $produtosPopulares = Produtos::find()->innerJoin(Encomendasprodutos::tableName(), 'idproduto = id' )->groupBy('idproduto')->addOrderBy(['COUNT(idproduto)' => SORT_DESC])->limit(4)->all();
 

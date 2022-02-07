@@ -153,7 +153,12 @@ class EventosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $evento = $this->findModel($id);
+        $eventosPerfis = $evento->eventosperfis;
+        foreach ($eventosPerfis as $eventosPerfil){
+            $eventosPerfil->delete();
+        }
+        $evento->delete();
 
         return $this->redirect(['index']);
     }
