@@ -112,13 +112,15 @@ if(isset($evento)){
                             $imagemNome = "";
                         }
                         ?>
-                        <div class="single_product_item">
-                            <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
-                            <div class="single_product_text">
-                                <h4><?= $produto->nome ?></h4>
-                                <h3><?= $produto->preco ?>€</h3>
+                        <a href="<?= Url::toRoute("produtos/view?produtoId=".$produto->id) ?>">
+                            <div class="single_product_item">
+                                <?= Html::img(Yii::getAlias('@imageurl') . '/' . $imagemNome, ['width' => "255px", 'height' => "250px"]); ?>
+                                <div class="single_product_text">
+                                    <h4><?= $produto->nome ?></h4>
+                                    <h3><?= $produto->preco ?>€</h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <?php
                     }
                     ?>
