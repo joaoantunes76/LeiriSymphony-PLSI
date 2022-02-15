@@ -58,6 +58,7 @@ AppAsset::register($this);
                                         Produtos
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                        <a class="dropdown-item" href="<?= Url::toRoute('produtos/index') ?>">Todos</a>
                                         <?php
                                             $categorias = \common\models\Categorias::find()->all();
                                             foreach($categorias as $categoria){

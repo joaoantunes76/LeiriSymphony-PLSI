@@ -10,7 +10,7 @@ $this->title = 'Sucesso';
 <section class="section_padding">
     <div class="site-index">
         <div class="text-center">
-            <h1 class="mb-5 ls-text-primary">Pagamento concluido com sucesso!</h1>
+            <h1 class="mb-5 ls-text-primary">Encomenda concluida com sucesso!</h1>
             <p>A sua encomenda está neste momento em processamento</p>
             <p>Pode acompanhar o estado da sua encomenda, na pagina encomendas, da sua conta.</p>
             <p>Obrigado por comprar na nossa loja!</p>
