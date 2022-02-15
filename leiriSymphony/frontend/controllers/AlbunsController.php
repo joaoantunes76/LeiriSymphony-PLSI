@@ -151,7 +151,7 @@ class AlbunsController extends Controller
                     $zip->addFile(Yii::getAlias('@musicpath').'/'.$musica->ficheiro, $musica->ficheiro);
                 }
                 $zip->close();
-                header('Content-disposition: attachment; filename=Resumes.zip');
+                header('Content-disposition: attachment; filename='.$album->nome.'.zip');
                 header('Content-type: application/zip');
                 readfile($tmp_file);
                 unlink($tmp_file);
