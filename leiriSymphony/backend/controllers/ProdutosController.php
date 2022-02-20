@@ -188,7 +188,7 @@ class ProdutosController extends Controller
             $favorito->delete();
         }
 
-        if (Imagens::find()->where(['idproduto' => $model->id])->exists() || Demonstracoes::find()->where(['idproduto' => $model->id])->exists() || Encomendasprodutos::find()->where(['idproduto'])){
+        if (Imagens::find()->where(['idproduto' => $model->id])->exists() || Demonstracoes::find()->where(['idproduto' => $model->id])->exists() || Encomendasprodutos::find()->where(['idproduto' => $model->id])->exists()){
             Yii::$app->session->setFlash('error', 'Por favor certifique-se de que as associações (imagens/demonstrações/encomendas) são removidas antes de eliminar o Produto');
             return $this->redirect(['view', 'id' => $model->id]);
         }else{

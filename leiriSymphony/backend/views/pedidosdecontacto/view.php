@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pedidosdecontacto-view">
 
     <p>
-        <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

@@ -73,7 +73,7 @@ AppAsset::register($this);
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown_1"
                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Albuns
+                                        Álbuns
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
                                         <a class="dropdown-item" href="<?= Url::toRoute('albuns/index') ?>">Loja</a>
@@ -146,7 +146,7 @@ AppAsset::register($this);
                     <div class="single_footer_part">
                         <h4>Informações:</h4>
                         <ul class="list-unstyled row">
-                            <li class="ml-3"><a href="<?= Url::toRoute('site/contact') ?>">Contact</a></li>
+                            <li class="ml-3"><a href="<?= Url::toRoute('site/contact') ?>">Contactar</a></li>
                             <li class="ml-4"><a href="<?= Url::toRoute('site/about') ?>">About</a></li>
                         </ul>
                     </div>

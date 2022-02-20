@@ -16,7 +16,7 @@ $this->title = 'Albuns';
         <div class="row justify-content-center mt-5">
             <div class="col-lg-12">
                 <div class="section_tittle">
-                    <h2>Albuns (Inventario)</h2>
+                    <h2>Álbuns (Inventario)</h2>
                 </div>
             </div>
         </div>

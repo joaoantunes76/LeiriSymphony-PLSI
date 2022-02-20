@@ -156,7 +156,7 @@ class ArtistasController extends Controller
         $model = $this->findModel($id);
 
         if (Albunsartistas::find()->where(['idartista' => $model->id])->exists()){
-            Yii::$app->session->setFlash('error', 'Não pode eliminar um Artista que está associado a um Album');
+            \Yii::$app->session->setFlash('error', 'Não pode eliminar um Artista que está associado a um Album');
             return $this->redirect(['index']);
         }else{
             $model->delete();

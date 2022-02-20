@@ -137,8 +137,11 @@ class EncomendasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $encomeda = $this->findModel($id);
+        foreach($encomeda->encomendasprodutos as $encomendasproduto){
+            $encomendasproduto->delete();
+        }
+        $encomeda->delete();
         return $this->redirect(['index']);
     }
 

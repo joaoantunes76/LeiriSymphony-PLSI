@@ -46,7 +46,7 @@ $this->title = 'Contact';
 
 
                 <div class="form-group text-center">
-                    <?= Html::submitButton('Submit', ['class' => 'btn_3', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Submeter', ['class' => 'btn_3', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
